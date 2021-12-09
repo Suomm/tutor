@@ -1,0 +1,7 @@
+{
+  "isStrict": true,
+  "allInOne": false,
+  "outPath": "../bin/apidoc/service",
+  "coverOld": true,
+  "projectName": "Tutor Service"
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <!--  默认配置  -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--  配置控制台 (Console)  -->
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <!--  配置文件 (File)  -->
+<!--    <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>-->
+
+    <appender name="AMQP" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
+        <layout>
+            <pattern><![CDATA[ %d %p %t [%c] - <%m>%n ]]></pattern>
+        </layout>
+        <applicationId>AmqpAppenderTest</applicationId>
+        <routingKeyPattern>%property{applicationId}.%c.%p</routingKeyPattern>
+        <generateId>true</generateId>
+        <charset>UTF-8</charset>
+        <durable>false</durable>
+        <deliveryMode>NON_PERSISTENT</deliveryMode>
+    </appender>
+
+    <!--  root 全局日志级别，用来指定最基础的日志输出级别  -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
