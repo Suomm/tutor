@@ -1,0 +1,158 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    privileged: true
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=tutor
+      - MYSQL_PASSWORD=tutor
+    ports:
+      - "3306:3306"
+    volumes:
+      # 数据挂载
+      - /docker/mysql/data/:/var/lib/mysql/
+      # 配置挂载
+      - /docker/mysql/conf/:/etc/mysql/conf.d/
+      # 初始化执行的 SQL 脚本
+      - /docker/mysql/init:/docker-entrypoint-initdb.d/
+      # 初始化 SQL 脚本映射
+      - /docker/mysql/db:/usr/local/sql
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    privileged: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # 证书映射
+      - /docker/nginx/cert:/etc/nginx/cert
+      # 配置文件映射
+      - /docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      # 页面目录
+      - /docker/nginx/html:/home/tutor/projects
+      # 日志目录
+      - /docker/nginx/log:/var/log/nginx
+  redis:
+    image: redis:6.2.6
+    container_name: redis
+    restart: always
+    privileged: true
+    command: "redis-server /usr/local/etc/redis/redis.conf --appendonly yes"
+    volumes:
+      - /docker/redis/data/:/data/
+      - /docker/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+  minio:
+    image: minio/minio:RELEASE.2021-06-14T01-29-23Z
+    container_name: minio
+    restart: always
+    privileged: true
+    ports:
+      - "9000:9000"
+    environment:
+      # 管理后台用户名
+      - MINIO_ACCESS_KEY=minio
+      # 管理后台密码，最小8个字符
+      - MINIO_SECRET_KEY=miniopass
+    volumes:
+      # 映射当前目录下的data目录至容器内/data目录
+      - /docker/minio/data:/data
+      # 映射配置目录
+      - /docker/minio/conf:/root/.minio/
+    command: "server /data"
+  nacos:
+    image: nacos/nacos-server:1.4.2
+    container_name: nacos
+    restart: always
+    privileged: true
+    environment:
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=root
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+    volumes:
+      - /docker/nacos/log/:/home/nacos/logs
+      - /docker/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9555:9555"
+    depends_on:
+      - mysql
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    container_name: rabbitmq
+    restart: always
+    privileged: true
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - /docker/rabbitmq/data:/var/lib/rabbitmq
+      - /docker/rabbitmq/log:/var/log/rabbitmq/log
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  kkfileview:
+    image: keking/kkfileview:latest
+    container_name: kkfileview
+    restart: always
+    privileged: true
+    ports:
+      - "8012:8012"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    container_name: elasticsearch
+    restart: always
+    privileged: true
+    environment:
+      - node.name=elasticsearch-single
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    volumes:
+      - /docker/elasticsearch/data/:/usr/share/elasticsearch/data
+      - /docker/elasticsearch/logs/:/usr/share/elasticsearch/logs
+    ports:
+      - "9200:9200"
+  tutor-admin:
+    build:
+      context: tutor/admin
+    container_name: tutor-admin
+    restart: always
+    privileged: true
+    ports:
+      - "9377:9377"
+    depends_on:
+      - redis
+      - nacos
+      - rabbitmq
+      - elasticsearch
+  tutor-service:
+    build:
+      context: ./tutor/service
+    container_name: tutor-service
+    restart: always
+    privileged: true
+    ports:
+      - "8633"
+    depends_on:
+      - minio
+      - nginx
+      - kkfileview
+      - tutor-admin
+
+networks:
+  default:
+    external:
+      name: tutor-network
