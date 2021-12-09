@@ -1,0 +1,9 @@
+# Library root
+node_modules
+
+# Binary system
+dist
+target
+
+# IntelliJ project files
+.idea
