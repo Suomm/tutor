@@ -1,0 +1,23 @@
+# SBA 服务端配置
+spring:
+  security:
+    user:
+      # 访问监控管理系统的用户名和密码
+      # 这个密码只能是项目管理人员知道
+      name: root
+      password: root
+  boot:
+    admin:
+      ui:
+        # 更改显示标题
+        title: "Tutor Admin"
+        brand: "<img src=\"assets/img/icon-spring-boot-admin.svg\"><span>Tutor Admin</span>"
+        # 关闭“关于我们”选项的展示
+        view-settings:
+          - name: "about"
+            enabled: false
+        # 添加自定义界面
+        external-views:
+          - label: "管理面板"
+            url: http://localhost:8792
+            order: 2000

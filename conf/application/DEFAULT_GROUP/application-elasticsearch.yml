@@ -1,0 +1,12 @@
+# Elasticsearch 搜索引擎配置
+spring:
+  # Elasticsearch 服务器的地址
+  elasticsearch:
+    rest:
+      uris: "http://localhost:9200"
+  # 排除响应式 Elasticsearch 的配置
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticSearchReactiveHealthContributorAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.elasticsearch.ReactiveElasticsearchRepositoriesAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.elasticsearch.ReactiveElasticsearchRestClientAutoConfiguration

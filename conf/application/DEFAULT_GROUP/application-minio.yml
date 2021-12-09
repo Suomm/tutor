@@ -1,0 +1,12 @@
+# Minio 文件系统配置
+minio:
+  # Minio 对象存储服务器的地址
+  endpoint: https://localhost:9000
+  # 账户唯一标识
+  access-key: accessKey
+  # 账户密码
+  secret-key: secretKey
+  # 储存桶的名称
+  bucket: bucketName
+  # 访问文件的根路径
+  base-url: https://tutor.tjnu.edu.cn/${minio.bucketName}/

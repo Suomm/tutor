@@ -1,0 +1,9 @@
+# Redis 缓存配置
+spring:
+  redis:
+    # 端口号
+    port: 6379
+    # 主机地址
+    host: localhost
+    # 密码（生产环境建议开启）
+    password: requirepass

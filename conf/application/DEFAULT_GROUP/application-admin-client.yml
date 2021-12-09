@@ -1,0 +1,15 @@
+# SBA 客户端配置
+spring:
+  security:
+    user:
+      # 访问监控端点的用户名和密码设置
+      # 这两个最好是随机生成的，用于 SBA 服务端验证访问
+      name: WRvBB5tUBWaT6XJo
+      password: 43eYgy9#8@hXCYle
+  cloud:
+    nacos:
+      discovery:
+        metadata:
+          # 将访问监控端点的用户名和密码通过注册中心元数据传递给 SBA 服务端
+          user.name: ${spring.security.user.name}
+          user.password: ${spring.security.user.password}

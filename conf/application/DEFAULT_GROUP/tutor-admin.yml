@@ -1,0 +1,9 @@
+# Tutor Admin 专有配置
+server:
+  # 应用端口号
+  port: 9377
+spring:
+  # 关闭 Thymeleaf 的警告
+  thymeleaf:
+    check-template: false
+    check-template-location: false

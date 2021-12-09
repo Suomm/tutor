@@ -1,0 +1,8 @@
+# Quartz 定时任务配置
+spring:
+  quartz:
+    # 设置持久化类型
+    job-store-type: jdbc
+    # 初始化数据库使用的表
+    jdbc:
+      initialize-schema: always

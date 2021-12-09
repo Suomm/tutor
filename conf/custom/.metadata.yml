@@ -1,0 +1,7 @@
+# Nacos 配置上传元数据清单
+metadata:
+- appName: ''
+  dataId: sentinel-flow.json
+  desc: Sentinel 限流策略
+  group: DEFAULT_GROUP
+  type: json

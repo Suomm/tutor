@@ -1,0 +1,72 @@
+# Nacos 配置上传元数据清单
+metadata:
+- appName: ''
+  dataId: application-actuator.yml
+  desc: Actuator 监控端点配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-admin-client.yml
+  desc: SBA 客户端配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-admin-server.yml
+  desc: SBA 服务端配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-cas.yml
+  desc: CAS 单点登录配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-druid.yml
+  desc: Druid 多数据源配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-elasticsearch.yml
+  desc: Elasticsearch 搜索引擎配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-logger.yml
+  desc: 项目日志配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-minio.yml
+  desc: Minio 文件系统配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-quartz.yml
+  desc: Quartz 定时任务配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-rabbitmq.yml
+  desc: RabbitMQ 消息队列配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-redis.yml
+  desc: Redis 缓存配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-sentinel.yml
+  desc: Sentinel 限流熔断配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: tutor-admin.yml
+  desc: Tutor Admin 专有配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: tutor-service.yml
+  desc: Tutor Service 专有配置
+  group: DEFAULT_GROUP
+  type: yaml

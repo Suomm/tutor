@@ -1,0 +1,7 @@
+# Tutor Service 专有配置
+server:
+  # 应用端口号
+  port: 8633
+xss:
+  # 开启 XSS 防护
+  enable: true

@@ -1,0 +1,12 @@
+# RabbitMQ 消息队列配置
+spring:
+  rabbitmq:
+    # 端口号
+    port: 5672
+    # 主机地址
+    host: localhost
+    # 账号密码
+    username: guest
+    password: guest
+    # 虚拟机地址
+    virtual-host: /

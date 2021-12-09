@@ -1,0 +1,10 @@
+# 项目日志配置
+mybatis-plus:
+  global-config:
+    # 关闭 MyBatis-Plus Banner 的打印
+    banner: false
+logging:
+  level:
+    # 调整某些日志的级别，这样在控制台上就不会打印 WARN 了
+    org.springframework.data.convert.CustomConversions: ERROR
+    org.springframework.boot.actuate.endpoint.EndpointId: ERROR
