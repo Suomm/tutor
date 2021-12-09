@@ -1,0 +1,7 @@
+{
+  "isStrict": true,
+  "allInOne": false,
+  "outPath": "../bin/apidoc/admin",
+  "coverOld": true,
+  "projectName": "Tutor Admin"
+}

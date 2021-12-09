@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: tutor-admin
+  cloud:
+    nacos:
+      config:
+        server-addr: &serverAddr 47.94.200.151:8848
+        file-extension: yml
+        extension-configs:
+          - data-id: application-druid.yml
+          - data-id: application-redis.yml
+          - data-id: application-logger.yml
+          - data-id: application-quartz.yml
+          - data-id: application-actuator.yml
+          - data-id: application-rabbitmq.yml
+          - data-id: application-admin-server.yml
+          - data-id: application-elasticsearch.yml
+        namespace: 68a35916-a3e4-4d69-8c66-22128b66dcb0
+      discovery:
+        server-addr: *serverAddr
+logging:
+  level:
+    com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder: ERROR
