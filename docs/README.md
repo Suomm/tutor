@@ -1,5 +1,7 @@
 # 简介
 
 ```java
-class A {}
+class A {
+    // 测试 Java 代码高亮
+}
 ```

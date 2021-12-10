@@ -4,7 +4,7 @@
     <a href="https://www.apache.org/licenses/LICENSE-2.0">
         <img src="https://img.shields.io/badge/Licenes-Apache%20License%202.0-important.svg" alt="license">
     </a>
-    <a href="https://suomm.gitee.io/tutor">
+    <a href="https://gitee.com/Suomm/tutor">
         <img src="https://img.shields.io/badge/Release-2.0--RC-blueviolet.svg" alt="release">
     </a>
 </p>
