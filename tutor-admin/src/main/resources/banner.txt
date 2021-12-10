@@ -4,4 +4,4 @@ ${AnsiColor.BLUE}
   / \ | | || / \ | / \||  \/|  | / \|| | \|| |\/||| || |\ ||
   | | | \_/| | | | \_/||    /  | |-||| |_/|| |  ||| || | \||
   \_/ \____/ \_/ \____/\_/\_\  \_/ \|\____/\_/  \|\_/\_/  \|
-${AnsiColor.GREEN}::Spring Boot Version:: ${AnsiColor.WHITE}${spring-boot.formatted-version}
+${AnsiColor.GREEN}::Spring Boot Version:: ${AnsiColor.DEFAULT}${spring-boot.formatted-version}
