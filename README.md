@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="320" src="images/logo.svg" alt="logo"/>
+  <img width="320" src="https://suomm.gitee.io/tutor/_images/logo.svg" alt="logo"/>
 </p>
 <p align="center">
     <a href="https://developer.ibm.com/languages/java/semeru-runtimes/#">
@@ -60,7 +60,7 @@ tutor
 
 ## 系统架构
 
-![架构图](./images/tutor.jpg)
+![架构图](https://suomm.gitee.io/tutor/_images/tutor.jpg)
 
 ## 内置功能
 
