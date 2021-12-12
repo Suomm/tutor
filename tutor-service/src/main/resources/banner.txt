@@ -1,7 +1,0 @@
-${AnsiColor.BLUE}
- _____ _    _____ ____  ____
-/__ __Y \ /Y__ __Y  _ \/  __\
-  / \ | | || / \ | / \||  \/|
-  | | | \_/| | | | \_/||    /
-  \_/ \____/ \_/ \____/\_/\_\
-${AnsiColor.GREEN}::Spring Boot Version:: ${AnsiColor.DEFAULT}${spring-boot.formatted-version}
