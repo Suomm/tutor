@@ -20,7 +20,6 @@ import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
 import cn.edu.tjnu.tutor.system.domain.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 数据层。
@@ -28,7 +27,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author 王帅
  * @since 2.0
  */
-@Mapper
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface RoleMapper extends BaseMapper<Role> {
 }
