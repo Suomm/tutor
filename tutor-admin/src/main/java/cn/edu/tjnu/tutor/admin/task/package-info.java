@@ -15,9 +15,9 @@
  */
 
 /**
- * 提供监控项目的相关配置类。
+ * 提供项目定时任务相关类。
  *
  * @author 王帅
  * @since 2.0
  */
-package cn.edu.tjnu.tutor.config;
+package cn.edu.tjnu.tutor.admin.task;

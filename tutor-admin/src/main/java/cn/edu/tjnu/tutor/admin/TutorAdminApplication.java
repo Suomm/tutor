@@ -14,10 +14,26 @@
  * limitations under the License.
  */
 
+package cn.edu.tjnu.tutor.admin;
+
+import cn.edu.tjnu.tutor.common.annotation.EnableCustomConfig;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
- * 提供项目定时任务相关类。
+ * Tutor Admin 主启动类。
  *
  * @author 王帅
  * @since 2.0
  */
-package cn.edu.tjnu.tutor.task;
+@EnableAdminServer
+@EnableCustomConfig
+@SpringBootApplication
+public class TutorAdminApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TutorAdminApplication.class, args);
+    }
+
+}
