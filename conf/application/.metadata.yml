@@ -66,7 +66,7 @@ metadata:
   group: DEFAULT_GROUP
   type: yaml
 - appName: ''
-  dataId: tutor-service.yml
-  desc: Tutor Service 专有配置
+  dataId: tutor-support.yml
+  desc: Tutor Support 专有配置
   group: DEFAULT_GROUP
   type: yaml

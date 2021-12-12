@@ -12,7 +12,7 @@
         <module>tutor-admin</module>
         <module>tutor-common</module>
         <module>tutor-system</module>
-        <module>tutor-service</module>
+        <module>tutor-support</module>
         <module>tutor-framework</module>
     </modules>
 

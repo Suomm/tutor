@@ -48,7 +48,7 @@ tutor
 ├─tutor-admin-ui                 // 监控界面模块
 ├─tutor-common                   // 公共接口模块
 ├─tutor-framework                // 核心框架模块
-├─tutor-service                  // 后端服务模块
+├─tutor-support                  // 服务支持模块
 ├─tutor-system                   // 系统代码模块
 ├─tutor-ui                       // 前端界面模块
 ├─.gitignore                     // 版本控制相关配置

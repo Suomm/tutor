@@ -1,4 +1,4 @@
-# Tutor Service 专有配置
+# Tutor Support 专有配置
 server:
   # 应用端口号
   port: 8633

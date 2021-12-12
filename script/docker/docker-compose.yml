@@ -138,10 +138,10 @@ services:
       - nacos
       - rabbitmq
       - elasticsearch
-  tutor-service:
+  tutor-support:
     build:
-      context: ./tutor/service
-    container_name: tutor-service
+      context: ./tutor/support
+    container_name: tutor-support
     restart: always
     privileged: true
     ports:

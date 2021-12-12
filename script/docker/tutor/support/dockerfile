@@ -7,6 +7,6 @@ RUN mkdir -p /home/tutor
 # 指定路径
 WORKDIR /home/tutor
 # 复制 jar 文件到路径
-COPY ./jar/tutor-service-RC.jar /home/tutor/tutor-service.jar
+COPY ./jar/tutor-support-2.0-RC.jar /home/tutor/tutor-support.jar
 # 启动后台服务
-ENTRYPOINT ["java", "-jar", "tutor-service.jar"]
+ENTRYPOINT ["java", "-jar", "tutor-support.jar"]
