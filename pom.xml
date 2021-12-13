@@ -188,9 +188,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.0.0</version>
                 <configuration>
                     <doclint>none</doclint>
+                    <description>天津师范大学师范生学业指导系统 API 文档</description>
                 </configuration>
             </plugin>
             <plugin>
