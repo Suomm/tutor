@@ -65,6 +65,9 @@
         <spring-boot.admin.version>2.3.1</spring-boot.admin.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
+        <jrebel-maven-plugin.version>1.1.10</jrebel-maven-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <smart-doc-maven-plugin.version>2.2.8</smart-doc-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -179,7 +182,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -187,17 +190,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <doclint>none</doclint>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>
-                <version>1.1.10</version>
+                <version>${jrebel-maven-plugin.version}</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -228,17 +223,10 @@
                 <plugin>
                     <groupId>com.github.shalousun</groupId>
                     <artifactId>smart-doc-maven-plugin</artifactId>
-                    <version>2.2.8</version>
+                    <version>${smart-doc-maven-plugin.version}</version>
                     <configuration>
                         <configFile>${basedir}/src/main/resources/smart-doc.json</configFile>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>markdown</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
