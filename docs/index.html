@@ -1,47 +1,164 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-  <meta charset="UTF-8">
-  <title>师范生学业指导系统</title>
-  <link rel="icon" href="_media/favicon.ico" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="天津师范大学师范生学业指导系统相关文档">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-</head>
-<body>
-  <div id="app">正在努力加载中！</div>
-  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
-  <script>
-    window.$docsify = {
-	  auto2top: true,
-	  loadSidebar: true,
-	  coverpage: true,
-      name: 'Tutor',
-      repo: 'https://gitee.com/Suomm/tutor',
-	  search: {
-		placeholder: '搜索',
-		noData: '找不到结果'
-	  },
-	  copyCode: {
-		buttonText : '点击复制',
-		errorText  : '错误',
-		successText: '复制'
-	  },
-	  plugins: [
-		EditOnGithubPlugin.create("https://gitee.com/Suomm/tutor/blob/master/docs/", null, "Edit on gitee"),
-		function (hook) {
-          hook.afterEach(function (html) {
-            return html + '<hr/>' + '<a href="https://docsify.js.org" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Powered by docsify.</a>'
-          })
-        }
-	  ]
-    }
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Tutor</title>
+    <link rel="icon" href="media/favicon.ico" />
+    <link rel="stylesheet" href="https://unpkg.com/docute@4/dist/docute.css" />
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/docute@4/dist/docute.js"></script>
+    <script src="https://unpkg.com/prismjs@1.25.0/components/prism-java.min.js"></script>
+    <script>
+      const SponsorIcon = {
+        template: `
+        <svg style="color:#ea4aaa;" fill="currentColor" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.727 3C7.091 3 6.001 4.65 6.001 4.65S4.909 3 3.273 3C1.636 3 0 4.1 0 6.3 0 9.6 6 14 6 14s6-4.4 6-7.7C12 4.1 10.364 3 8.727 3z"></path></svg>
+        `,
+      };
+      new Docute({
+        target: "#app",
+        title: "Tutor",
+        highlight: ["java"],
+        detectSystemDarkTheme: true,
+        darkThemeToggler: true,
+        router: {
+          mode: "history",
+        },
+        editLinkBase: "https://gitee.com/Suomm/tutor/blob/master/docs/",
+        editLinkText: "在 Gitee 上编辑此页",
+        footer: `
+			<div style="border-top:1px solid var(--border-color);padding-top:30px;margin: 40px 0;color:#999999;font-size: .9rem;">
+				Powered by Docute.
+			</div>
+			`,
+        banner: {
+          template: `
+      			  <div class="docute-banner">
+      				<note :label="false"
+      				  ><SponsorIcon width="16" height="16" style="position:relative;top:2px;margin-right:8px;" />Star the project on
+      				  <a href="https://gitee.com/Suomm/collections/219445" target="_blank"
+      					>Gitee<ExternalLinkIcon /></a
+      				  > to support development.</note
+      				>
+      			  </div>
+      			`,
+          components: {
+            SponsorIcon,
+          },
+        },
+        nav: [
+          {
+            title: "首页",
+            link: "/",
+          },
+          {
+            title: "Gitee",
+            link: "https://gitee.com/Suomm/tutor",
+          },
+        ],
+		versions: {
+			"v2.0-RC (Latest)": {
+				link: "/"
+			},
+			"v1.0-SNAPSHOT": {
+				link: "/changelog"
+			}
+		},
+        sidebar: [
+          {
+            title: "指南",
+            toc: false,
+            children: [
+              {
+                title: "项目介绍",
+                link: "/",
+              },
+              {
+                title: "快速了解",
+                link: "",
+              },
+              {
+                title: "环境搭建",
+                link: "",
+              },
+              {
+                title: "运行项目",
+                link: "",
+              },
+            ],
+          },
+          {
+            title: "开发",
+            children: [
+              {
+                title: "权限控制",
+                link: "",
+              },
+              {
+                title: "系统日志",
+                link: "",
+              },
+            ],
+          },
+          {
+            title: "部署",
+            children: [
+              {
+                title: "SSH 工具",
+                link: "",
+              },
+              {
+                title: "常规部署",
+                link: "",
+              },
+              {
+                title: "容器部署",
+                link: "",
+              },
+              {
+                title: "CI/CD",
+                link: "",
+              },
+            ],
+          },
+          {
+            title: "其他",
+            children: [
+              {
+                title: "贡献代码",
+                link: "",
+              },
+              {
+                title: "版权说明",
+                link: "",
+              },
+              {
+                title: "捐赠支持",
+                link: "",
+              },
+            ],
+          },
+          {
+            title: "致谢",
+            children: [
+              {
+                title: "创作团队",
+                link: "",
+              },
+              {
+                title: "开源项目",
+                link: "",
+              },
+            ],
+          },
+        ],
+      });
+    </script>
+  </body>
 </html>
