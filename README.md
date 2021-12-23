@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="320" src="https://suomm.gitee.io/tutor/_images/logo.svg" alt="logo"/>
+  <img width="320" src="https://suomm.gitee.io/tutor/images/logo.svg" alt="logo"/>
 </p>
 <p align="center">
     <a href="https://developer.ibm.com/languages/java/semeru-runtimes/#">
@@ -16,9 +16,6 @@
     </a>
     <a href="https://spring.io/projects/spring-cloud-alibaba">
         <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.2.6.RELEASE-brightgreen.svg" alt="spring-cloud-alibaba">
-    </a>
-    <a href="https://github.com/anncwb/vben-admin-thin-next">
-        <img src="https://img.shields.io/badge/Vue%20Vben%20Admin-2.7.2-brightgreen.svg" alt="vue.js">
     </a>
     <a href="https://www.apache.org/licenses/LICENSE-2.0">
         <img src="https://img.shields.io/badge/Licenes-Apache%20License%202.0-important.svg" alt="license">
@@ -39,18 +36,15 @@ tutor
 ├─.gitee                         // Gitee 相关模板管理
 ├─conf                           // Nacos 配置信息备份
 ├─docs                           // 相关文档信息
-├─images                         // 文档需要的一些图片
 ├─script                         // 用于构建的脚本命令
 │ ├─bin                          // 自动化本地构建命令
 │ ├─docker                       // Docker 镜像文件
 │ └─sql                          // 数据库 Sql 文件
 ├─tutor-admin                    // 监控管理模块
-├─tutor-admin-ui                 // 监控界面模块
 ├─tutor-common                   // 公共接口模块
 ├─tutor-framework                // 核心框架模块
 ├─tutor-support                  // 服务支持模块
 ├─tutor-system                   // 系统代码模块
-├─tutor-ui                       // 前端界面模块
 ├─.gitignore                     // 版本控制相关配置
 ├─Jenkinsfile                    // 自动化构建部署脚本
 ├─LICENSE                        // 开源许可文件
@@ -60,7 +54,7 @@ tutor
 
 ## 系统架构
 
-![架构图](https://suomm.gitee.io/tutor/_images/tutor.jpg)
+![架构图](https://suomm.gitee.io/tutor/images/tutor.jpg)
 
 ## 内置功能
 
@@ -73,3 +67,13 @@ tutor
 ## 加入我们
 
 您如果对这个项目感兴趣，请不要吝啬您的`Star`，或者您力有所及，可以选择加入到我们的开发之中，详细文档 [在这里](https://suomm.gitee.io/tutor) 。
+
+## 相关项目
+
+> 天津师范大学师范生学业指导系统系列项目
+
+| 项目名称             | 项目介绍   | 项目地址                                   |
+|------------------|--------|----------------------------------------|
+| `tutor`          | 系统后台模块 | https://gitee.com/Suomm/tutor          |
+| `tutor-ui`       | 用户使用界面 | https://gitee.com/Suomm/tutor-ui       |
+| `tutor-admin-ui` | 运维使用界面 | https://gitee.com/Suomm/tutor-admin-ui |
