@@ -1,0 +1,7 @@
+# xxl-job 分布式任务配置
+xxl-job:
+  # 调度中心部署跟地址
+  admin-addresses: http://localhost:8080/xxl-job-admin
+  executor:
+    # 执行器名称
+    app-name: tutor-executor

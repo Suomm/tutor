@@ -10,7 +10,7 @@ spring:
           - data-id: application-druid.yml
           - data-id: application-redis.yml
           - data-id: application-logger.yml
-          - data-id: application-quartz.yml
+          - data-id: application-xxl-job.yml
           - data-id: application-actuator.yml
           - data-id: application-rabbitmq.yml
           - data-id: application-admin-server.yml
