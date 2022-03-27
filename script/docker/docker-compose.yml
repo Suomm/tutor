@@ -111,6 +111,15 @@ services:
     privileged: true
     ports:
       - "8012:8012"
+  xxl-job-admin:
+    image: xuxueli/xxl-job-admin:2.3.0
+    container_name: xxl-job-admin
+    restart: always
+    privileged: true
+    environment:
+      PARAMS: "--spring.datasource.url=jdbc:mysql://mysql/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai"
+    ports:
+      - "8080:8080"
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
     container_name: elasticsearch
@@ -121,13 +130,12 @@ services:
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
     volumes:
-      - /docker/elasticsearch/data/:/usr/share/elasticsearch/data
-      - /docker/elasticsearch/logs/:/usr/share/elasticsearch/logs
+      - /docker/elasticsearch/data:/usr/share/elasticsearch/data
+      - /docker/elasticsearch/logs:/usr/share/elasticsearch/logs
     ports:
       - "9200:9200"
   tutor-admin:
-    build:
-      context: tutor/admin
+    image: suomm/tutor-admin
     container_name: tutor-admin
     restart: always
     privileged: true
@@ -139,13 +147,12 @@ services:
       - rabbitmq
       - elasticsearch
   tutor-support:
-    build:
-      context: ./tutor/support
+    image: suomm/tutor-support
     container_name: tutor-support
     restart: always
     privileged: true
     ports:
-      - "8633"
+      - "8633:8633"
     depends_on:
       - minio
       - nginx
