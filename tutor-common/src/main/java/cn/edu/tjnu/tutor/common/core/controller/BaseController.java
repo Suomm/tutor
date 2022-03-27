@@ -26,33 +26,33 @@ import cn.edu.tjnu.tutor.common.util.SecurityUtils;
  * @author 王帅
  * @since 2.0
  */
-public class BaseController {
+public abstract class BaseController {
 
     /**
      * 返回成功。
      */
-    public AjaxResult<Void> success() {
+    protected AjaxResult<Void> success() {
         return AjaxResult.success();
     }
 
     /**
      * 返回失败消息。
      */
-    public AjaxResult<Void> error() {
+    protected AjaxResult<Void> error() {
         return AjaxResult.error();
     }
 
     /**
      * 返回成功消息。
      */
-    public AjaxResult<Void> success(String message) {
+    protected AjaxResult<Void> success(String message) {
         return AjaxResult.success(message);
     }
 
     /**
      * 返回失败消息。
      */
-    public AjaxResult<Void> error(String message) {
+    protected AjaxResult<Void> error(String message) {
         return AjaxResult.error(message);
     }
 
@@ -79,7 +79,7 @@ public class BaseController {
     /**
      * 获取用户缓存信息。
      */
-    public LoginUser getLoginUser() {
+    protected LoginUser getLoginUser() {
         return SecurityUtils.getLoginUser();
     }
     

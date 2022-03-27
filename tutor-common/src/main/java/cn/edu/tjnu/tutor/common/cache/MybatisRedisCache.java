@@ -39,7 +39,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * </ul>
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
 @Slf4j
 public class MybatisRedisCache implements Cache {

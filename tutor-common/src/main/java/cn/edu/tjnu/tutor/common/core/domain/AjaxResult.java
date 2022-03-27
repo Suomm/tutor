@@ -20,7 +20,6 @@ import cn.hutool.http.HttpStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -33,7 +32,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(chain = true)
 public final class AjaxResult<T> implements Serializable {
 
     private static final long serialVersionUID = -589774230401895753L;

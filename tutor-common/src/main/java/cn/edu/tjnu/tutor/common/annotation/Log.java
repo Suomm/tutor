@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.common.annotation;
 
+import cn.edu.tjnu.tutor.common.enums.Category;
 import cn.edu.tjnu.tutor.common.enums.OperType;
 
 import java.lang.annotation.Documented;
@@ -37,9 +38,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface Log {
 
     /**
-     * 模块名称。
+     * 日志类别。
      */
-    String title() default "";
+    Category category();
 
     /**
      * 业务操作。

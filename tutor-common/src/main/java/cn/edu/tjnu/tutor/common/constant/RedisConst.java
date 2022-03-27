@@ -25,12 +25,7 @@ import lombok.NoArgsConstructor;
  * @author 王帅
  * @since 1.0
  */
+@SuppressWarnings("unused")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class RedisConsts {
-
-    /**
-     * 缓存测试键。
-     */
-    public static final String TEST_KEY = "TEST_KEY";
-
+public final class RedisConst {
 }

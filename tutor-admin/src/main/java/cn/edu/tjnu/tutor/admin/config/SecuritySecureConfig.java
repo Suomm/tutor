@@ -17,6 +17,7 @@
 package cn.edu.tjnu.tutor.admin.config;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -38,17 +39,13 @@ import java.util.UUID;
  * @author 王帅
  * @since 2.0
  */
+@RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
 
     private final AdminServerProperties adminServer;
 
     private final SecurityProperties security;
-
-    public SecuritySecureConfig(AdminServerProperties adminServer, SecurityProperties security) {
-        this.adminServer = adminServer;
-        this.security = security;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -76,12 +73,12 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Required to provide UserDetailsService for "remember functionality"
+     * Required to provide UserDetailsService for "remember functionality".
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser(security.getUser().getName())
-                .password("{noop}" + security.getUser().getPassword()).roles("USER");
+                .password("{noop}" + security.getUser().getPassword()).roles("MONITOR");
     }
 
 }

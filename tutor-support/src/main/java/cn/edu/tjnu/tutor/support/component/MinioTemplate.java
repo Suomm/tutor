@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2021-present the original author or authors.
+ * Copyright 2021-2022 the original author and authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *        http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,9 +20,8 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,13 +32,12 @@ import org.springframework.web.multipart.MultipartFile;
  * @author 王帅
  * @since 1.0
  */
-@Slf4j
+@RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(MinioProperties.class)
 public class MinioTemplate implements InitializingBean {
 
-    @Autowired
-    private MinioProperties minioProperties;
+    private final MinioProperties minioProperties;
 
     // 根据配置信息初始化 MinioClient
 

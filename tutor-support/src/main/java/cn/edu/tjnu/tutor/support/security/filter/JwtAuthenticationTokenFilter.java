@@ -19,7 +19,7 @@ package cn.edu.tjnu.tutor.support.security.filter;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.common.core.service.TokenService;
 import cn.edu.tjnu.tutor.common.util.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -39,10 +39,10 @@ import java.io.IOException;
  * @since 2.0
  */
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
     @Override
     @SuppressWarnings("NullableProblems")

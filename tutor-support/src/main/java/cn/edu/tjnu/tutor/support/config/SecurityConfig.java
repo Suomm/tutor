@@ -17,7 +17,7 @@
 package cn.edu.tjnu.tutor.support.config;
 
 import cn.edu.tjnu.tutor.support.security.filter.JwtAuthenticationTokenFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
@@ -30,15 +30,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * 后端服务安全配置。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
 @EnableWebSecurity
+@RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtAuthenticationTokenFilter authenticationTokenFilter;
+    private final JwtAuthenticationTokenFilter authenticationTokenFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

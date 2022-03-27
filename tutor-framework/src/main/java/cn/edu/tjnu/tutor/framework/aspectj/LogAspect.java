@@ -117,7 +117,7 @@ public class LogAspect {
         // 设置操作类型
         operLog.setOperType(log.operType().ordinal());
         // 设置标题
-        operLog.setTitle(log.title());
+        operLog.setTitle(log.category().getName());
         // 是否需要保存 Request 中的参数和值
         if (log.isSaveRequestData()) {
             // 获取参数的信息，传入到数据库中。
