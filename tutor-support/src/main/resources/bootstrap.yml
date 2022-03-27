@@ -23,4 +23,4 @@ spring:
 logging:
   level:
     com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder: ERROR
-  config: classpath:logback-spring.xml
+#  config: classpath:logback-spring.xml
