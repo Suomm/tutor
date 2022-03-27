@@ -16,26 +16,18 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Role;
-import cn.edu.tjnu.tutor.system.mapper.RoleMapper;
-import cn.edu.tjnu.tutor.system.service.RoleService;
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import cn.edu.tjnu.tutor.system.domain.Role;
+import cn.edu.tjnu.tutor.system.service.RoleService;
+import cn.edu.tjnu.tutor.system.mapper.RoleMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
+ * 角色信息服务层实现。
  *
- * @author 14749
+ * @author 王帅
+ * @since 1.0
  */
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
-
-    @Override
-    @SentinelResource(value = "test")
-    public List<Role> getAllRoles() {
-        return baseMapper.selectList(null);
-    }
-
 }

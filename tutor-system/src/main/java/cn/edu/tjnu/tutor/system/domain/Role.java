@@ -14,19 +14,42 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.system.domain;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.Role;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+
+import java.io.Serializable;
 
 /**
- * 角色信息数据层。
+ * 角色信息。
  *
  * @author 王帅
  * @since 1.0
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface RoleMapper extends BaseMapper<Role> {
+@Data
+@TableName("sys_role")
+public class Role implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 角色主键。
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer roleId;
+
+    /**
+     * 角色键名。
+     */
+    private String roleKey;
+
+    /**
+     * 角色名称。
+     */
+    private String roleName;
+
 }

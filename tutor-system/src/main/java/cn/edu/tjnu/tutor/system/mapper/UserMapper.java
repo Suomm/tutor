@@ -17,16 +17,16 @@
 package cn.edu.tjnu.tutor.system.mapper;
 
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.Role;
+import cn.edu.tjnu.tutor.system.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 
 /**
- * 角色信息数据层。
+ * 用户信息数据层。
  *
  * @author 王帅
  * @since 1.0
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface RoleMapper extends BaseMapper<Role> {
+public interface UserMapper extends BaseMapper<User> {
 }

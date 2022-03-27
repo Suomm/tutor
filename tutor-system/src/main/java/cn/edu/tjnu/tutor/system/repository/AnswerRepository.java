@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.system.repository;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.Role;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import cn.edu.tjnu.tutor.system.domain.Answer;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+
+import java.util.List;
 
 /**
- * 角色信息数据层。
+ * 问题答复信息数据层。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface RoleMapper extends BaseMapper<Role> {
+public interface AnswerRepository extends ElasticsearchRepository<Answer, Integer> {
+
+    /**
+     * 根据问题主键查询对应的答复信息。
+     *
+     * @param problemId 问题主键
+     * @return 问题的所有答复信息
+     */
+    List<Answer> findAllByProblemId(Integer problemId);
+
 }

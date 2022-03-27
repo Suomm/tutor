@@ -14,19 +14,40 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.common.core.domain;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.Role;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
- * 角色信息数据层。
+ * 树节点实体类。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
+ * @param <T> 数据类型
+ * @param <I> 主键类型
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface RoleMapper extends BaseMapper<Role> {
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class TreeNode<T extends TreeNode<T, I>, I> {
+
+    /**
+     * 树主键。
+     */
+    private I id;
+
+    /**
+     * 父主键。
+     */
+    private I parentId;
+
+    /**
+     * 子节点。
+     */
+    private List<T> child;
+
 }

@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.domain;
+package cn.edu.tjnu.tutor.system.service;
 
-import java.io.Serializable;
+import cn.edu.tjnu.tutor.system.domain.Group;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * 基础的实体类。
+ * 导师小组信息服务层。
  *
  * @author 王帅
  * @since 2.0
  */
-public class BaseEntity implements Serializable {
-
-    private static final long serialVersionUID = 2869491919279806661L;
-
+public interface GroupService extends IService<Group> {
 }
-

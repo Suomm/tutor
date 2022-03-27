@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.system.service;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.Role;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import cn.edu.tjnu.tutor.system.domain.Team;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * 角色信息数据层。
+ * 导师团信息服务层。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface RoleMapper extends BaseMapper<Role> {
+public interface TeamService extends IService<Team> {
 }

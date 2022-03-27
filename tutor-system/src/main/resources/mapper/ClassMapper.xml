@@ -18,12 +18,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.tjnu.tutor.system.mapper.RoleMapper">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.ClassMapper">
 
-    <resultMap id="RoleResult" type="cn.edu.tjnu.tutor.system.domain.Role">
-        <id property="roleId" column="role_id"/>
-        <result property="roleKey" column="role_key"/>
-        <result property="roleName" column="role_name"/>
+    <resultMap id="ClassResult" type="cn.edu.tjnu.tutor.system.domain.TheClass">
+        <id property="classId" column="class_id"/>
+        <result property="majorId" column="major_id"/>
+        <result property="className" column="class_name"/>
+        <result property="grade" column="grade"/>
     </resultMap>
 
 </mapper>

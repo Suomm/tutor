@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.system.service.impl;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.Role;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import cn.edu.tjnu.tutor.system.domain.Template;
+import cn.edu.tjnu.tutor.system.service.TemplateService;
+import cn.edu.tjnu.tutor.system.mapper.TemplateMapper;
+import org.springframework.stereotype.Service;
 
 /**
- * 角色信息数据层。
+ * （教育实践）文档拆分之后的模板信息服务层实现。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface RoleMapper extends BaseMapper<Role> {
+@Service
+public class TemplateServiceImpl extends ServiceImpl<TemplateMapper, Template> implements TemplateService {
 }

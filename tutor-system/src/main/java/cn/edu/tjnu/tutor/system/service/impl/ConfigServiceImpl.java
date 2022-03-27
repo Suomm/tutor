@@ -14,39 +14,20 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.entity;
+package cn.edu.tjnu.tutor.system.service.impl;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-
-import java.io.Serializable;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import cn.edu.tjnu.tutor.system.domain.Config;
+import cn.edu.tjnu.tutor.system.service.ConfigService;
+import cn.edu.tjnu.tutor.system.mapper.ConfigMapper;
+import org.springframework.stereotype.Service;
 
 /**
- * 角色
+ * 参数配置服务层实现。
  *
  * @author 王帅
+ * @since 2.0
  */
-@TableName(value ="role")
-@Data
-public class Role implements Serializable {
-    /**
-     * 角色主键
-     */
-    @TableId
-    private Integer id;
-
-    /**
-     * 角色名
-     */
-    private String roleName;
-
-    /**
-     * 角色描述
-     */
-    private String roleLabel;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+@Service
+public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, Config> implements ConfigService {
 }

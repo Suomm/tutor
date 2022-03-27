@@ -16,22 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.service;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Role;
+import cn.edu.tjnu.tutor.system.domain.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
-
 /**
+ * 角色信息服务层。
  *
- * @author 14749
+ * @author 王帅
+ * @since 1.0
  */
 public interface RoleService extends IService<Role> {
-
-    /**
-     * 把所有角色
-     *
-     * @return {@link List}<{@link Role}>
-     */
-    List<Role> getAllRoles();
-
 }

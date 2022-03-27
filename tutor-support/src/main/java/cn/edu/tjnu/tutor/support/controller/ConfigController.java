@@ -20,85 +20,85 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Role;
-import cn.edu.tjnu.tutor.system.service.RoleService;
+import cn.edu.tjnu.tutor.system.domain.Config;
+import cn.edu.tjnu.tutor.system.service.ConfigService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static cn.edu.tjnu.tutor.common.enums.Category.ROLE;
+import static cn.edu.tjnu.tutor.common.enums.Category.CONFIG;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
 /**
- * 角色信息控制层。
+ * 参数配置控制层。
  *
  * @author 王帅
  * @since 2.0
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/role")
-public class RoleController extends BaseController {
+@RequestMapping("/config")
+public class ConfigController extends BaseController {
 
-    private final RoleService roleService;
+    private final ConfigService configService;
 
     /**
-     * 分页查询角色信息。
+     * 分页查询参数配置。
      *
      * @param pageHelper 分页帮助
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<Page<Role>> list(PageHelper pageHelper) {
-        return AjaxResult.success(roleService.page(pageHelper.mybatisPlus()));
+    public AjaxResult<Page<Config>> list(PageHelper pageHelper) {
+        return AjaxResult.success(configService.page(pageHelper.mybatisPlus()));
     }
 
     /**
-     * 根据角色主键获取详细信息。
+     * 根据参数主键获取详细信息。
      *
-     * @param roleId 角色主键
-     * @return 角色信息详情
+     * @param configId 参数主键
+     * @return 参数配置详情
      */
-    @GetMapping("getInfo/{roleId}")
-    public AjaxResult<Role> getInfo(@PathVariable Integer roleId) {
-        return AjaxResult.success(roleService.getById(roleId));
+    @GetMapping("getInfo/{configId}")
+    public AjaxResult<Config> getInfo(@PathVariable Integer configId) {
+        return AjaxResult.success(configService.getById(configId));
     }
 
     /**
-     * 添加角色信息。
+     * 添加参数配置。
      *
-     * @param role 角色信息
+     * @param config 参数配置
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    @Log(category = ROLE, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Role role) {
-        return toResult(roleService.save(role));
+    @Log(category = CONFIG, operType = INSERT)
+    public AjaxResult<Void> save(@Validated @RequestBody Config config) {
+        return toResult(configService.save(config));
     }
 
     /**
-     * 更新角色信息。
+     * 更新参数配置。
      *
-     * @param role 角色信息
+     * @param config 参数配置
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    @Log(category = ROLE, operType = UPDATE)
-    public AjaxResult<Void> update(@Validated @RequestBody Role role) {
-        return toResult(roleService.updateById(role));
+    @Log(category = CONFIG, operType = UPDATE)
+    public AjaxResult<Void> update(@Validated @RequestBody Config config) {
+        return toResult(configService.updateById(config));
     }
 
     /**
-     * 根据角色主键删除角色信息。
+     * 根据参数主键删除参数配置。
      *
-     * @param roleId 角色主键
+     * @param configId 参数主键
      * @return {@code true} 删除成功，{@code false} 删除失败
      */
-    @DeleteMapping("remove/{roleId}")
-    @Log(category = ROLE, operType = DELETE)
-    public AjaxResult<Void> remove(@PathVariable Integer roleId) {
-        return toResult(roleService.removeById(roleId));
+    @DeleteMapping("remove/{configId}")
+    @Log(category = CONFIG, operType = DELETE)
+    public AjaxResult<Void> remove(@PathVariable Integer configId) {
+        return toResult(configService.removeById(configId));
     }
 
 }
