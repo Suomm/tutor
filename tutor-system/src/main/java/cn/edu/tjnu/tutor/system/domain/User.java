@@ -19,8 +19,10 @@ package cn.edu.tjnu.tutor.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -31,6 +33,9 @@ import java.io.Serializable;
  * @since 1.0
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_user")
 public class User implements Serializable {
 
@@ -46,11 +51,6 @@ public class User implements Serializable {
      * 所属学院主键。
      */
     private Integer collegeId;
-
-    /**
-     * 用户类别（0学生，1教师）。
-     */
-    private Integer userType;
 
     /**
      * 用户编号（学号或工号）。
@@ -73,7 +73,7 @@ public class User implements Serializable {
     private String phone;
 
     /**
-     * 用户性别（0 女，1男，2保密）。
+     * 用户性别（0女，1男，2保密）。
      */
     private Integer gender;
 
