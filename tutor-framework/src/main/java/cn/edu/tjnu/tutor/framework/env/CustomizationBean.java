@@ -30,7 +30,6 @@ import org.springframework.stereotype.Component;
  * @since 2.0
  */
 @Component
-@SuppressWarnings("unused")
 public class CustomizationBean implements WebServerFactoryCustomizer<UndertowServletWebServerFactory> {
  
     @Override

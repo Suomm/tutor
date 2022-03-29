@@ -14,31 +14,26 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.service.impl;
+package cn.edu.tjnu.tutor.common.validation;
 
-import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
-import cn.edu.tjnu.tutor.common.core.service.TokenService;
-import org.springframework.stereotype.Service;
+import cn.edu.tjnu.tutor.common.validation.constraints.Xss;
+import cn.hutool.core.util.ReUtil;
+import cn.hutool.http.HtmlUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 /**
- * 令牌 服务层实现。
+ * 校验参数是否存在 Xss 攻击。
  *
  * @author 王帅
  * @since 2.0
  */
-@Service
-public class TokenServiceImpl implements TokenService {
+public class XssValidator implements ConstraintValidator<Xss, String> {
 
     @Override
-    public LoginUser getLoginUser(HttpServletRequest request) {
-        return null;
-    }
-
-    @Override
-    public void verifyToken(LoginUser loginUser) {
-        // do something ...
+    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+        return !ReUtil.contains(HtmlUtil.RE_SCRIPT, value);
     }
 
 }

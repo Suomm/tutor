@@ -18,6 +18,7 @@ package cn.edu.tjnu.tutor.common.annotation;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 import java.lang.annotation.*;
 
@@ -33,5 +34,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @ComponentScan("cn.edu.tjnu.tutor")
 @MapperScan("cn.edu.tjnu.tutor.system.mapper")
+@EnableElasticsearchRepositories("cn.edu.tjnu.tutor.system.repository")
 public @interface EnableCustomConfig {
 }

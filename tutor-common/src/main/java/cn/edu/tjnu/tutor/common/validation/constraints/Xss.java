@@ -29,20 +29,20 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 校验 {@code Integer} 所表示的类型取值范围。
+ * Xss 校验注解。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  * @see ScopeValidator
  */
 @Documented
 @Retention(RUNTIME)
-@Repeatable(Scope.List.class)
+@Repeatable(Xss.List.class)
 @Constraint(validatedBy = ScopeValidator.class)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
-public @interface Scope {
+public @interface Xss {
 
-    String message() default "数字范围不在规定之内！";
+    String message() default "含有脚本的内容！";
 
     int[] value() default {0, 1};
 
@@ -54,7 +54,7 @@ public @interface Scope {
     @Retention(RUNTIME)
     @Documented
     @interface List {
-        Scope[] value();
+        Xss[] value();
     }
 
 }

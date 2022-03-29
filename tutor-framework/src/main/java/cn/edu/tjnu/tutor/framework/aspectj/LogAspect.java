@@ -44,7 +44,6 @@ import java.util.Map;
 @Slf4j
 @Aspect
 @Component
-@SuppressWarnings("unused")
 public class LogAspect {
 
     /**
