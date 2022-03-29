@@ -16,7 +16,6 @@
 
 package cn.edu.tjnu.tutor.admin.config;
 
-import cn.edu.tjnu.tutor.admin.properties.XxlJobProperties;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
