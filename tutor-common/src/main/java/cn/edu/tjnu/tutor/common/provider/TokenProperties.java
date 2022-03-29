@@ -14,36 +14,41 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.service;
+package cn.edu.tjnu.tutor.common.provider;
 
-import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
-import cn.edu.tjnu.tutor.system.domain.User;
-import com.baomidou.mybatisplus.extension.service.IService;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
- * 用户信息服务层。
+ * JWT 令牌校验相关属性绑定类。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
-public interface UserService extends IService<User> {
+@Data
+@Component
+@ConfigurationProperties(prefix = "token")
+public class TokenProperties {
 
     /**
-     * 学生学号的正则匹配表达式。
+     * 令牌自定义标识头。
      */
-    String RE_STUDENT_CODE = "\\d{10}";
+    private String header = "Authorization";
 
     /**
-     * 教师工号的正则匹配表达式。
+     * 令牌自定义前缀。
      */
-    String RE_TEACHER_CODE = "\\d{6}";
+    private String prefix = "Bearer ";
 
     /**
-     * 用户登录并获取相应权限信息，如果用户不存在则注册用户。
-     *
-     * @param user 用户实体
-     * @return 登录用户
+     * 令牌秘钥（必填项）。
      */
-    LoginUser login(User user);
+    private String secret;
+
+    /**
+     * 令牌有效期（默认30分钟）。
+     */
+    private int expireTime = 30;
 
 }

@@ -41,12 +41,12 @@ public final class PageHelper implements Serializable {
     /**
      * 当前页码。
      */
-    private Integer pageNum;
+    private Integer pageNum = 1;
 
     /**
      * 每页显示数量。
      */
-    private Integer pageSize;
+    private Integer pageSize = 10;
 
     /**
      * 生成 MyBatis PLus 分页对象。

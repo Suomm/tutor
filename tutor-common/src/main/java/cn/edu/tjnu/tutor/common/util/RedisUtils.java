@@ -23,6 +23,7 @@ import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -45,6 +46,18 @@ public final class RedisUtils {
      */
     public static <T> void setCacheObject(String key, T value) {
         DB.getBucket(key).set(value);
+    }
+
+    /**
+     * 缓存基本的对象，并设置过期时间
+     *
+     * @param key 缓存的键值
+     * @param value 缓存的值
+     * @param timeToLive 存活时间
+     * @param timeUnit 时间单位
+     */
+    public static void setCacheObject(String key, Object value, int timeToLive, TimeUnit timeUnit) {
+        DB.getBucket(key).set(value, timeToLive, timeUnit);
     }
 
     /**

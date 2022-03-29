@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.system.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.util.List;
+
 /**
  * 用户信息数据层。
  *
@@ -29,4 +31,22 @@ import org.apache.ibatis.annotations.CacheNamespace;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface UserMapper extends BaseMapper<User> {
+
+    /**
+     * 为用户绑定角色。
+     *
+     * @param userId 用户主键
+     * @param roleKey 角色键值
+     * @return {@code 1} 绑定成功，否则失败
+     */
+    int bindRoleForUser(Integer userId, String roleKey);
+
+    /**
+     * 根据用户主键查询角色信息。
+     *
+     * @param userId 用户主键
+     * @return 角色信息
+     */
+    List<String> selectRoleKeysByUserId(Integer userId);
+
 }

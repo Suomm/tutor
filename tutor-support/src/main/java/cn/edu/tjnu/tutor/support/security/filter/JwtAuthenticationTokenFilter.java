@@ -17,12 +17,13 @@
 package cn.edu.tjnu.tutor.support.security.filter;
 
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
-import cn.edu.tjnu.tutor.common.core.service.TokenService;
+import cn.edu.tjnu.tutor.common.provider.TokenProvider;
 import cn.edu.tjnu.tutor.common.util.SecurityUtils;
+import cn.hutool.core.text.CharSequenceUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.lang.NonNull;
+import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -42,18 +43,21 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    private final TokenService tokenService;
+    private final TokenProvider tokenProvider;
 
     @Override
-    @SuppressWarnings("NullableProblems")
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain chain)
             throws ServletException, IOException {
-        LoginUser loginUser = tokenService.getLoginUser(request);
+        // 根据 Token 请求头获取当前登录用户
+        LoginUser loginUser = tokenProvider.getLoginUser(request);
+        // loginUser == null 用户没有 JWT 令牌需要登陆
+        // SecurityUtils.getAuthentication() == null 用户未通过 CAS 登录
         if (loginUser != null && SecurityUtils.getAuthentication() == null) {
-            tokenService.verifyToken(loginUser);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            CasAssertionAuthenticationToken token = new CasAssertionAuthenticationToken(null, CharSequenceUtil.EMPTY);
+            token.setDetails(loginUser);
+            SecurityContextHolder.getContext().setAuthentication(token);
         }
         chain.doFilter(request, response);
     }

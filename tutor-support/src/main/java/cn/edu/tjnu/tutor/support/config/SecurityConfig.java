@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.support.config;
 
+import cn.edu.tjnu.tutor.support.security.cas.CasLogoutHandler;
 import cn.edu.tjnu.tutor.support.security.filter.JwtAuthenticationTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -38,6 +39,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final CasLogoutHandler casLogoutHandler;
+
     private final JwtAuthenticationTokenFilter authenticationTokenFilter;
 
     @Override
@@ -46,10 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().init(http.requestMatcher(EndpointRequest.toAnyEndpoint()));
         // 关闭 CSRF 防护功能，因为不使用 Session
         http.csrf().disable();
-        // 放行登录请求，拦截所有请求
+        // CAS 过滤器拦截所有请求
         http.authorizeRequests()
-                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
+        // Cas 登出配置
+        http.logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .addLogoutHandler(casLogoutHandler);
         // 添加 JWT Filter
         http.addFilterAfter(authenticationTokenFilter, CasAuthenticationFilter.class);
     }

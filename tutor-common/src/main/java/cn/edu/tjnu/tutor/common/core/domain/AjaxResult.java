@@ -57,7 +57,7 @@ public final class AjaxResult<T> implements Serializable {
      * @return 成功消息
      */
     public static AjaxResult<Void> success() {
-        return success("操作成功");
+        return success("操作成功", null);
     }
 
     /**
@@ -67,16 +67,6 @@ public final class AjaxResult<T> implements Serializable {
      */
     public static <T> AjaxResult<T> success(T data) {
         return success("操作成功", data);
-    }
-
-    /**
-     * 返回成功消息。
-     *
-     * @param msg 返回内容
-     * @return 成功消息
-     */
-    public static AjaxResult<Void> success(String msg) {
-        return success(msg, null);
     }
 
     /**

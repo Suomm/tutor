@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.security.authentication;
+package cn.edu.tjnu.tutor.support.security.cas;
 
+import cn.edu.tjnu.tutor.common.util.ServletUtils;
 import org.jasig.cas.client.authentication.AuthenticationRedirectStrategy;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,15 +31,10 @@ import java.io.IOException;
  */
 public class CasAuthenticationRedirectStrategy implements AuthenticationRedirectStrategy {
 
-    // ===== AJAX 请求相关的常量 =====
-
-    private static final String XML_HTTP_REQUEST = "XMLHttpRequest";
-    private static final String X_REQUESTED_WITH = "X-Requested-With";
-
     @Override
     public void redirect(HttpServletRequest request, HttpServletResponse response,
                          String potentialRedirectUrl) throws IOException {
-        if (XML_HTTP_REQUEST.equals(request.getHeader(X_REQUESTED_WITH))) {
+        if (ServletUtils.isAjaxRequest(request)) {
             // 异步请求：返回 401 状态码和重定向地址
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write(potentialRedirectUrl);

@@ -24,7 +24,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 /**
@@ -37,17 +36,32 @@ import java.util.Objects;
 public final class ServletUtils {
 
     /**
-     * 获取 {@link HttpServletRequest} 类。
+     * Ajax 异步请求请求头。
      */
-    public static HttpServletRequest getRequest() {
-        return getRequestAttributes().getRequest();
+    public static final String XML_HTTP_REQUEST = "XMLHttpRequest";
+
+    /**
+     * Ajax 异步请求请求头对应值。
+     */
+    public static final String X_REQUESTED_WITH = "X-Requested-With";
+
+    /**
+     * 判断请求是否为 Ajax 异步请求。
+     *
+     * @param request 请求
+     * @return {@code true} 请求为异步请求，{@code false} 非异步请求
+     */
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        return XML_HTTP_REQUEST.equals(request.getHeader(X_REQUESTED_WITH));
     }
 
     /**
-     * 获取 {@link HttpServletResponse} 类。
+     * 获取 {@link HttpServletRequest} 类。
+     *
+     * @return 当前请求对象
      */
-    public static HttpServletResponse getResponse() {
-        return getRequestAttributes().getResponse();
+    public static HttpServletRequest getRequest() {
+        return getRequestAttributes().getRequest();
     }
 
     /**
@@ -60,6 +74,8 @@ public final class ServletUtils {
 
     /**
      * 获取客户端 IP 地址。
+     *
+     * @return IP 地址
      */
     public static String getClientIp() {
         return ServletUtil.getClientIP(getRequest());

@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.common.exception;
 
+import cn.edu.tjnu.tutor.common.enums.ExceptionType;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -41,11 +42,11 @@ public class ServiceException extends RuntimeException {
      * 用指定的详细消息构造一个新的运行时异常。其中的详细消息用于回显到前端界面，
      * 详细消息的内容不应该为 {@code null}。
      *
-     * @param message 需要回显的消息信息
+     * @param exceptionType 异常的类型
      * @throws NullPointerException 如果回显详细消息为 {@code null}
      */
-    public ServiceException(String message) {
-        this(null, message);
+    public ServiceException(ExceptionType exceptionType) {
+        this(exceptionType.getCode(), exceptionType.getMessage());
     }
 
     /**

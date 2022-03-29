@@ -25,7 +25,12 @@ import lombok.NoArgsConstructor;
  * @author 王帅
  * @since 1.0
  */
-@SuppressWarnings("unused")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RedisConst {
+
+    /**
+     * 登录用户唯一标识（UUID）键名。
+     */
+    public static final String LOGIN_USER_KEY = "login_user_key";
+
 }

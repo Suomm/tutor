@@ -17,11 +17,11 @@
 package cn.edu.tjnu.tutor.common.core.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * 当前登录用户。
@@ -29,23 +29,48 @@ import java.util.Collections;
  * @author 王帅
  * @since 2.0
  */
+@Data
 public class LoginUser implements UserDetails {
 
     private static final long serialVersionUID = 5501326495340971354L;
 
+    /**
+     * 用户主键。
+     */
+    private Integer userId;
 
     /**
-     * 获取账户权限信息。
+     * 所属学院主键。
+     */
+    private Integer collegeId;
+
+    /**
+     * 用户编号（学号，工号）。
+     */
+    private String userCode;
+
+    /**
+     * 用户唯一标识。
+     */
+    private String uuid;
+
+    /**
+     * 用户权限信息。
+     */
+    private Collection<? extends GrantedAuthority> authorities;
+
+    /**
+     * 获取用户权限信息。
      *
-     * @return 总是返回 {@code Collections.emptyList()}
+     * @return 用户权限信息
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return this.authorities;
     }
 
     /**
-     * 获取账户的密码。
+     * 获取用户的密码。
      *
      * @return 总是返回 {@code null}
      */
@@ -57,18 +82,17 @@ public class LoginUser implements UserDetails {
 
 
     /**
-     * 获取账户的用户名。
+     * 获取用户的用户名。
      *
-     * @return 返回账户的学号或工号
+     * @return 返回用户的学号或工号
      */
     @Override
-    @JsonIgnore
     public String getUsername() {
-        return null;
+        return this.userCode;
     }
 
     /**
-     * 账户是否未过期，过期无法验证。
+     * 用户是否未过期，过期无法验证。
      *
      * @return 总是返回 {@code true}
      */

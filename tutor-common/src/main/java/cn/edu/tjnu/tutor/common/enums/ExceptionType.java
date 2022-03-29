@@ -14,33 +14,33 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.service;
+package cn.edu.tjnu.tutor.common.enums;
 
-import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
-
-import javax.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * 令牌 服务层。
+ * 异常类型枚举类。
  *
  * @author 王帅
  * @since 2.0
  */
-public interface TokenService {
+@Getter
+@AllArgsConstructor
+public enum ExceptionType {
+
+    // 所有异常代码及其描述信息
+
+    COLLEGE_NOT_REGISTER(1000, "您所在的学院未注册！");
 
     /**
-     * 获取登录用户。
-     *
-     * @param request 请求
-     * @return {@link LoginUser}
+     * 异常代码。
      */
-    LoginUser getLoginUser(HttpServletRequest request);
+    private final int code;
 
     /**
-     * 验证令牌。
-     *
-     * @param loginUser 登录用户
+     * 描述信息。
      */
-    void verifyToken(LoginUser loginUser);
+    private final String message;
 
 }

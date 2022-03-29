@@ -43,20 +43,6 @@ public abstract class BaseController {
     }
 
     /**
-     * 返回成功消息。
-     */
-    protected AjaxResult<Void> success(String message) {
-        return AjaxResult.success(message);
-    }
-
-    /**
-     * 返回失败消息。
-     */
-    protected AjaxResult<Void> error(String message) {
-        return AjaxResult.error(message);
-    }
-
-    /**
      * 响应返回结果。
      *
      * @param rows 影响行数
