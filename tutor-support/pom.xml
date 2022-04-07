@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.edu.tjnu</groupId>
             <artifactId>tutor-system</artifactId>
         </dependency>
@@ -21,25 +25,9 @@
             <artifactId>tutor-framework</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-        </dependency>
-        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-cas</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,20 +38,12 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jasig.cas.client</groupId>
-            <artifactId>cas-client-support-springboot</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>kaptcha-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

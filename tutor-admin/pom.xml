@@ -13,6 +13,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>cn.edu.tjnu</groupId>
             <artifactId>tutor-system</artifactId>
         </dependency>
@@ -25,9 +35,8 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-job-core</artifactId>
-            <version>${xxl-job.version}</version>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-cas</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
