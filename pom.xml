@@ -12,6 +12,7 @@
         <module>tutor-admin</module>
         <module>tutor-common</module>
         <module>tutor-system</module>
+        <module>tutor-gateway</module>
         <module>tutor-support</module>
         <module>tutor-framework</module>
     </modules>
@@ -55,22 +56,20 @@
         <tutor.version>2.0-RC</tutor.version>
         <lock4j.version>2.2.1</lock4j.version>
         <hutool.version>5.7.15</hutool.version>
-        <kaptcha.version>1.1.0</kaptcha.version>
         <xxl-job.version>2.3.0</xxl-job.version>
         <redisson.version>3.16.3</redisson.version>
         <easyexcel.version>3.0.5</easyexcel.version>
-        <cas.client.version>3.6.2</cas.client.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <mybatis-plus.version>3.4.3.2</mybatis-plus.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <spring-boot.admin.version>2.3.1</spring-boot.admin.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
-        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <jrebel-maven-plugin.version>1.1.10</jrebel-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <smart-doc-maven-plugin.version>2.2.8</smart-doc-maven-plugin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
+        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
     </properties>
 
     <dependencyManagement>
@@ -135,18 +134,8 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>kaptcha-spring-boot-starter</artifactId>
-                <version>${kaptcha.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
                 <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
                 <version>${lock4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jasig.cas.client</groupId>
-                <artifactId>cas-client-support-springboot</artifactId>
-                <version>${cas.client.version}</version>
             </dependency>
             <dependency>
                 <groupId>p6spy</groupId>
