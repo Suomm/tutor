@@ -90,6 +90,14 @@ services:
       - "9555:9555"
     depends_on:
       - mysql
+  sentinel:
+    build:
+      context: ./sentinel
+    container_name: sentinel
+    restart: always
+    privileged: true
+    ports:
+      - "8080:8080"
   rabbitmq:
     image: rabbitmq:3.8-management
     container_name: rabbitmq
@@ -104,6 +112,42 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    container_name: kibana
+    restart: always
+    privileged: true
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.6.2
+    container_name: filebeat
+    restart: always
+    privileged: true
+    volumes:
+      - /var/log/:/var/log/
+      - /docker/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+    depends_on:
+      - elasticsearch
+  elasticsearch:
+    build:
+      context: ./elasticsearch
+    container_name: elasticsearch
+    restart: always
+    privileged: true
+    environment:
+      - node.name=elasticsearch-single
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    volumes:
+      - /docker/elasticsearch/data:/usr/share/elasticsearch/data
+      - /docker/elasticsearch/logs:/usr/share/elasticsearch/logs
+    ports:
+      - "9200:9200"
   kkfileview:
     image: keking/kkfileview:latest
     container_name: kkfileview
@@ -120,20 +164,6 @@ services:
       PARAMS: "--spring.datasource.url=jdbc:mysql://mysql/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai"
     ports:
       - "8080:8080"
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
-    container_name: elasticsearch
-    restart: always
-    privileged: true
-    environment:
-      - node.name=elasticsearch-single
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
-    volumes:
-      - /docker/elasticsearch/data:/usr/share/elasticsearch/data
-      - /docker/elasticsearch/logs:/usr/share/elasticsearch/logs
-    ports:
-      - "9200:9200"
   tutor-admin:
     image: suomm/tutor-admin
     container_name: tutor-admin
@@ -146,13 +176,22 @@ services:
       - nacos
       - rabbitmq
       - elasticsearch
+  tutor-gateway:
+    image: suomm/tutor-gateway
+    container_name: tutor-gateway
+    restart: always
+    privileged: true
+    ports:
+      - "5735:5735"
+    depends_on:
+      - sentinel
   tutor-support:
     image: suomm/tutor-support
     container_name: tutor-support
     restart: always
     privileged: true
     ports:
-      - "8633:8633"
+      - "8633"
     depends_on:
       - minio
       - nginx

@@ -1,0 +1,7 @@
+filebeat.inputs:
+  - type: log
+    paths:
+      - /var/log/tutor/*.log
+output.elasticsearch:
+  hosts: ["http://elasticsearch"]
+  index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
