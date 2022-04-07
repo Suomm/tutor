@@ -16,12 +16,16 @@
 
 package cn.edu.tjnu.tutor.system.domain;
 
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
@@ -40,21 +44,26 @@ public class Config implements Serializable {
      * 参数主键。
      */
     @TableId(type = IdType.AUTO)
+    @Null(groups = Insert.class)
+    @NotNull(groups = Update.class)
     private Integer configId;
 
     /**
      * 参数名称。
      */
+    @NotBlank(groups = Insert.class)
     private String configName;
 
     /**
      * 参数键名。
      */
+    @NotBlank(groups = Insert.class)
     private String configKey;
 
     /**
      * 参数键值。
      */
+    @NotBlank(groups = Insert.class)
     private String configValue;
 
 }

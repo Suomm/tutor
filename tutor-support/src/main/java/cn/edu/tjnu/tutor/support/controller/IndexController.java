@@ -16,33 +16,51 @@
 
 package cn.edu.tjnu.tutor.support.controller;
 
-import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.provider.TokenProvider;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
+import cn.edu.tjnu.tutor.system.domain.vo.RouterVo;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
- * 登录控制器。
+ * 首页控制器。
  *
  * @author 王帅
  * @since 2.0
  */
 @RestController
-@RequiredArgsConstructor
-public class LoginController extends BaseController {
-
-    private final TokenProvider tokenProvider;
+public class IndexController {
 
     /**
-     * 用户登录请求。
+     * 后台首页展示内容。
      *
-     * @return JWT 令牌
+     * @return Hello World！
      */
-    @PostMapping("/login")
-    public AjaxResult<String> login() {
-        return AjaxResult.success(tokenProvider.createToken(getLoginUser()));
+    @GetMapping({"/", "/index"})
+    public AjaxResult<String> index() {
+        return AjaxResult.success("Hello World!");
     }
+
+    /**
+     * 获取当前登录用户信息。
+     *
+     * @return 用户信息
+     */
+    @GetMapping("/getInfo")
+    public AjaxResult<Map<String, Object>> getInfo() {
+        return AjaxResult.success(Map.of());
+    }
+
+    /**
+     * 获取路由信息。
+     *
+     * @return 路由信息
+     */
+    @GetMapping("/getRouters")
+    public AjaxResult<RouterVo> getRouters() {
+        return AjaxResult.success(new RouterVo());
+    }
+
 
 }
