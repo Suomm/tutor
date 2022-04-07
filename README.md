@@ -43,6 +43,7 @@ tutor
 ├─tutor-admin                    // 监控管理模块
 ├─tutor-common                   // 公共接口模块
 ├─tutor-framework                // 核心框架模块
+├─tutor-gateway                  // 网关服务模块
 ├─tutor-support                  // 服务支持模块
 ├─tutor-system                   // 系统代码模块
 ├─.gitignore                     // 版本控制相关配置
