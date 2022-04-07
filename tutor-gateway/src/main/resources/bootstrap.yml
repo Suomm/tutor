@@ -1,0 +1,27 @@
+# Tutor Gateway 端口号
+server:
+  port: 5735
+spring:
+  # 微服务名称
+  application:
+    name: tutor-gateway
+  cloud:
+    # Nacos 的相关配置
+    nacos:
+      config:
+        server-addr: &serverAddr 47.94.200.151:8848
+        file-extension: yml
+        extension-configs:
+          - data-id: application-logger.yml
+          - data-id: application-sentinel.yml
+        namespace: 68a35916-a3e4-4d69-8c66-22128b66dcb0
+      discovery:
+        server-addr: *serverAddr
+    # 启用注册中心发现
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+logging:
+  level:
+    com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder: ERROR
