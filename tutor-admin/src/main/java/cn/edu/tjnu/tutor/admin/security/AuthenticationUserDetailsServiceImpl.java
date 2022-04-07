@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.security.cas;
+package cn.edu.tjnu.tutor.admin.security;
 
 import cn.edu.tjnu.tutor.common.enums.ExceptionType;
 import cn.edu.tjnu.tutor.common.exception.ServiceException;
@@ -23,7 +23,6 @@ import cn.edu.tjnu.tutor.system.domain.User;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
 import cn.edu.tjnu.tutor.system.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,11 +37,9 @@ import java.util.Map;
  * @author 王帅
  * @since 1.0
  */
-@Slf4j
+@Service
 @RequiredArgsConstructor
-@Service("springSecurityCasUserDetailsService")
-public class AuthenticationUserDetailsServiceImpl
-        implements AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
+public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
 
     private final UserService userService;
 

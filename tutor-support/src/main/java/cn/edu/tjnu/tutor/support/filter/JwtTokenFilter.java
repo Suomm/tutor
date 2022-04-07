@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.security.filter;
+package cn.edu.tjnu.tutor.support.filter;
 
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.common.provider.TokenProvider;
 import cn.edu.tjnu.tutor.common.util.SecurityUtils;
-import cn.hutool.core.text.CharSequenceUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.lang.NonNull;
-import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -41,24 +42,29 @@ import java.io.IOException;
  */
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+@ConditionalOnProperty(prefix = "token", name = "enable", havingValue = "true")
+public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain chain)
+    public void doFilterInternal(@NonNull HttpServletRequest request,
+                                 @NonNull HttpServletResponse response,
+                                 @NonNull FilterChain chain)
             throws ServletException, IOException {
         // 根据 Token 请求头获取当前登录用户
         LoginUser loginUser = tokenProvider.getLoginUser(request);
-        // loginUser == null 用户没有 JWT 令牌需要登陆
-        // SecurityUtils.getAuthentication() == null 用户未通过 CAS 登录
+        // loginUser == null 用户没有令牌或者令牌不正确，拒绝访问任何资源
+        // SecurityUtils.getAuthentication() == null 用户未登录到系统
         if (loginUser != null && SecurityUtils.getAuthentication() == null) {
-            CasAssertionAuthenticationToken token = new CasAssertionAuthenticationToken(null, CharSequenceUtil.EMPTY);
-            token.setDetails(loginUser);
-            SecurityContextHolder.getContext().setAuthentication(token);
+            // 校验令牌是否过期并增加可用时间
+            tokenProvider.verifyToken(loginUser);
+            // 为持有令牌的用户创建登录信息
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        // 继续下一个过滤器
         chain.doFilter(request, response);
     }
 

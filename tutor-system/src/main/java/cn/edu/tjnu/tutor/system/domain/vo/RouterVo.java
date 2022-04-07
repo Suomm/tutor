@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.constant;
+package cn.edu.tjnu.tutor.system.domain.vo;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
 /**
- * Redis 缓存键值常量。
+ * 路由信息展示。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class RedisConst {
+public class RouterVo implements Serializable {
 
-    /**
-     * 当前登录用户键名前缀（loginUsers:login_user_用户编号）。
-     */
-    public static final String PREFIX_LOGIN_USER = "loginUsers:login_user_";
+    private static final long serialVersionUID = 7776260582756952728L;
 
 }

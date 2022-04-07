@@ -19,16 +19,16 @@ package cn.edu.tjnu.tutor.common.provider;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.common.util.RedisUtils;
 import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static cn.edu.tjnu.tutor.common.constant.RedisConst.LOGIN_USER_KEY;
+import static cn.edu.tjnu.tutor.common.constant.RedisConst.PREFIX_LOGIN_USER;
 
 /**
  * 提供令牌的相关操作。
@@ -38,8 +38,22 @@ import static cn.edu.tjnu.tutor.common.constant.RedisConst.LOGIN_USER_KEY;
  */
 @Component
 @RequiredArgsConstructor
+@EnableConfigurationProperties(TokenProperties.class)
 public class TokenProvider {
 
+    /**
+     * 毫秒数，用于分钟转毫秒。
+     */
+    private static final long MILLIS_MINUTE = 60 * 1000L;
+
+    /**
+     * 二十分钟毫秒数。
+     */
+    private static final long TWENTY_MINUTES = 20 * 60 * 1000L;
+
+    /**
+     * Token 配置信息。
+     */
     private final TokenProperties tokenProperties;
 
     /**
@@ -52,30 +66,44 @@ public class TokenProvider {
         // 获取请求头中的 Token
         String token = getToken(request);
         // 没有 Token 直接返回空
-        if (CharSequenceUtil.isEmpty(token)) {
-            return null;
+        if (CharSequenceUtil.isNotEmpty(token)) {
+            try {
+                // 解析 Token 从 Redis 中取出用户信息
+                String userCode = parseToken(token);
+                String userKey  = getUserKey(userCode);
+                return RedisUtils.getCacheObject(userKey);
+            } catch (Exception e) {
+                // Token 解析失败
+            }
         }
-        // 解析 Token 并从 Redis 中取出用户信息
-        String uuid = parseToken(token);
-        String userKey = getUserKey(uuid);
-        return RedisUtils.getCacheObject(userKey);
+        return null;
     }
 
     /**
-     * 为当前登录用户创建 JWT 令牌。
+     * 根据用户编号为当前登录用户创建 JWT 令牌。
      *
      * @param loginUser 当前登录用户
      * @return JWT Token
      */
     public String createToken(LoginUser loginUser) {
-        // 创建并设置 UUID
-        String uuid = IdUtil.fastUUID();
-        loginUser.setUuid(uuid);
         // 刷新存储令牌
         refreshToken(loginUser);
         // 生成 JWT 令牌
         byte[] key = tokenProperties.getSecret().getBytes();
-        return JWTUtil.createToken(Map.of(LOGIN_USER_KEY, uuid), key);
+        return JWTUtil.createToken(Map.of(PREFIX_LOGIN_USER, loginUser.getUserCode()), key);
+    }
+
+    /**
+     * 验证 Token 有效期，相差不足20分钟，自动刷新缓存。
+     *
+     * @param loginUser 当前登录用户
+     */
+    public void verifyToken(LoginUser loginUser) {
+        long expireTime = loginUser.getExpireTime();
+        long currentTime = System.currentTimeMillis();
+        if (expireTime - currentTime <= TWENTY_MINUTES) {
+            refreshToken(loginUser);
+        }
     }
 
     /**
@@ -95,13 +123,13 @@ public class TokenProvider {
     }
 
     /**
-     * 从令牌中获取用户唯一标识（UUID）。
+     * 从令牌中获取用户编号。
      *
      * @param token 令牌
-     * @return 用户唯一标识（UUID）
+     * @return 用户编号
      */
     private String parseToken(String token) {
-        return (String) JWTUtil.parseToken(token).getPayload(LOGIN_USER_KEY);
+        return (String) JWTUtil.parseToken(token).getPayload(PREFIX_LOGIN_USER);
     }
 
     /**
@@ -110,18 +138,21 @@ public class TokenProvider {
      * @param loginUser 当前登录用户
      */
     public void refreshToken(LoginUser loginUser) {
-        String userKey = getUserKey(loginUser.getUuid());
+        // 设用户登陆过期时间
+        loginUser.setExpireTime(System.currentTimeMillis() + tokenProperties.getExpireTime() * MILLIS_MINUTE);
+        // 缓存当前登录用户的信息
+        String userKey = getUserKey(loginUser.getUserCode());
         RedisUtils.setCacheObject(userKey, loginUser, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
     }
 
     /**
      * 删除令牌信息和当前登录用户信息。
      *
-     * @param uuid 用户唯一标识
+     * @param userCode 用户编号
      */
-    public void deleteToken(String uuid) {
-        if (CharSequenceUtil.isNotEmpty(uuid)) {
-            String userKey = getUserKey(uuid);
+    public void deleteToken(String userCode) {
+        if (CharSequenceUtil.isNotEmpty(userCode)) {
+            String userKey = getUserKey(userCode);
             RedisUtils.deleteObject(userKey);
         }
     }
@@ -129,11 +160,11 @@ public class TokenProvider {
     /**
      * 获取用户键，用于 Redis 存取。
      *
-     * @param uuid 用户唯一标识
+     * @param userCode 用户编号
      * @return 用户键
      */
-    private String getUserKey(String uuid) {
-        return LOGIN_USER_KEY.concat(uuid);
+    private String getUserKey(String userCode) {
+        return PREFIX_LOGIN_USER.concat(userCode);
     }
 
 }

@@ -16,50 +16,55 @@
 
 package cn.edu.tjnu.tutor.support.config;
 
-import cn.edu.tjnu.tutor.support.security.cas.CasLogoutHandler;
-import cn.edu.tjnu.tutor.support.security.filter.JwtAuthenticationTokenFilter;
+import cn.edu.tjnu.tutor.support.filter.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.cas.web.CasAuthenticationFilter;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * 后端服务安全配置。
+ * Spring Security 配置。
  *
  * @author 王帅
  * @since 1.0
  */
-@EnableWebSecurity
-@RequiredArgsConstructor
-@Configuration(proxyBeanMethods = false)
-@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CasLogoutHandler casLogoutHandler;
+    @Order(1)
+    @Configuration(proxyBeanMethods = false)
+    public static class HttpBasicConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtAuthenticationTokenFilter authenticationTokenFilter;
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.antMatcher("/actuator/**")
+                    .authorizeRequests(authorize -> authorize.anyRequest().hasRole("MONITOR"))
+                    .httpBasic();
+        }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // 设置监控端点需要认证，并开启 HTTP Basic，用于监控端点的授权
-        http.httpBasic().init(http.requestMatcher(EndpointRequest.toAnyEndpoint()));
-        // 关闭 CSRF 防护功能，因为不使用 Session
-        http.csrf().disable();
-        // CAS 过滤器拦截所有请求
-        http.authorizeRequests()
-                .anyRequest().authenticated();
-        // Cas 登出配置
-        http.logout()
-                .logoutUrl("/logout")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .addLogoutHandler(casLogoutHandler);
-        // 添加 JWT Filter
-        http.addFilterAfter(authenticationTokenFilter, CasAuthenticationFilter.class);
+    }
+
+    @RequiredArgsConstructor
+    @Configuration(proxyBeanMethods = false)
+    @ConditionalOnBean(JwtTokenFilter.class)
+    @EnableGlobalMethodSecurity(securedEnabled = true)
+    public static class JwtTokenConfig extends WebSecurityConfigurerAdapter {
+
+        private final JwtTokenFilter jwtTokenFilter;
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new Http403ForbiddenEntryPoint()).and()
+                    .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                    .csrf().disable();
+        }
+
     }
 
 }

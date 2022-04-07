@@ -43,9 +43,9 @@ import java.util.UUID;
 @Configuration(proxyBeanMethods = false)
 public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
 
-    private final AdminServerProperties adminServer;
-
     private final SecurityProperties security;
+
+    private final AdminServerProperties adminServer;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -57,7 +57,8 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
                         authorizeRequests -> authorizeRequests.antMatchers(this.adminServer.path("/assets/**")).permitAll()
                                 .antMatchers(this.adminServer.path("/actuator/info")).permitAll()
                                 .antMatchers(this.adminServer.path("/actuator/health")).permitAll()
-                                .antMatchers(this.adminServer.path("/login")).permitAll().anyRequest().authenticated()
+                                .antMatchers(this.adminServer.path("/login")).permitAll()
+                                .anyRequest().hasRole("ROOT")
                 ).formLogin(
                         formLogin -> formLogin.loginPage(this.adminServer.path("/login")).successHandler(successHandler).and()
                 ).logout(logout -> logout.logoutUrl(this.adminServer.path("/logout"))).httpBasic(Customizer.withDefaults())
@@ -77,8 +78,10 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser(security.getUser().getName())
-                .password("{noop}" + security.getUser().getPassword()).roles("MONITOR");
+        SecurityProperties.User user = security.getUser();
+        auth.inMemoryAuthentication().withUser(user.getName())
+                .password("{noop}".concat(user.getPassword()))
+                .authorities(user.getRoles().toArray(String[]::new));
     }
 
 }

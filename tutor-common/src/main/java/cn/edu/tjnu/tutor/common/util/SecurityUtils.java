@@ -35,7 +35,7 @@ public final class SecurityUtils {
      * 获取用户对象。
      */
     public static LoginUser getLoginUser() {
-        return (LoginUser) getAuthentication().getDetails();
+        return (LoginUser) getAuthentication().getPrincipal();
     }
 
     /**

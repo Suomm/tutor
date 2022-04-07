@@ -18,7 +18,6 @@ package cn.edu.tjnu.tutor.common.provider;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * JWT 令牌校验相关属性绑定类。
@@ -27,9 +26,13 @@ import org.springframework.stereotype.Component;
  * @since 2.0
  */
 @Data
-@Component
 @ConfigurationProperties(prefix = "token")
 public class TokenProperties {
+
+    /**
+     * 是否启用 JWT Token 功能。
+     */
+    private boolean enable;
 
     /**
      * 令牌自定义标识头。
