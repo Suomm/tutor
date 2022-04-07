@@ -4,7 +4,7 @@ spring:
     # 端口号
     port: 5672
     # 主机地址
-    host: localhost
+    host: rabbitmq
     # 账号密码
     username: guest
     password: guest

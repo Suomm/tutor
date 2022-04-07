@@ -3,7 +3,7 @@ spring:
   # Elasticsearch 服务器的地址
   elasticsearch:
     rest:
-      uris: "http://localhost:9200"
+      uris: "elasticsearch"
   # 排除响应式 Elasticsearch 的配置
   autoconfigure:
     exclude:

@@ -1,0 +1,6 @@
+# JWT Token 令牌配置
+token:
+  # 启用令牌验证
+  enable: true
+  # 令牌密钥信息
+  secret: QRDzoGny54ruFn4q

@@ -6,6 +6,7 @@ spring:
       # 这两个最好是随机生成的，用于 SBA 服务端验证访问
       name: WRvBB5tUBWaT6XJo
       password: 43eYgy9#8@hXCYle
+      roles: MONITOR
   cloud:
     nacos:
       discovery:

@@ -16,11 +16,6 @@ metadata:
   group: DEFAULT_GROUP
   type: yaml
 - appName: ''
-  dataId: application-cas.yml
-  desc: CAS 单点登录配置
-  group: DEFAULT_GROUP
-  type: yaml
-- appName: ''
   dataId: application-druid.yml
   desc: Druid 多数据源配置
   group: DEFAULT_GROUP
@@ -41,11 +36,6 @@ metadata:
   group: DEFAULT_GROUP
   type: yaml
 - appName: ''
-  dataId: application-xxl-job.yml
-  desc: XXL-JOB 分布式任务配置
-  group: DEFAULT_GROUP
-  type: yaml
-- appName: ''
   dataId: application-rabbitmq.yml
   desc: RabbitMQ 消息队列配置
   group: DEFAULT_GROUP
@@ -61,8 +51,23 @@ metadata:
   group: DEFAULT_GROUP
   type: yaml
 - appName: ''
+  dataId: application-token.yml
+  desc: JWT Token 令牌配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: application-xxl-job.yml
+  desc: XXL-JOB 分布式任务配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
   dataId: tutor-admin.yml
   desc: Tutor Admin 专有配置
+  group: DEFAULT_GROUP
+  type: yaml
+- appName: ''
+  dataId: tutor-gateway.yml
+  desc: Tutor Gateway 专有配置
   group: DEFAULT_GROUP
   type: yaml
 - appName: ''

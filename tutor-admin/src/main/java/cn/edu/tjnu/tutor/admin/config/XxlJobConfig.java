@@ -18,6 +18,7 @@ package cn.edu.tjnu.tutor.admin.config;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(XxlJobProperties.class)
+@ConditionalOnProperty(prefix = "xxl-job", value = "enable", havingValue = "true")
 public class XxlJobConfig {
 
     private final XxlJobProperties xxlJobProperties;

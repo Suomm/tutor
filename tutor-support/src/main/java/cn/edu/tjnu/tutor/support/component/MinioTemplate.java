@@ -22,8 +22,9 @@ import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -32,9 +33,10 @@ import org.springframework.web.multipart.MultipartFile;
  * @author 王帅
  * @since 1.0
  */
+@Component
 @RequiredArgsConstructor
-@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(MinioProperties.class)
+@ConditionalOnProperty(prefix = "minio", name = "enable", havingValue = "true")
 public class MinioTemplate implements InitializingBean {
 
     private final MinioProperties minioProperties;
@@ -64,6 +66,7 @@ public class MinioTemplate implements InitializingBean {
      * @param file 文件内容
      * @return 可以访问的地址
      */
+    @SuppressWarnings("unused")
     public String upload(String filename, MultipartFile file) {
         try {
             minioClient.putObject(PutObjectArgs.builder()

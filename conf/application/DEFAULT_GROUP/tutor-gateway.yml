@@ -1,0 +1,30 @@
+# Tutor Gateway 专有配置
+spring:
+  cloud:
+    gateway:
+      # 资源跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+        add-to-simple-url-handler-mapping: true
+      # 路由转发规则
+      routes:
+        - id: tutor-support-router
+          uri: lb://tutor-support
+          predicates:
+            - Header=Authentication, Bearer .+
+        - id: tutor-auth-router
+          uri: lb://tutor-admin
+          predicates:
+            - Path=/login,/logout
+          filters:
+            - PrefixPath=/auth
+# 关闭没有必要的功能
+management:
+  endpoint:
+    gateway:
+      enabled: false

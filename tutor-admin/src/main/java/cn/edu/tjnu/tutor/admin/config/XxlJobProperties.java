@@ -18,18 +18,21 @@ package cn.edu.tjnu.tutor.admin.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
- * 令牌配置属性。
+ * XXL-JOB 配置属性。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@Component
 @ConfigurationProperties(prefix = "xxl-job")
 public class XxlJobProperties {
+
+    /**
+     * 是否启用 XXL-JOB 配置。
+     */
+    private boolean enable;
 
     /**
      * 调度中心部署跟地址（选填）：如调度中心集群部署存在多个地址则用逗号分隔。

@@ -1,20 +1,24 @@
+# Tutor Support 端口号
+server:
+  port: 8633
 spring:
+  # 微服务名称
   application:
     name: tutor-support
   cloud:
+    # Nacos 的相关配置
     nacos:
       config:
         server-addr: &serverAddr 47.94.200.151:8848
         file-extension: yml
-        shared-configs:
-          - data-id: application-cas.yml
+        extension-configs:
           - data-id: application-druid.yml
           - data-id: application-minio.yml
           - data-id: application-redis.yml
+          - data-id: application-token.yml
           - data-id: application-logger.yml
           - data-id: application-actuator.yml
           - data-id: application-rabbitmq.yml
-          - data-id: application-sentinel.yml
           - data-id: application-admin-client.yml
           - data-id: application-elasticsearch.yml
         namespace: 68a35916-a3e4-4d69-8c66-22128b66dcb0

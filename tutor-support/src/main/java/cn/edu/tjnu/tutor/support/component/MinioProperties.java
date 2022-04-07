@@ -18,7 +18,6 @@ package cn.edu.tjnu.tutor.support.component;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * Minio 的相关属性绑定。
@@ -27,9 +26,13 @@ import org.springframework.stereotype.Component;
  * @since 1.0
  */
 @Data
-@Component
 @ConfigurationProperties(prefix = "minio")
 public class MinioProperties {
+
+    /**
+     * 是否启用 Minio 功能。
+     */
+    private boolean enable;
 
     /**
      * 连接地址。
