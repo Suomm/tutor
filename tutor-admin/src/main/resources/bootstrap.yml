@@ -1,7 +1,12 @@
+# Tutor Admin 端口号
+server:
+  port: 9377
 spring:
+  # 微服务名称
   application:
     name: tutor-admin
   cloud:
+    # Nacos 的相关配置
     nacos:
       config:
         server-addr: &serverAddr 47.94.200.151:8848
@@ -9,6 +14,7 @@ spring:
         extension-configs:
           - data-id: application-druid.yml
           - data-id: application-redis.yml
+          - data-id: application-token.yml
           - data-id: application-logger.yml
           - data-id: application-xxl-job.yml
           - data-id: application-actuator.yml
