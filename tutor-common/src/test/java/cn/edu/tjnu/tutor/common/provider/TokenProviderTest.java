@@ -20,6 +20,7 @@ import cn.hutool.jwt.JWTUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -35,7 +36,7 @@ class TokenProviderTest {
         // JWT 私钥
         byte[] key = "secret".getBytes();
         // payload 载荷
-        Map<String, Object> payload = Map.of("key", "value");
+        Map<String, Object> payload = Collections.singletonMap("key", "value");
         // 生成 Token
         String token = JWTUtil.createToken(payload, key);
         // 获取载荷值

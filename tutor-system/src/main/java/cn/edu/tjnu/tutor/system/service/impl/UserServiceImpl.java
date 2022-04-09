@@ -27,6 +27,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static cn.edu.tjnu.tutor.common.constant.GlobalConst.EMPTY_STRING_ARRAY;
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.STUDENT;
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.TEACHER;
 
@@ -63,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 权限信息为空则查询权限信息
         if (loginUser.getAuthorities() != null) {
             String[] roleKeys = baseMapper.selectRoleKeysByUserId(user.getUserId())
-                    .toArray(String[]::new);
+                    .toArray(EMPTY_STRING_ARRAY);
             loginUser.setAuthorities(AuthorityUtils.createAuthorityList(roleKeys));
         }
         return loginUser;

@@ -18,12 +18,12 @@ package cn.edu.tjnu.tutor.admin.config;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.SneakyThrows;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.cas.ServiceProperties;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * CAS 授权服务相关参数。
@@ -79,9 +79,12 @@ public class CasClientProperties extends ServiceProperties {
         return buildUrl(serverLogoutUrl, getService());
     }
 
+    private static final String UTF_8 = "UTF-8";
+
     /**
      * 拼接 URL 地址。
      */
+    @SneakyThrows(UnsupportedEncodingException.class)
     private String buildUrl(String serverUrl, String clientUrl) {
         return serverUrl + "?" + getServiceParameter() + "=" + URLEncoder.encode(clientUrl, UTF_8);
     }

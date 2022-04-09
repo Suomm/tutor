@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.annotation;
+package cn.edu.tjnu.tutor.common.constant;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.context.annotation.ComponentScan;
-
-import java.lang.annotation.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
- * 开启项目自定义配置。
+ * 统一类型常量。
  *
  * @author 王帅
  * @since 2.0
  */
-@Inherited
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@ComponentScan("cn.edu.tjnu.tutor")
-@MapperScan("cn.edu.tjnu.tutor.system.mapper")
-public @interface EnableCustomConfig {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class GlobalConst {
+    
+    public static final String[] EMPTY_STRING_ARRAY = {};
+    
 }

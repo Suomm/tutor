@@ -31,6 +31,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.UUID;
 
+import static cn.edu.tjnu.tutor.common.constant.GlobalConst.EMPTY_STRING_ARRAY;
+
 /**
  * <a href="https://codecentric.github.io/spring-boot-admin/current/#_securing_spring_boot_admin_server">
  * SpringBoot Admin 安全配置。
@@ -81,7 +83,7 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
         SecurityProperties.User user = security.getUser();
         auth.inMemoryAuthentication().withUser(user.getName())
                 .password("{noop}".concat(user.getPassword()))
-                .authorities(user.getRoles().toArray(String[]::new));
+                .authorities(user.getRoles().toArray(EMPTY_STRING_ARRAY));
     }
 
 }

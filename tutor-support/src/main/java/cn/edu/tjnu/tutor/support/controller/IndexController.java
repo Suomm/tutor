@@ -21,6 +21,7 @@ import cn.edu.tjnu.tutor.system.domain.vo.RouterVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -49,7 +50,7 @@ public class IndexController {
      */
     @GetMapping("/getInfo")
     public AjaxResult<Map<String, Object>> getInfo() {
-        return AjaxResult.success(Map.of());
+        return AjaxResult.success(new HashMap<>(0));
     }
 
     /**

@@ -20,6 +20,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
+ * Tutor Gateway 主启动类。
+ *
  * @author 王帅
  * @since 2.0
  */

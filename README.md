@@ -2,8 +2,8 @@
   <img width="320" src="https://suomm.gitee.io/tutor/images/logo.svg" alt="logo"/>
 </p>
 <p align="center">
-    <a href="https://developer.ibm.com/languages/java/semeru-runtimes/#">
-        <img src="https://img.shields.io/badge/JDK-11.0.13-brightgreen.svg" alt="JDK">
+    <a href="https://www.oracle.com/java/technologies/downloads/#java8">
+        <img src="https://img.shields.io/badge/JDK-8u321-brightgreen.svg" alt="JDK">
     </a>
     <a href="https://maven.apache.org/">
         <img src="https://img.shields.io/badge/Maven-3.8.1-brightgreen.svg" alt="maven">

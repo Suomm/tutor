@@ -25,7 +25,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import static cn.edu.tjnu.tutor.common.constant.RedisConst.PREFIX_LOGIN_USER;
@@ -90,7 +90,7 @@ public class TokenProvider {
         refreshToken(loginUser);
         // 生成 JWT 令牌
         byte[] key = tokenProperties.getSecret().getBytes();
-        return JWTUtil.createToken(Map.of(PREFIX_LOGIN_USER, loginUser.getUserCode()), key);
+        return JWTUtil.createToken(Collections.singletonMap(PREFIX_LOGIN_USER, loginUser.getUserCode()), key);
     }
 
     /**
