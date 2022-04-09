@@ -47,7 +47,7 @@
     </developers>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <druid.version>1.2.5</druid.version>
@@ -65,11 +65,11 @@
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <spring-boot.admin.version>2.3.1</spring-boot.admin.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
+        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <jrebel-maven-plugin.version>1.1.10</jrebel-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <smart-doc-maven-plugin.version>2.2.8</smart-doc-maven-plugin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
-        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
     </properties>
 
     <dependencyManagement>

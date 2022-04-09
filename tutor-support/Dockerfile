@@ -1,5 +1,5 @@
 # 基础镜像
-FROM ibm-semeru-runtimes:open-11-jre
+FROM openjdk:8-jre
 # 挂载目录
 VOLUME /home/tutor
 # 创建目录
