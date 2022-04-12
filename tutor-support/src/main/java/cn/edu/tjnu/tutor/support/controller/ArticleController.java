@@ -19,11 +19,12 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.helper.PageHelper;
+import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
+import cn.edu.tjnu.tutor.common.core.domain.Pagination;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.model.Article;
 import cn.edu.tjnu.tutor.system.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,12 +48,12 @@ public class ArticleController extends BaseController {
     /**
      * 分页查询文章信息。
      *
-     * @param pageHelper 分页帮助
+     * @param pageQuery 分页帮助
      * @return 分页对象
      */
-    @GetMapping("list}")
-    public AjaxResult<Page<Article>> list(PageHelper pageHelper) {
-        return success(articleRepository.findAll(pageHelper.elasticsearch()));
+    @GetMapping("list")
+    public AjaxResult<Pagination<Article>> list(PageQuery pageQuery) {
+        return success(PageUtils.convert(articleRepository.findAll(pageQuery.pageable())));
     }
 
     /**
@@ -88,7 +89,7 @@ public class ArticleController extends BaseController {
     @Log(category = ARTICLE, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable Integer articleId) {
         articleRepository.deleteById(articleId);
-        return success();
+        return AjaxResult.SUCCESS;
     }
 
 }

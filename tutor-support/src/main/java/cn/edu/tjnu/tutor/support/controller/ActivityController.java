@@ -19,13 +19,14 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.helper.PageHelper;
+import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
+import cn.edu.tjnu.tutor.common.core.domain.Pagination;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.model.Activity;
 import cn.edu.tjnu.tutor.system.domain.model.Record;
 import cn.edu.tjnu.tutor.system.repository.ActivityRepository;
 import cn.edu.tjnu.tutor.system.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -54,11 +55,12 @@ public class ActivityController extends BaseController {
      * 根据用户主键查询参加的的活动。
      *
      * @param userId 用户主键
-     * @param pageHelper 分页帮助
+     * @param pageQuery 分页帮助
      * @return 所有关联活动
      */
-    public AjaxResult<Page<Record>> list(Integer userId, PageHelper pageHelper) {
-        return success(recordRepository.findAllByUserId(userId, pageHelper.elasticsearch()));
+    @GetMapping("list")
+    public AjaxResult<Pagination<Record>> list(Integer userId, PageQuery pageQuery) {
+        return success(PageUtils.convert(recordRepository.findAllByUserId(userId, pageQuery.pageable())));
     }
 
     /**
@@ -96,7 +98,7 @@ public class ActivityController extends BaseController {
     @Log(category = ACTIVITY, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable Integer activityId) {
         activityRepository.deleteById(activityId);
-        return success();
+        return AjaxResult.SUCCESS;
     }
 
 }

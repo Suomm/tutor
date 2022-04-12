@@ -84,7 +84,7 @@ public class AnswerController extends BaseController {
     @Log(category = ANSWER, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable Integer commentId) {
         answerRepository.deleteById(commentId);
-        return success();
+        return AjaxResult.SUCCESS;
     }
 
 }

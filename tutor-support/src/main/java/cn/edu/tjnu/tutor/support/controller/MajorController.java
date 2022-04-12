@@ -19,14 +19,17 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.helper.PageHelper;
+import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
+import cn.edu.tjnu.tutor.common.core.domain.Pagination;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.Major;
 import cn.edu.tjnu.tutor.system.service.MajorService;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
 import static cn.edu.tjnu.tutor.common.enums.Category.MAJOR;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
@@ -44,14 +47,15 @@ public class MajorController extends BaseController {
     private final MajorService majorService;
 
     /**
-     * 分页查询专业信息。
+     * （超级管理员）分页查询所有专业信息。
      *
-     * @param pageHelper 分页帮助
+     * @param pageQuery 分页帮助
      * @return 分页对象
      */
+    @Secured(ROLE_ROOT)
     @GetMapping("list")
-    public AjaxResult<Page<Major>> list(PageHelper pageHelper) {
-        return success(majorService.page(pageHelper.mybatisPlus()));
+    public AjaxResult<Pagination<Major>> list(PageQuery pageQuery) {
+        return success(PageUtils.convert(majorService.page(pageQuery.page())));
     }
 
     /**

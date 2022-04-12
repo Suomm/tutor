@@ -29,7 +29,7 @@ import java.util.Collection;
  * @since 2.0
  */
 @Data
-public class LoginUser implements UserDetails {
+public final class LoginUser implements UserDetails {
 
     private static final long serialVersionUID = 5501326495340971354L;
 

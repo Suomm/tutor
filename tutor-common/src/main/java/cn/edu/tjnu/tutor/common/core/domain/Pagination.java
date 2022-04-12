@@ -14,56 +14,37 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.helper;
+package cn.edu.tjnu.tutor.common.core.domain;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * 分页帮助。
+ * 统一分页返回对象。
  *
+ * @param <T> 数据类型
  * @author 王帅
  * @since 2.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public final class PageHelper implements Serializable {
+public final class Pagination<T> implements Serializable {
 
-    private static final long serialVersionUID = 1325019744536935240L;
-
-    /**
-     * 当前页码。
-     */
-    private Integer pageNum = 1;
+    private static final long serialVersionUID = -553124397223609762L;
 
     /**
-     * 每页显示数量。
+     * 数据总记录数。
      */
-    private Integer pageSize = 10;
+    private Long total;
 
     /**
-     * 生成 MyBatis PLus 分页对象。
-     *
-     * @return 分页对象
+     * 每页的数据内容。
      */
-    public <T> Page<T> mybatisPlus() {
-        return new Page<>(pageNum, pageSize);
-    }
-
-    /**
-     * 生成 Elasticsearch 分页对象。
-     *
-     * @return 分页对象
-     */
-    public Pageable elasticsearch() {
-        return PageRequest.of(pageNum, pageSize);
-    }
+    private List<T> content;
 
 }

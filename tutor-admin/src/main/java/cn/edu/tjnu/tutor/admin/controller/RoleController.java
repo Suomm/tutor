@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.controller;
+package cn.edu.tjnu.tutor.admin.controller;
 
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.helper.PageHelper;
+import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
+import cn.edu.tjnu.tutor.common.core.domain.Pagination;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.Role;
 import cn.edu.tjnu.tutor.system.service.RoleService;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -46,12 +47,12 @@ public class RoleController extends BaseController {
     /**
      * 分页查询角色信息。
      *
-     * @param pageHelper 分页帮助
+     * @param pageQuery 分页帮助
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<Page<Role>> list(PageHelper pageHelper) {
-        return success(roleService.page(pageHelper.mybatisPlus()));
+    public AjaxResult<Pagination<Role>> list(PageQuery pageQuery) {
+        return success(PageUtils.convert(roleService.page(pageQuery.page())));
     }
 
     /**

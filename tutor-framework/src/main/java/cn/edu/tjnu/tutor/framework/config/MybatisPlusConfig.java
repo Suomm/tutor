@@ -18,6 +18,7 @@ package cn.edu.tjnu.tutor.framework.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0
  */
 @Configuration(proxyBeanMethods = false)
+@MapperScan("cn.edu.tjnu.tutor.system.mapper")
 public class MybatisPlusConfig {
 
     /**

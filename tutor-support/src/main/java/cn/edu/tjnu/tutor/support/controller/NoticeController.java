@@ -19,10 +19,11 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.helper.PageHelper;
+import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
+import cn.edu.tjnu.tutor.common.core.domain.Pagination;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.Notice;
 import cn.edu.tjnu.tutor.system.service.NoticeService;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -46,12 +47,12 @@ public class NoticeController extends BaseController {
     /**
      * 分页查询公告信息。
      *
-     * @param pageHelper 分页帮助
+     * @param pageQuery 分页帮助
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<Page<Notice>> list(PageHelper pageHelper) {
-        return success(noticeService.page(pageHelper.mybatisPlus()));
+    public AjaxResult<Pagination<Notice>> list(PageQuery pageQuery) {
+        return success(PageUtils.convert(noticeService.page(pageQuery.page())));
     }
 
     /**

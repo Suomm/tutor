@@ -29,24 +29,10 @@ import cn.edu.tjnu.tutor.common.util.SecurityUtils;
 public abstract class BaseController {
 
     /**
-     * 返回成功。
-     */
-    protected AjaxResult<Void> success() {
-        return AjaxResult.success();
-    }
-
-    /**
      * 返回成功数据。
      */
     protected <T> AjaxResult<T> success(T data) {
         return AjaxResult.success(data);
-    }
-
-    /**
-     * 返回失败消息。
-     */
-    protected AjaxResult<Void> error() {
-        return AjaxResult.error();
     }
 
     /**
@@ -56,7 +42,7 @@ public abstract class BaseController {
      * @return 操作结果
      */
     protected AjaxResult<Void> toResult(int rows) {
-        return rows > 0 ? AjaxResult.success() : AjaxResult.error();
+        return rows > 0 ? AjaxResult.SUCCESS : AjaxResult.ERROR;
     }
 
     /**
@@ -66,7 +52,7 @@ public abstract class BaseController {
      * @return 操作结果
      */
     protected AjaxResult<Void> toResult(boolean result) {
-        return result ? success() : error();
+        return result ? AjaxResult.SUCCESS : AjaxResult.ERROR;
     }
 
     /**
