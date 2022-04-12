@@ -46,8 +46,8 @@ CREATE TABLE `sys_college`
     `phone`        varchar(11) NULL DEFAULT NULL COMMENT '学院电话',
     `email`        varchar(50) NULL DEFAULT NULL COMMENT '学院邮箱',
     `visible`      int         NULL DEFAULT 0 COMMENT '可见性（0可见，1不可见）',
-    `del_flag`     int         NULL DEFAULT 0 COMMENT '删除标志（0存在，1删除）',
-    PRIMARY KEY (`college_id`)
+    PRIMARY KEY (`college_id`),
+    UNIQUE KEY `uk_college_code` (`college_code`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8
@@ -96,7 +96,7 @@ CREATE TABLE `sys_major`
     `major_name` varchar(50) NOT NULL COMMENT '专业名称',
     `major_abbr` varchar(10) NOT NULL COMMENT '专业简称',
     PRIMARY KEY (`major_id`),
-    CONSTRAINT `fk_major_dept` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
+    CONSTRAINT `fk_major_college` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '专业信息表';
@@ -110,11 +110,9 @@ CREATE TABLE `sys_menu`
     `menu_id`   int          NOT NULL AUTO_INCREMENT COMMENT '菜单主键',
     `menu_name` varchar(50)  NOT NULL COMMENT '菜单名称',
     `parent_id` int          NULL DEFAULT 0 COMMENT '父菜单主键',
-    `weight`    int          NULL DEFAULT 0 COMMENT '菜单权重',
+    `order`     int          NULL DEFAULT 0 COMMENT '菜单排序',
     `path`      varchar(200) NULL DEFAULT '' COMMENT '路由地址',
     `component` varchar(255) NULL DEFAULT NULL COMMENT '组件路径',
-    `is_link`   int          NULL DEFAULT 0 COMMENT '是否外链（0否，1是）',
-    `is_hide`   int          NULL DEFAULT 0 COMMENT '是否隐藏（0否，1是）',
     `icon`      varchar(100) NULL DEFAULT NULL COMMENT '菜单图标',
     PRIMARY KEY (`menu_id`)
 ) ENGINE = InnoDB
@@ -138,7 +136,7 @@ CREATE TABLE `sys_notice`
     `update_by`      varchar(50) NULL DEFAULT NULL COMMENT '更新人',
     `update_time`    datetime    NULL DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`notice_id`),
-    CONSTRAINT `fk_notice_dept` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
+    CONSTRAINT `fk_notice_college` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '公告信息表';
@@ -168,10 +166,29 @@ CREATE TABLE `sys_role`
     `role_id`   int         NOT NULL AUTO_INCREMENT COMMENT '角色主键',
     `role_key`  varchar(50) NOT NULL COMMENT '角色键名',
     `role_name` varchar(50) NOT NULL COMMENT '角色名称',
-    PRIMARY KEY (`role_id`)
+    PRIMARY KEY (`role_id`),
+    UNIQUE KEY `uk_role_key` (`role_key`)
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '角色信息表';
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+INSERT INTO `sys_role`
+VALUES (1, 'ROLE_ROOT', '超级管理员');
+INSERT INTO `sys_role`
+VALUES (2, 'ROLE_ADMIN', '学院管理员');
+INSERT INTO `sys_role`
+VALUES (3, 'ROLE_TUTOR', '导师');
+INSERT INTO `sys_role`
+VALUES (4, 'ROLE_STUDENT', '学生');
+INSERT INTO `sys_role`
+VALUES (5, 'ROLE_TEACHER', '教师');
+INSERT INTO `sys_role`
+VALUES (6, 'ROLE_INTERN', '实习生');
+INSERT INTO `sys_role`
+VALUES (7, 'ROLE_INSTRUCTOR', '实践导师');
 
 -- ----------------------------
 -- Table structure for sys_team
@@ -184,7 +201,7 @@ CREATE TABLE `sys_team`
     `team_name`  varchar(50) NOT NULL COMMENT '导师团名称',
     `introduce`  longtext    NULL COMMENT '导师团介绍信息',
     PRIMARY KEY (`team_id`),
-    CONSTRAINT `fk_team_dept` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
+    CONSTRAINT `fk_team_college` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '导师团信息表';
@@ -205,7 +222,8 @@ CREATE TABLE `sys_user`
     `avatar`     varchar(255) NULL DEFAULT '' COMMENT '头像地址',
     `introduce`  longtext     NULL COMMENT '自我介绍',
     PRIMARY KEY (`user_id`),
-    CONSTRAINT `fk_user_dept` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
+    UNIQUE KEY `uk_user_code` (`user_code`),
+    CONSTRAINT `fk_user_college` FOREIGN KEY (`college_id`) REFERENCES `sys_college` (`college_id`)
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '用户信息表';

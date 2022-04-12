@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.repository;
 
-import cn.edu.tjnu.tutor.system.domain.Record;
+import cn.edu.tjnu.tutor.system.domain.model.Record;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

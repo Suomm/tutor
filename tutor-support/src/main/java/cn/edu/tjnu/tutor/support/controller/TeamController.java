@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Team;
+import cn.edu.tjnu.tutor.system.domain.entity.Team;
 import cn.edu.tjnu.tutor.system.service.TeamService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class TeamController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<Team>> list(PageHelper pageHelper) {
-        return AjaxResult.success(teamService.page(pageHelper.mybatisPlus()));
+        return success(teamService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class TeamController extends BaseController {
      */
     @GetMapping("getInfo/{teamId}")
     public AjaxResult<Team> getInfo(@PathVariable Integer teamId) {
-        return AjaxResult.success(teamService.getById(teamId));
+        return success(teamService.getById(teamId));
     }
 
     /**

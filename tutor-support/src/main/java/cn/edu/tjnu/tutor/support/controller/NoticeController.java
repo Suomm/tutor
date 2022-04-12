@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Notice;
+import cn.edu.tjnu.tutor.system.domain.entity.Notice;
 import cn.edu.tjnu.tutor.system.service.NoticeService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class NoticeController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<Notice>> list(PageHelper pageHelper) {
-        return AjaxResult.success(noticeService.page(pageHelper.mybatisPlus()));
+        return success(noticeService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class NoticeController extends BaseController {
      */
     @GetMapping("getInfo/{noticeId}")
     public AjaxResult<Notice> getInfo(@PathVariable Integer noticeId) {
-        return AjaxResult.success(noticeService.getById(noticeId));
+        return success(noticeService.getById(noticeId));
     }
 
     /**

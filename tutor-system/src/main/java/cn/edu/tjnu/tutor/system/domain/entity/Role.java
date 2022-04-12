@@ -14,77 +14,41 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
- * 用户信息。
+ * 角色信息。
  *
  * @author 王帅
  * @since 1.0
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("sys_user")
-public class User implements Serializable {
+@TableName("sys_role")
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户主键。
+     * 角色主键。
      */
     @TableId(type = IdType.AUTO)
-    private Integer userId;
+    private Integer roleId;
 
     /**
-     * 所属学院主键。
+     * 角色键名。
      */
-    private Integer collegeId;
+    private String roleKey;
 
     /**
-     * 用户编号（学号或工号）。
+     * 角色名称。
      */
-    private String userCode;
-
-    /**
-     * 用户名称。
-     */
-    private String userName;
-
-    /**
-     * 用户邮箱。
-     */
-    private String email;
-
-    /**
-     * 手机号码。
-     */
-    private String phone;
-
-    /**
-     * 用户性别（0女，1男，2保密）。
-     */
-    private Integer gender;
-
-    /**
-     * 头像地址。
-     */
-    private String avatar;
-
-    /**
-     * 自我介绍。
-     */
-    private String introduce;
+    private String roleName;
 
 }

@@ -20,8 +20,8 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Activity;
-import cn.edu.tjnu.tutor.system.domain.Record;
+import cn.edu.tjnu.tutor.system.domain.model.Activity;
+import cn.edu.tjnu.tutor.system.domain.model.Record;
 import cn.edu.tjnu.tutor.system.repository.ActivityRepository;
 import cn.edu.tjnu.tutor.system.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.TUTOR;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_TUTOR;
 import static cn.edu.tjnu.tutor.common.enums.Category.ACTIVITY;
 import static cn.edu.tjnu.tutor.common.enums.OperType.DELETE;
 import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
@@ -58,7 +58,7 @@ public class ActivityController extends BaseController {
      * @return 所有关联活动
      */
     public AjaxResult<Page<Record>> list(Integer userId, PageHelper pageHelper) {
-        return AjaxResult.success(recordRepository.findAllByUserId(userId, pageHelper.elasticsearch()));
+        return success(recordRepository.findAllByUserId(userId, pageHelper.elasticsearch()));
     }
 
     /**
@@ -69,7 +69,7 @@ public class ActivityController extends BaseController {
      */
     @GetMapping("getInfo/{activityId}")
     public AjaxResult<Activity> getInfo(@PathVariable Integer activityId) {
-        return AjaxResult.success(activityRepository.findById(activityId).orElse(null));
+        return success(activityRepository.findById(activityId).orElse(null));
     }
 
     /**
@@ -78,7 +78,7 @@ public class ActivityController extends BaseController {
      * @param activity 活动信息
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
-    @Secured(TUTOR)
+    @Secured(ROLE_TUTOR)
     @PostMapping("save")
     @Log(category = ACTIVITY, operType = INSERT)
     public AjaxResult<Void> save(@Validated @RequestBody Activity activity) {
@@ -91,7 +91,7 @@ public class ActivityController extends BaseController {
      * @param activityId 活动主键
      * @return 总是返回 {@code true} 删除成功
      */
-    @Secured(TUTOR)
+    @Secured(ROLE_TUTOR)
     @DeleteMapping("remove/{activityId}")
     @Log(category = ACTIVITY, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable Integer activityId) {

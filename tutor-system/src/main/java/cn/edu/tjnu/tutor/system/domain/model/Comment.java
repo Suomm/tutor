@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -26,44 +27,54 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 活动记录信息。
+ * 文章评论信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@Document(indexName = "txt_record")
-public class Record implements Serializable {
+@Document(indexName = "txt_comment")
+public class Comment implements Serializable {
 
-    private static final long serialVersionUID = -2836638793719121984L;
+    private static final long serialVersionUID = -1473775313525466489L;
 
     /**
-     * 活动记录主键。
+     * 评论主键。
      */
     @Id
-    private Integer recordId;
+    private Integer commentId;
 
     /**
-     * 完成用户的主键。
-     */
-    private Integer userId;
-
-    /**
-     * 完成活动的主键。
-     */
-    private Integer activityId;
-
-    /**
-     * 活动标题。
+     * 评论文章的主键。
      *
-     * @see Activity#getTitle()
+     * @see Article#getArticleId()
+     */
+    private Integer articleId;
+
+    /**
+     * 评论者姓名。
+     *
+     * @see User#getUserName()
      */
     @Field(type = FieldType.Keyword)
-    private String activityTitle;
+    private String reviewer;
 
     /**
-     * 活动完成的时间。
+     * 回复评论的主键（0表示直接对文章进行评论）。
+     *
+     * @see #commentId
      */
-    private LocalDateTime completeTime;
+    private Integer replyId;
+
+    /**
+     * 评论内容。
+     */
+    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    private String content;
+
+    /**
+     * 创建时间。
+     */
+    private LocalDateTime createTime;
 
 }

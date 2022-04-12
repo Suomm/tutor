@@ -14,18 +14,45 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.vo;
+package cn.edu.tjnu.tutor.system.domain.view;
+
+import cn.edu.tjnu.tutor.common.core.domain.TreeNode;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * 路由信息展示。
+ * 问题答复显示信息。
  *
  * @author 王帅
  * @since 2.0
  */
-public class RouterVo implements Serializable {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class AnswerVO extends TreeNode<AnswerVO> implements Serializable {
 
-    private static final long serialVersionUID = 7776260582756952728L;
+    private static final long serialVersionUID = 7475794724822576239L;
+
+    /**
+     * 答复人姓名。
+     */
+    private String reviewer;
+
+    /**
+     * 答复内容。
+     */
+    private String content;
+
+    /**
+     * 答复点赞数。
+     */
+    private Integer star;
+
+    /**
+     * 回答时间。
+     */
+    private LocalDateTime createTime;
 
 }

@@ -16,10 +16,10 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.edu.tjnu.tutor.system.domain.Document;
-import cn.edu.tjnu.tutor.system.service.DocumentService;
+import cn.edu.tjnu.tutor.system.domain.entity.Document;
 import cn.edu.tjnu.tutor.system.mapper.DocumentMapper;
+import cn.edu.tjnu.tutor.system.service.DocumentService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

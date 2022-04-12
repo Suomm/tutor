@@ -16,10 +16,10 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.edu.tjnu.tutor.system.domain.Role;
-import cn.edu.tjnu.tutor.system.service.RoleService;
+import cn.edu.tjnu.tutor.system.domain.entity.Role;
 import cn.edu.tjnu.tutor.system.mapper.RoleMapper;
+import cn.edu.tjnu.tutor.system.service.RoleService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

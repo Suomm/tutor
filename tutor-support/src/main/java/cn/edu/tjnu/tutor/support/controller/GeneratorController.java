@@ -18,8 +18,8 @@ package cn.edu.tjnu.tutor.support.controller;
 
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.system.domain.Document;
-import cn.edu.tjnu.tutor.system.domain.Template;
+import cn.edu.tjnu.tutor.system.domain.entity.Document;
+import cn.edu.tjnu.tutor.system.domain.entity.Template;
 import cn.edu.tjnu.tutor.system.service.DocumentService;
 import cn.edu.tjnu.tutor.system.service.TemplateService;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.INSTRUCTOR;
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.INTERN;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_INSTRUCTOR;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_INTERN;
 
 /**
  * 教育实践手册生成控制器。
@@ -54,7 +54,7 @@ public class GeneratorController extends BaseController {
      * @param document 文档信息
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
-    @Secured(INSTRUCTOR)
+    @Secured(ROLE_INSTRUCTOR)
     @PostMapping("/upload/doc")
     public AjaxResult<Void> uploadDoc(@Validated @RequestBody Document document) {
         return toResult(documentService.save(document));
@@ -66,7 +66,7 @@ public class GeneratorController extends BaseController {
      * @param template 模板信息
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
-    @Secured(INTERN)
+    @Secured(ROLE_INTERN)
     @PostMapping("/upload/tmpl")
     public AjaxResult<Void> uploadTmpl(@Validated @RequestBody Template template) {
         return toResult(templateService.save(template));

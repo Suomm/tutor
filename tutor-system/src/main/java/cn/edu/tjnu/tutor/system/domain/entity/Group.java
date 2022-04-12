@@ -14,52 +14,56 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-
 import java.io.Serializable;
 
 /**
- * 对象存储信息。
+ * 导师小组信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("sys_oss")
-public class Oss implements Serializable {
+@TableName("sys_group")
+public class Group implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 对象存储主键。
+     * 小组主键。
      */
     @TableId(type = IdType.AUTO)
-    private Integer ossId;
+    private Integer groupId;
 
     /**
-     * 文件名。
+     * 创建者主键。
      */
-    private String fileName;
+    private Integer userId;
 
     /**
-     * 原名。
+     * 小组名称。
      */
-    private String originalName;
+    private String groupName;
 
     /**
-     * 文件后缀名。
+     * 小组可选人数。
      */
-    private String fileSuffix;
+    private Integer total;
 
     /**
-     * URL地址。
+     * 小组剩余可选人数。
      */
-    private String url;
+    private Integer stock;
+
+    /**
+     * 小组介绍。
+     */
+    private String introduce;
 
 }

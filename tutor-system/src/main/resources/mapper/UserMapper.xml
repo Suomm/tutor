@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.tjnu.tutor.system.mapper.UserMapper">
 
-    <resultMap id="UserResult" type="cn.edu.tjnu.tutor.system.domain.User">
+    <resultMap id="UserResult" type="cn.edu.tjnu.tutor.system.domain.entity.User">
         <id property="userId" column="user_id"/>
         <result property="collegeId" column="college_id"/>
         <result property="userCode" column="user_code"/>
@@ -16,16 +16,56 @@
         <result property="introduce" column="introduce"/>
     </resultMap>
 
+    <resultMap id="UserVOResult" type="cn.edu.tjnu.tutor.system.domain.view.UserVO">
+        <result property="userCode" column="user_code"/>
+        <result property="userName" column="user_name"/>
+        <result property="email" column="user_email"/>
+        <result property="phone" column="user_phone"/>
+        <result property="gender" column="gender"/>
+        <result property="avatar" column="avatar"/>
+        <result property="introduce" column="introduce"/>
+        <result property="className" column="class_name"/>
+        <result property="majorName" column="major_name"/>
+        <association property="college" javaType="cn.edu.tjnu.tutor.system.domain.view.CollegeVO">
+            <result property="name" column="college_name"/>
+            <result property="leader" column="leader"/>
+            <result property="phone" column="college_phone"/>
+            <result property="email" column="college_email"/>
+        </association>
+    </resultMap>
+
     <insert id="bindRoleForUser">
         insert into ref_user_role (user_id, role_id)
         values (#{userId}, (select role_id from sys_role where role_key = #{roleKey}))
     </insert>
 
-    <select id="selectRoleKeysByUserId" resultType="java.lang.String">
+    <select id="selectRoleKeysById" resultType="java.lang.String">
         select r.role_key
         from sys_role r
                  left join ref_user_role ur on ur.role_id = r.role_id
         where ur.user_id = #{userId}
+    </select>
+
+    <select id="selectUserInfo" resultMap="UserVOResult">
+        select u.user_code,
+               u.user_name,
+               u.email as user_email,
+               u.phone as user_phone,
+               u.gender,
+               u.avatar,
+               u.introduce,
+               cl.class_name,
+               m.major_name,
+               c.college_name,
+               c.leader,
+               c.email as college_email,
+               c.phone as college_phone
+        from sys_user u
+                 left join sys_college c on u.college_id = c.college_id
+                 left join ref_user_class uc on uc.user_id = u.user_id
+                 left join sys_class cl on cl.class_id = uc.class_id
+                 left join sys_major m on m.major_id = cl.major_id
+        where u.user_id = #{userId}
     </select>
 
 </mapper>

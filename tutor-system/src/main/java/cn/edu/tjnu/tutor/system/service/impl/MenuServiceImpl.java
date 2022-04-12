@@ -16,11 +16,17 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.edu.tjnu.tutor.system.domain.Menu;
-import cn.edu.tjnu.tutor.system.service.MenuService;
+import cn.edu.tjnu.tutor.common.util.TreeUtils;
+import cn.edu.tjnu.tutor.system.domain.entity.Menu;
+import cn.edu.tjnu.tutor.system.domain.view.RouterVO;
 import cn.edu.tjnu.tutor.system.mapper.MenuMapper;
+import cn.edu.tjnu.tutor.system.service.MenuService;
+import cn.hutool.core.text.CharSequenceUtil;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 菜单信息服务层实现。
@@ -30,4 +36,27 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+
+    @Override
+    public List<RouterVO> getRouters(Integer userId) {
+        return TreeUtils.build(baseMapper.findByUserId(userId)
+                .stream()
+                .map(this::generate)
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * 生成未进行映射的属性。
+     */
+    private RouterVO generate(RouterVO routerVO) {
+        // 设置路由的 name 属性，默认 path 属性首字母大写
+        routerVO.setName(CharSequenceUtil.upperFirst(routerVO.getPath()));
+        // 如果路由对应的组件为空，则为父组件，path 前面要加 /
+        if (routerVO.getComponent() == null) {
+            routerVO.setComponent("LAYOUT");
+            routerVO.setPath("/" + routerVO.getPath());
+        }
+        return routerVO;
+    }
+
 }

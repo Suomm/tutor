@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.User;
+import cn.edu.tjnu.tutor.system.domain.entity.User;
 import cn.edu.tjnu.tutor.system.service.UserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.STUDENT;
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.TEACHER;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_STUDENT;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_TEACHER;
 import static cn.edu.tjnu.tutor.common.enums.Category.USER;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
@@ -54,7 +54,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<User>> list(PageHelper pageHelper) {
-        return AjaxResult.success(userService.page(pageHelper.mybatisPlus()));
+        return success(userService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -64,9 +64,9 @@ public class UserController extends BaseController {
      * @return 用户信息详情
      */
     @GetMapping("getInfo/{userId}")
-    @Secured({STUDENT, TEACHER})
+    @Secured({ROLE_STUDENT, ROLE_TEACHER})
     public AjaxResult<User> getInfo(@PathVariable Integer userId) {
-        return AjaxResult.success(userService.getById(userId));
+        return success(userService.getById(userId));
     }
 
     /**

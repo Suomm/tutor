@@ -14,40 +14,34 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.vo;
+package cn.edu.tjnu.tutor.system.structure;
 
-import cn.edu.tjnu.tutor.common.core.domain.TreeNode;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import cn.edu.tjnu.tutor.system.domain.model.Answer;
+import cn.edu.tjnu.tutor.system.domain.view.AnswerVO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
- * 文章评论显示信息。
+ * 问题回复实体类结构映射接口。
  *
  * @author 王帅
  * @since 2.0
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class CommentVO extends TreeNode<CommentVO, Integer> implements Serializable {
+@Mapper
+public interface AnswerStruct {
 
-    private static final long serialVersionUID = -441183386271447419L;
-
-    /**
-     * 评论人姓名。
-     */
-    private String reviewer;
+    AnswerStruct INSTANCE = Mappers.getMapper(AnswerStruct.class);
 
     /**
-     * 评论内容。
+     * 转换到 VO 对象。
+     *
+     * @param answer 实体类
+     * @return VO 对象
      */
-    private String content;
-
-    /**
-     * 评论时间。
-     */
-    private LocalDateTime createTime;
+    @Mapping(target = "children", ignore = true)
+    @Mapping(source = "answerId", target = "id")
+    @Mapping(source = "replyId", target = "parentId")
+    AnswerVO toVO(Answer answer);
 
 }

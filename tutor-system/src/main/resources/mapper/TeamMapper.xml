@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.tjnu.tutor.system.mapper.TeamMapper">
 
-    <resultMap id="TeamResult" type="cn.edu.tjnu.tutor.system.domain.Team">
+    <resultMap id="TeamResult" type="cn.edu.tjnu.tutor.system.domain.entity.Team">
         <id property="teamId" column="team_id"/>
         <result property="collegeId" column="college_id"/>
         <result property="teamName" column="team_name"/>

@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Menu;
+import cn.edu.tjnu.tutor.system.domain.entity.Menu;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<Menu>> list(PageHelper pageHelper) {
-        return AjaxResult.success(menuService.page(pageHelper.mybatisPlus()));
+        return success(menuService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class MenuController extends BaseController {
      */
     @GetMapping("getInfo/{menuId}")
     public AjaxResult<Menu> getInfo(@PathVariable Integer menuId) {
-        return AjaxResult.success(menuService.getById(menuId));
+        return success(menuService.getById(menuId));
     }
 
     /**

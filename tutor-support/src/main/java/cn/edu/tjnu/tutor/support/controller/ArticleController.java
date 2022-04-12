@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Article;
+import cn.edu.tjnu.tutor.system.domain.model.Article;
 import cn.edu.tjnu.tutor.system.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,7 +52,7 @@ public class ArticleController extends BaseController {
      */
     @GetMapping("list}")
     public AjaxResult<Page<Article>> list(PageHelper pageHelper) {
-        return AjaxResult.success(articleRepository.findAll(pageHelper.elasticsearch()));
+        return success(articleRepository.findAll(pageHelper.elasticsearch()));
     }
 
     /**
@@ -63,7 +63,7 @@ public class ArticleController extends BaseController {
      */
     @GetMapping("getInfo/{articleId}")
     public AjaxResult<Article> getInfo(@PathVariable Integer articleId) {
-        return AjaxResult.success(articleRepository.findById(articleId).orElse(null));
+        return success(articleRepository.findById(articleId).orElse(null));
     }
 
     /**

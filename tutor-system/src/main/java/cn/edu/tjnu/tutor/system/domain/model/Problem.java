@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -26,49 +27,53 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 文章评论信息。
+ * 问题信息。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
 @Data
-@Document(indexName = "txt_comment")
-public class Comment implements Serializable {
+@Document(indexName = "txt_problem")
+public class Problem implements Serializable {
 
-    private static final long serialVersionUID = -1473775313525466489L;
+    private static final long serialVersionUID = 5559693170878148296L;
 
     /**
-     * 评论主键。
+     * 问题主键。
      */
     @Id
-    private Integer commentId;
+    private Integer problemId;
 
     /**
-     * 评论文章的主键。
+     * 发布问题的用户主键。
      *
-     * @see Article#getArticleId()
+     * @see User#getUserId()
      */
-    private Integer articleId;
+    private Integer userId;
 
     /**
-     * 评论者姓名。
+     * 提问者姓名。
      *
      * @see User#getUserName()
      */
     @Field(type = FieldType.Keyword)
-    private String reviewer;
+    private String questioner;
 
     /**
-     * 回复评论的主键（0表示直接对文章进行评论）。
-     *
-     * @see #commentId
+     * 发布问题者所属学院名称。
      */
-    private Integer replyId;
+    @Field(type = FieldType.Keyword)
+    private String collegeName;
 
     /**
-     * 评论内容。
+     * 问题标题。
      */
     @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    private String title;
+
+    /**
+     * 详细内容。
+     */
     private String content;
 
     /**
@@ -76,4 +81,14 @@ public class Comment implements Serializable {
      */
     private LocalDateTime createTime;
 
+    /**
+     * 可见范围（0导师小组/班级内可见，1精选问题/公开）。
+     */
+    private Integer scope;
+
+    /**
+     * 当前状态（0未解决，1线上解决，2线下解决）。
+     */
+    private Integer status;
+    
 }

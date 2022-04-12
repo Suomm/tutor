@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -24,32 +24,47 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * （学生）用户与生成的（教育实践）文档关联。
+ * （教育实践）文档拆分之后的模板信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("gen_user_doc")
-public class UserDoc implements Serializable {
+@TableName("gen_template")
+public class Template implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户主键。
+     * 模板主键。
      */
     @TableId
-    private Integer userId;
+    private Integer tmplId;
 
     /**
-     * 文档主键。
+     * 所属手册主键。
      */
     private Integer docId;
 
     /**
-     * 生成的文档URL。
+     * 模板名称。
      */
-    private String docUrl;
+    private String tmplName;
+
+    /**
+     * 模板排列顺序。
+     */
+    private Integer tmplOrder;
+
+    /**
+     * 模板文件URL。
+     */
+    private String tmplUrl;
+
+    /**
+     * 是否只读（0否 1是）。
+     */
+    private Integer readOnly;
 
     /**
      * 创建时间。

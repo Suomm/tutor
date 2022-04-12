@@ -17,7 +17,7 @@
 package cn.edu.tjnu.tutor.system.mapper;
 
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.Team;
+import cn.edu.tjnu.tutor.system.domain.entity.Team;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 

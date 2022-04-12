@@ -31,36 +31,36 @@ public final class RoleConst {
     /**
      * 超级管理员：职能部门人员角色，用于设置系统相关参数，查看各个部门任务完成度。
      */
-    public static final String ROOT       = "ROLE_ROOT";
+    public static final String ROLE_ROOT = "ROLE_ROOT";
 
     /**
      * 学院管理员：学院内部管理角色，用于设置每个学院的基本信息等操作。
      */
-    public static final String ADMIN      = "ROLE_ADMIN";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     /**
      * 导师：指导班级或者小组进行相关活动，回答学生提问等的教师角色。
      */
-    public static final String TUTOR      = "ROLE_TUTOR";
+    public static final String ROLE_TUTOR = "ROLE_TUTOR";
 
     /**
      * 学生：跟随导师进行学习，完成教育实践等任务的角色。
      */
-    public static final String STUDENT    = "ROLE_STUDENT";
+    public static final String ROLE_STUDENT = "ROLE_STUDENT";
 
     /**
      * 教师：没有任何进一步操作的普通教师角色。
      */
-    public static final String TEACHER    = "ROLE_TEACHER";
+    public static final String ROLE_TEACHER = "ROLE_TEACHER";
 
     /**
      * 实习生：需要完成教育实践活动的特定学生角色。
      */
-    public static final String INTERN     = "ROLE_INTERN";
+    public static final String ROLE_INTERN = "ROLE_INTERN";
 
     /**
      * 实践导师：指导实习生完成教育实践的导师角色。
      */
-    public static final String INSTRUCTOR = "ROLE_INSTRUCTOR";
+    public static final String ROLE_INSTRUCTOR = "ROLE_INSTRUCTOR";
 
 }

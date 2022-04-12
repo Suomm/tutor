@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Group;
+import cn.edu.tjnu.tutor.system.domain.entity.Group;
 import cn.edu.tjnu.tutor.system.service.GroupService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class GroupController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<Group>> list(PageHelper pageHelper) {
-        return AjaxResult.success(groupService.page(pageHelper.mybatisPlus()));
+        return success(groupService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class GroupController extends BaseController {
      */
     @GetMapping("getInfo/{groupId}")
     public AjaxResult<Group> getInfo(@PathVariable Integer groupId) {
-        return AjaxResult.success(groupService.getById(groupId));
+        return success(groupService.getById(groupId));
     }
 
     /**

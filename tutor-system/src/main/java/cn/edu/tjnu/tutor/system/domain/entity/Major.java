@@ -14,45 +14,46 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.vo;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
-import cn.edu.tjnu.tutor.common.core.domain.TreeNode;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
- * 问题答复显示信息。
+ * 专业信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class AnswerVO extends TreeNode<AnswerVO, Integer> implements Serializable {
+@TableName("sys_major")
+public class Major implements Serializable {
 
-    private static final long serialVersionUID = 7475794724822576239L;
-
-    /**
-     * 答复人姓名。
-     */
-    private String reviewer;
+    private static final long serialVersionUID = 1L;
 
     /**
-     * 答复内容。
+     * 专业主键。
      */
-    private String content;
+    @TableId(type = IdType.AUTO)
+    private Integer majorId;
 
     /**
-     * 答复点赞数。
+     * 所属学院的主键。
      */
-    private Integer star;
+    private Integer collegeId;
 
     /**
-     * 回答时间。
+     * 专业名称。
      */
-    private LocalDateTime createTime;
+    private String majorName;
+
+    /**
+     * 专业简称。
+     */
+    private String majorAbbr;
 
 }

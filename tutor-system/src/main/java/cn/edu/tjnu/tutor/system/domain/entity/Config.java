@@ -14,66 +14,56 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
- * （教育实践）文档拆分之后的模板信息。
+ * 参数配置。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("gen_template")
-public class Template implements Serializable {
+@TableName("sys_config")
+public class Config implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 模板主键。
+     * 参数主键。
      */
-    @TableId
-    private Integer tmplId;
+    @TableId(type = IdType.AUTO)
+    @Null(groups = Insert.class)
+    @NotNull(groups = Update.class)
+    private Integer configId;
 
     /**
-     * 所属手册主键。
+     * 参数名称。
      */
-    private Integer docId;
+    @NotBlank(groups = Insert.class)
+    private String configName;
 
     /**
-     * 模板名称。
+     * 参数键名。
      */
-    private String tmplName;
+    @NotBlank(groups = Insert.class)
+    private String configKey;
 
     /**
-     * 模板排列顺序。
+     * 参数键值。
      */
-    private Integer tmplOrder;
-
-    /**
-     * 模板文件URL。
-     */
-    private String tmplUrl;
-
-    /**
-     * 是否只读（0否 1是）。
-     */
-    private Integer readOnly;
-
-    /**
-     * 创建时间。
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间。
-     */
-    private LocalDateTime updateTime;
+    @NotBlank(groups = Insert.class)
+    private String configValue;
 
 }

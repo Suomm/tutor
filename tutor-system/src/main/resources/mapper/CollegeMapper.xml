@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.tjnu.tutor.system.mapper.CollegeMapper">
 
-    <resultMap id="CollegeResult" type="cn.edu.tjnu.tutor.system.domain.College">
+    <resultMap id="CollegeResult" type="cn.edu.tjnu.tutor.system.domain.entity.College">
         <id property="collegeId" column="college_id"/>
         <result property="collegeCode" column="college_code"/>
         <result property="collegeName" column="college_name"/>
@@ -12,7 +12,6 @@
         <result property="phone" column="phone"/>
         <result property="email" column="email"/>
         <result property="visible" column="visible"/>
-        <result property="delFlag" column="del_flag"/>
     </resultMap>
 
 </mapper>

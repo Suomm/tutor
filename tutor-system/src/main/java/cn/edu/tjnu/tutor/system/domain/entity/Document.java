@@ -14,57 +14,45 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-
 import java.io.Serializable;
 
 /**
- * 导师小组信息。
+ * （教育实践）文档信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("sys_group")
-public class Group implements Serializable {
+@TableName("gen_document")
+public class Document implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 小组主键。
+     * 文档主键。
      */
-    @TableId(type = IdType.AUTO)
-    private Integer groupId;
+    @TableId
+    private Integer docId;
 
     /**
-     * 创建者主键。
+     * 文档名称。
      */
-    private Integer userId;
+    private String docName;
 
     /**
-     * 小组名称。
+     * 文档样例URL。
      */
-    private String groupName;
+    private String docUrl;
 
     /**
-     * 小组可选人数。
+     * 文件类型（文件后缀名）。
      */
-    private Integer total;
-
-    /**
-     * 小组剩余可选人数。
-     */
-    private Integer stock;
-
-    /**
-     * 小组介绍。
-     */
-    private String introduce;
+    private String docType;
 
 }

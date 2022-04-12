@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.repository;
 
-import cn.edu.tjnu.tutor.system.domain.Comment;
+import cn.edu.tjnu.tutor.system.domain.model.Comment;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import java.util.List;

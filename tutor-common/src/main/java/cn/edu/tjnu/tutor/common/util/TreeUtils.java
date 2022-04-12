@@ -20,9 +20,9 @@ import cn.edu.tjnu.tutor.common.core.domain.TreeNode;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 树结构工具类。
@@ -34,18 +34,29 @@ import java.util.stream.Stream;
 public final class TreeUtils {
 
     /**
-     * 构建树结构。
+     * 构建树结构（默认父节点主键为 0）。
      *
-     * @param nodes 所有节点数据流
-     * @param parentId 父节点主键
+     * @param nodes 所有节点数据集合
      * @param <T> 数据类型
-     * @param <I> 主键类型
      * @return 完整的树结构信息
      */
-    public static <T extends TreeNode<T, I>, I> List<T> build(Stream<T> nodes, I parentId) {
-        List<T> list = nodes.filter(e -> e.getParentId().equals(parentId))
+    public static <T extends TreeNode<T>> List<T> build(Collection<T> nodes) {
+        return build(nodes, 0);
+    }
+
+    /**
+     * 构建树结构。
+     *
+     * @param nodes 所有节点数据集合
+     * @param parentId 父节点主键
+     * @param <T> 数据类型
+     * @return 完整的树结构信息
+     */
+    public static <T extends TreeNode<T>> List<T> build(Collection<T> nodes, Integer parentId) {
+        List<T> list = nodes.stream()
+                .filter(e -> e.getParentId().equals(parentId))
                 .collect(Collectors.toList());
-        list.forEach(e -> e.setChild(build(nodes, e.getParentId())));
+        list.forEach(e -> e.setChildren(build(nodes, e.getId())));
         return list;
     }
 

@@ -17,19 +17,20 @@
 package cn.edu.tjnu.tutor.system.service.impl;
 
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
-import cn.edu.tjnu.tutor.system.domain.User;
+import cn.edu.tjnu.tutor.system.domain.entity.User;
+import cn.edu.tjnu.tutor.system.domain.view.UserVO;
 import cn.edu.tjnu.tutor.system.mapper.UserMapper;
 import cn.edu.tjnu.tutor.system.service.UserService;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ReUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static cn.edu.tjnu.tutor.common.constant.GlobalConst.EMPTY_STRING_ARRAY;
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.STUDENT;
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.TEACHER;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_STUDENT;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_TEACHER;
+import static org.springframework.security.core.authority.AuthorityUtils.createAuthorityList;
 
 /**
  * 用户信息服务层实现。
@@ -53,21 +54,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             baseMapper.insert(user);
             // 根据用户编号特征绑定初始角色
             if (ReUtil.isMatch(RE_STUDENT_CODE, user.getUserCode())) {
-                baseMapper.bindRoleForUser(user.getUserId(), STUDENT);
-                loginUser.setAuthorities(AuthorityUtils.createAuthorityList(STUDENT));
+                baseMapper.bindRoleForUser(user.getUserId(), ROLE_STUDENT);
+                loginUser.setAuthorities(createAuthorityList(ROLE_STUDENT));
             } else if (ReUtil.isMatch(RE_TEACHER_CODE, user.getUserCode())){
-                baseMapper.bindRoleForUser(user.getUserId(), TEACHER);
-                loginUser.setAuthorities(AuthorityUtils.createAuthorityList(TEACHER));
+                baseMapper.bindRoleForUser(user.getUserId(), ROLE_TEACHER);
+                loginUser.setAuthorities(createAuthorityList(ROLE_TEACHER));
             }
         }
         BeanUtil.copyProperties(loginUser, user);
         // 权限信息为空则查询权限信息
         if (loginUser.getAuthorities() != null) {
-            String[] roleKeys = baseMapper.selectRoleKeysByUserId(user.getUserId())
+            String[] roleKeys = baseMapper.selectRoleKeysById(user.getUserId())
                     .toArray(EMPTY_STRING_ARRAY);
-            loginUser.setAuthorities(AuthorityUtils.createAuthorityList(roleKeys));
+            loginUser.setAuthorities(createAuthorityList(roleKeys));
         }
         return loginUser;
+    }
+
+    @Override
+    public UserVO getInfo(Integer userId) {
+        return baseMapper.selectUserInfo(userId);
     }
 
 }

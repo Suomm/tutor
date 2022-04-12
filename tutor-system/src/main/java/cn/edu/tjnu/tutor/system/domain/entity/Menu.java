@@ -14,47 +14,61 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-
 import java.io.Serializable;
 
 /**
- * 专业信息。
+ * 菜单信息。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
 @Data
-@TableName("sys_major")
-public class Major implements Serializable {
+@TableName("sys_menu")
+public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 专业主键。
+     * 菜单主键。
      */
     @TableId(type = IdType.AUTO)
-    private Integer majorId;
+    private Integer menuId;
 
     /**
-     * 所属学院的主键。
+     * 菜单名称。
      */
-    private Integer collegeId;
+    private String menuName;
 
     /**
-     * 专业名称。
+     * 父菜单主键。
      */
-    private String majorName;
+    private Integer parentId;
 
     /**
-     * 专业简称。
+     * 菜单排序。
      */
-    private String majorAbbr;
+    private Integer order;
+
+    /**
+     * 路由地址。
+     */
+    private String path;
+
+    /**
+     * 组件路径。
+     */
+    private String component;
+
+    /**
+     * 菜单图标。
+     */
+    private String icon;
 
 }

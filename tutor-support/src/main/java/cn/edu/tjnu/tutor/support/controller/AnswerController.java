@@ -20,16 +20,16 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.util.TreeUtils;
-import cn.edu.tjnu.tutor.system.domain.Answer;
-import cn.edu.tjnu.tutor.system.domain.vo.AnswerVO;
+import cn.edu.tjnu.tutor.system.domain.model.Answer;
+import cn.edu.tjnu.tutor.system.domain.view.AnswerVO;
 import cn.edu.tjnu.tutor.system.repository.AnswerRepository;
-import cn.edu.tjnu.tutor.system.structure.AnswerMapper;
+import cn.edu.tjnu.tutor.system.structure.AnswerStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import static cn.edu.tjnu.tutor.common.enums.Category.ANSWER;
 import static cn.edu.tjnu.tutor.common.enums.OperType.DELETE;
@@ -56,9 +56,10 @@ public class AnswerController extends BaseController {
      */
     @GetMapping("list/{problemId}")
     public AjaxResult<List<AnswerVO>> list(@PathVariable Integer problemId) {
-        Stream<AnswerVO> nodes = answerRepository.findAllByProblemId(problemId).stream()
-                .map(AnswerMapper.INSTANCE::toVO);
-        return AjaxResult.success(TreeUtils.build(nodes, 0));
+        return success(TreeUtils.build(answerRepository.findAllByProblemId(problemId)
+                .stream()
+                .map(AnswerStruct.INSTANCE::toVO)
+                .collect(Collectors.toList())));
     }
 
     /**

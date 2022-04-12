@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Oss;
+import cn.edu.tjnu.tutor.system.domain.entity.Oss;
 import cn.edu.tjnu.tutor.system.service.OssService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class OssController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<Oss>> list(PageHelper pageHelper) {
-        return AjaxResult.success(ossService.page(pageHelper.mybatisPlus()));
+        return success(ossService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class OssController extends BaseController {
      */
     @GetMapping("getInfo/{ossId}")
     public AjaxResult<Oss> getInfo(@PathVariable Integer ossId) {
-        return AjaxResult.success(ossService.getById(ossId));
+        return success(ossService.getById(ossId));
     }
 
     /**

@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.College;
+import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROOT;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
@@ -51,10 +51,10 @@ public class CollegeController extends BaseController {
      * @param pageHelper 分页帮助
      * @return 分页对象
      */
-    @Secured(ROOT)
+    @Secured(ROLE_ROOT)
     @GetMapping("list")
     public AjaxResult<Page<College>> list(PageHelper pageHelper) {
-        return AjaxResult.success(collegeService.page(pageHelper.mybatisPlus()));
+        return success(collegeService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -65,7 +65,7 @@ public class CollegeController extends BaseController {
      */
     @GetMapping("getInfo/{collegeId}")
     public AjaxResult<College> getInfo(@PathVariable Integer collegeId) {
-        return AjaxResult.success(collegeService.getById(collegeId));
+        return success(collegeService.getById(collegeId));
     }
 
     /**

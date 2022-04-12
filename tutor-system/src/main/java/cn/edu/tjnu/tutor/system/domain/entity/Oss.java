@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -23,36 +24,41 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * （教育实践）文档信息。
+ * 对象存储信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("gen_document")
-public class Document implements Serializable {
+@TableName("sys_oss")
+public class Oss implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 文档主键。
+     * 对象存储主键。
      */
-    @TableId
-    private Integer docId;
+    @TableId(type = IdType.AUTO)
+    private Integer ossId;
 
     /**
-     * 文档名称。
+     * 文件名。
      */
-    private String docName;
+    private String fileName;
 
     /**
-     * 文档样例URL。
+     * 原名。
      */
-    private String docUrl;
+    private String originalName;
 
     /**
-     * 文件类型（文件后缀名）。
+     * 文件后缀名。
      */
-    private String docType;
+    private String fileSuffix;
+
+    /**
+     * URL地址。
+     */
+    private String url;
 
 }

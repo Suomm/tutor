@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.tjnu.tutor.system.mapper.MajorMapper">
 
-    <resultMap id="MajorResult" type="cn.edu.tjnu.tutor.system.domain.Major">
+    <resultMap id="MajorResult" type="cn.edu.tjnu.tutor.system.domain.entity.Major">
         <id property="majorId" column="major_id"/>
         <result property="collegeId" column="college_id"/>
         <result property="majorName" column="major_name"/>

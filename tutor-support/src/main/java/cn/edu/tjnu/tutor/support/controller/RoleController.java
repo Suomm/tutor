@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Role;
+import cn.edu.tjnu.tutor.system.domain.entity.Role;
 import cn.edu.tjnu.tutor.system.service.RoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class RoleController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<Role>> list(PageHelper pageHelper) {
-        return AjaxResult.success(roleService.page(pageHelper.mybatisPlus()));
+        return success(roleService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class RoleController extends BaseController {
      */
     @GetMapping("getInfo/{roleId}")
     public AjaxResult<Role> getInfo(@PathVariable Integer roleId) {
-        return AjaxResult.success(roleService.getById(roleId));
+        return success(roleService.getById(roleId));
     }
 
     /**

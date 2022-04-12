@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.TheClass;
+import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
 import cn.edu.tjnu.tutor.system.service.ClassService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.ADMIN;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ADMIN;
 import static cn.edu.tjnu.tutor.common.enums.Category.CLASS;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
@@ -53,7 +53,7 @@ public class ClassController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<TheClass>> list(PageHelper pageHelper) {
-        return AjaxResult.success(classService.page(pageHelper.mybatisPlus()));
+        return success(classService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -64,7 +64,7 @@ public class ClassController extends BaseController {
      */
     @GetMapping("getInfo/{classId}")
     public AjaxResult<TheClass> getInfo(@PathVariable Integer classId) {
-        return AjaxResult.success(classService.getById(classId));
+        return success(classService.getById(classId));
     }
 
     /**
@@ -73,7 +73,7 @@ public class ClassController extends BaseController {
      * @param theClass 班级信息
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
-    @Secured(ADMIN)
+    @Secured(ROLE_ADMIN)
     @PostMapping("save")
     @Log(category = CLASS, operType = INSERT)
     public AjaxResult<Void> save(@Validated @RequestBody TheClass theClass) {

@@ -14,39 +14,41 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.domain;
+package cn.edu.tjnu.tutor.system.domain.view;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
- * 树节点实体类。
+ * 学院基本信息。
  *
  * @author 王帅
  * @since 2.0
- * @param <T> 数据类型
  */
 @Data
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class TreeNode<T extends TreeNode<T>> {
+public class CollegeVO implements Serializable {
+
+    private static final long serialVersionUID = -1614808098749200598L;
 
     /**
-     * 树主键。
+     * 学院名称。
      */
-    protected Integer id;
+    private String name;
 
     /**
-     * 父主键。
+     * 学院负责人。
      */
-    protected Integer parentId;
+    private String leader;
 
     /**
-     * 子节点。
+     * 学院电话。
      */
-    protected List<T> children;
+    private String phone;
+
+    /**
+     * 学院邮箱。
+     */
+    private String email;
 
 }

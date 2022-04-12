@@ -16,32 +16,32 @@
 
 package cn.edu.tjnu.tutor.system.structure;
 
-import cn.edu.tjnu.tutor.system.domain.Answer;
-import cn.edu.tjnu.tutor.system.domain.vo.AnswerVO;
+import cn.edu.tjnu.tutor.system.domain.model.Comment;
+import cn.edu.tjnu.tutor.system.domain.view.CommentVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
- * 问题回复实体类结构映射接口。
+ * 文章评论实体类结构映射接口。
  *
  * @author 王帅
  * @since 2.0
  */
 @Mapper
-public interface AnswerMapper {
+public interface CommentStruct {
 
-    AnswerMapper INSTANCE = Mappers.getMapper(AnswerMapper.class);
+    CommentStruct INSTANCE = Mappers.getMapper(CommentStruct.class);
 
     /**
      * 转换到 VO 对象。
      *
-     * @param answer 实体类
+     * @param comment 实体类
      * @return VO 对象
      */
-    @Mapping(target = "child", ignore = true)
-    @Mapping(source = "answerId", target = "id")
+    @Mapping(target = "children", ignore = true)
+    @Mapping(source = "commentId", target = "id")
     @Mapping(source = "replyId", target = "parentId")
-    AnswerVO toVO(Answer answer);
+    CommentVO toVO(Comment comment);
 
 }

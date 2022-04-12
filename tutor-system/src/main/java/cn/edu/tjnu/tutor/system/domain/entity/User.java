@@ -14,72 +14,77 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
- * 菜单信息。
+ * 用户信息。
  *
  * @author 王帅
  * @since 1.0
  */
 @Data
-@TableName("sys_menu")
-public class Menu implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("sys_user")
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 菜单主键。
+     * 用户主键。
      */
     @TableId(type = IdType.AUTO)
-    private Integer menuId;
+    private Integer userId;
 
     /**
-     * 菜单名称。
+     * 所属学院主键。
      */
-    private String menuName;
+    private Integer collegeId;
 
     /**
-     * 父菜单主键。
+     * 用户编号（学号或工号）。
      */
-    private Integer parentId;
+    private String userCode;
 
     /**
-     * 菜单权重。
+     * 用户名称。
      */
-    private Integer weight;
+    private String userName;
 
     /**
-     * 路由地址。
+     * 用户邮箱。
      */
-    private String path;
+    private String email;
 
     /**
-     * 组件路径。
+     * 手机号码。
      */
-    private String component;
+    private String phone;
 
     /**
-     * 是否外链（0否，1是）。
+     * 用户性别（0女，1男，2保密）。
      */
-    private Integer isLink;
+    private Integer gender;
 
     /**
-     * 是否隐藏（0否，1是）。
+     * 头像地址。
      */
-    private Integer isHide;
+    private String avatar;
 
     /**
-     * 菜单图标。
+     * 自我介绍。
      */
-    private String icon;
+    private String introduce;
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -26,59 +26,44 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 问题答复信息。
+ * 活动记录信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@Document(indexName = "txt_answer")
-public class Answer implements Serializable {
+@Document(indexName = "txt_record")
+public class Record implements Serializable {
 
-    private static final long serialVersionUID = -5407130919934194838L;
+    private static final long serialVersionUID = -2836638793719121984L;
 
     /**
-     * 答复主键。
+     * 活动记录主键。
      */
     @Id
-    private Integer answerId;
+    private Integer recordId;
 
     /**
-     * 答复问题的主键。
-     *
-     * @see Problem#getProblemId()
+     * 完成用户的主键。
      */
-    private Integer problemId;
+    private Integer userId;
 
     /**
-     * 答复者姓名。
+     * 完成活动的主键。
+     */
+    private Integer activityId;
+
+    /**
+     * 活动标题。
      *
-     * @see User#getUserName()
+     * @see Activity#getTitle()
      */
     @Field(type = FieldType.Keyword)
-    private String reviewer;
+    private String activityTitle;
 
     /**
-     * 追问答复的主键（0表示直接对问题进行答复）。
-     *
-     * @see #answerId
+     * 活动完成的时间。
      */
-    private Integer replyId;
-
-    /**
-     * 答复内容。
-     */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private String content;
-
-    /**
-     * 答复点赞数。
-     */
-    private Integer star;
-
-    /**
-     * 创建时间。
-     */
-    private LocalDateTime createTime;
+    private LocalDateTime completeTime;
 
 }

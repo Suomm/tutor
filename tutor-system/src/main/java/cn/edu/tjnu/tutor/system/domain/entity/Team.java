@@ -14,42 +14,46 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-
 import java.io.Serializable;
 
 /**
- * 角色信息。
+ * 导师团信息。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 @Data
-@TableName("sys_role")
-public class Role implements Serializable {
+@TableName("sys_team")
+public class Team implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 角色主键。
+     * 导师团主键。
      */
     @TableId(type = IdType.AUTO)
-    private Integer roleId;
+    private Integer teamId;
 
     /**
-     * 角色键名。
+     * 所属学院主键。
      */
-    private String roleKey;
+    private Integer collegeId;
 
     /**
-     * 角色名称。
+     * 导师团名称。
      */
-    private String roleName;
+    private String teamName;
+
+    /**
+     * 导师团介绍信息。
+     */
+    private String introduce;
 
 }

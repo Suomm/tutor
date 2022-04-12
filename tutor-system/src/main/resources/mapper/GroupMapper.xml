@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.tjnu.tutor.system.mapper.GroupMapper">
 
-    <resultMap id="GroupResult" type="cn.edu.tjnu.tutor.system.domain.Group">
+    <resultMap id="GroupResult" type="cn.edu.tjnu.tutor.system.domain.entity.Group">
         <id property="groupId" column="group_id"/>
         <result property="userId" column="user_id"/>
         <result property="groupName" column="group_name"/>

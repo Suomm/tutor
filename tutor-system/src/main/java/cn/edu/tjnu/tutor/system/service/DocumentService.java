@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.service;
 
-import cn.edu.tjnu.tutor.system.domain.Document;
+import cn.edu.tjnu.tutor.system.domain.entity.Document;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

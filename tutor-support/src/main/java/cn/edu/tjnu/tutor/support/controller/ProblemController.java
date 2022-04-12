@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Problem;
+import cn.edu.tjnu.tutor.system.domain.model.Problem;
 import cn.edu.tjnu.tutor.system.repository.ProblemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,7 +52,7 @@ public class ProblemController extends BaseController {
      */
     @GetMapping("list}")
     public AjaxResult<Page<Problem>> list(PageHelper pageHelper) {
-        return AjaxResult.success(problemRepository.findAll(pageHelper.elasticsearch()));
+        return success(problemRepository.findAll(pageHelper.elasticsearch()));
     }
 
     /**
@@ -63,7 +63,7 @@ public class ProblemController extends BaseController {
      */
     @GetMapping("getInfo/{problemId}")
     public AjaxResult<Problem> getInfo(@PathVariable Integer problemId) {
-        return AjaxResult.success(problemRepository.findById(problemId).orElse(null));
+        return success(problemRepository.findById(problemId).orElse(null));
     }
 
     /**

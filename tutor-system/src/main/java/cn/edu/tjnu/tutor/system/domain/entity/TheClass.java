@@ -14,56 +14,46 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
-import cn.edu.tjnu.tutor.common.validation.groups.Insert;
-import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * 参数配置。
+ * 班级信息。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
 @Data
-@TableName("sys_config")
-public class Config implements Serializable {
+@TableName("sys_class")
+public class TheClass implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 参数主键。
+     * 班级主键。
      */
     @TableId(type = IdType.AUTO)
-    @Null(groups = Insert.class)
-    @NotNull(groups = Update.class)
-    private Integer configId;
+    private Integer classId;
 
     /**
-     * 参数名称。
+     * 所属专业的主键。
      */
-    @NotBlank(groups = Insert.class)
-    private String configName;
+    private Integer majorId;
 
     /**
-     * 参数键名。
+     * 班级名称。
      */
-    @NotBlank(groups = Insert.class)
-    private String configKey;
+    private String className;
 
     /**
-     * 参数键值。
+     * 所属年级。
      */
-    @NotBlank(groups = Insert.class)
-    private String configValue;
+    private String grade;
 
 }

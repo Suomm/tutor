@@ -20,16 +20,16 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.util.TreeUtils;
-import cn.edu.tjnu.tutor.system.domain.Comment;
-import cn.edu.tjnu.tutor.system.domain.vo.CommentVO;
+import cn.edu.tjnu.tutor.system.domain.model.Comment;
+import cn.edu.tjnu.tutor.system.domain.view.CommentVO;
 import cn.edu.tjnu.tutor.system.repository.CommentRepository;
-import cn.edu.tjnu.tutor.system.structure.CommentMapper;
+import cn.edu.tjnu.tutor.system.structure.CommentStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import static cn.edu.tjnu.tutor.common.enums.Category.COMMENT;
 import static cn.edu.tjnu.tutor.common.enums.OperType.DELETE;
@@ -56,9 +56,10 @@ public class CommentController extends BaseController {
      */
     @GetMapping("list/{articleId}")
     public AjaxResult<List<CommentVO>> list(@PathVariable Integer articleId) {
-        Stream<CommentVO> nodes = commentRepository.findAllByArticleId(articleId).stream()
-                .map(CommentMapper.INSTANCE::toVO);
-        return AjaxResult.success(TreeUtils.build(nodes, 0));
+        return success(TreeUtils.build(commentRepository.findAllByArticleId(articleId)
+                .stream()
+                .map(CommentStruct.INSTANCE::toVO)
+                .collect(Collectors.toList())));
     }
 
     /**

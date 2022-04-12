@@ -14,34 +14,36 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.structure;
+package cn.edu.tjnu.tutor.system.domain.view;
 
-import cn.edu.tjnu.tutor.system.domain.vo.CommentVO;
-import cn.edu.tjnu.tutor.system.domain.Comment;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
- * 文章评论实体类结构映射接口。
+ * 路由元数据。
  *
  * @author 王帅
  * @since 2.0
  */
-@Mapper
-public interface CommentMapper {
+@Data
+public class MetaVO implements Serializable {
 
-    CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
+    private static final long serialVersionUID = -8923807398745375358L;
 
     /**
-     * 转换到 VO 对象。
-     *
-     * @param comment 实体类
-     * @return VO 对象
+     * 菜单图标。
      */
-    @Mapping(target = "child", ignore = true)
-    @Mapping(source = "commentId", target = "id")
-    @Mapping(source = "replyId", target = "parentId")
-    CommentVO toVO(Comment comment);
+    private String icon;
+
+    /**
+     * 菜单标题。
+     */
+    private String title;
+
+    /**
+     * 菜单排序，只对第一级有效。
+     */
+    private Integer orderNo;
 
 }

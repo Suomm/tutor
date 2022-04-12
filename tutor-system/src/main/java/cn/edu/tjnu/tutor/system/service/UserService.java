@@ -17,7 +17,8 @@
 package cn.edu.tjnu.tutor.system.service;
 
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
-import cn.edu.tjnu.tutor.system.domain.User;
+import cn.edu.tjnu.tutor.system.domain.entity.User;
+import cn.edu.tjnu.tutor.system.domain.view.UserVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -45,5 +46,13 @@ public interface UserService extends IService<User> {
      * @return 登录用户
      */
     LoginUser login(User user);
+
+    /**
+     * 根据用户主键获取用户所有信息。
+     *
+     * @param userId 用户主键
+     * @return 用户所有信息
+     */
+    UserVO getInfo(Integer userId);
 
 }

@@ -20,7 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.helper.PageHelper;
-import cn.edu.tjnu.tutor.system.domain.Config;
+import cn.edu.tjnu.tutor.system.domain.entity.Config;
 import cn.edu.tjnu.tutor.system.service.ConfigService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class ConfigController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<Page<Config>> list(PageHelper pageHelper) {
-        return AjaxResult.success(configService.page(pageHelper.mybatisPlus()));
+        return success(configService.page(pageHelper.mybatisPlus()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class ConfigController extends BaseController {
      */
     @GetMapping("getInfo/{configId}")
     public AjaxResult<Config> getInfo(@PathVariable Integer configId) {
-        return AjaxResult.success(configService.getById(configId));
+        return success(configService.getById(configId));
     }
 
     /**

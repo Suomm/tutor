@@ -18,8 +18,8 @@ package cn.edu.tjnu.tutor.admin.security;
 
 import cn.edu.tjnu.tutor.common.enums.ExceptionType;
 import cn.edu.tjnu.tutor.common.exception.ServiceException;
-import cn.edu.tjnu.tutor.system.domain.College;
-import cn.edu.tjnu.tutor.system.domain.User;
+import cn.edu.tjnu.tutor.system.domain.entity.College;
+import cn.edu.tjnu.tutor.system.domain.entity.User;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
 import cn.edu.tjnu.tutor.system.service.UserService;
 import lombok.RequiredArgsConstructor;

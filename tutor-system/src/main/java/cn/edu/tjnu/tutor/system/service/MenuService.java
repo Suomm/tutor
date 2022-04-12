@@ -16,8 +16,11 @@
 
 package cn.edu.tjnu.tutor.system.service;
 
-import cn.edu.tjnu.tutor.system.domain.Menu;
+import cn.edu.tjnu.tutor.system.domain.entity.Menu;
+import cn.edu.tjnu.tutor.system.domain.view.RouterVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 菜单信息服务层。
@@ -26,4 +29,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 1.0
  */
 public interface MenuService extends IService<Menu> {
+
+    /**
+     * 根据用户主键查询路由权限信息。
+     *
+     * @param userId 用户主键
+     * @return 路由信息
+     */
+    List<RouterVO> getRouters(Integer userId);
+
 }

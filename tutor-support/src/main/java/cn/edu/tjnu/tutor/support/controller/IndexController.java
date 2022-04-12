@@ -16,13 +16,21 @@
 
 package cn.edu.tjnu.tutor.support.controller;
 
+import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.system.domain.vo.RouterVo;
+import cn.edu.tjnu.tutor.system.domain.view.RouterVO;
+import cn.edu.tjnu.tutor.system.domain.view.UserVO;
+import cn.edu.tjnu.tutor.system.service.MenuService;
+import cn.edu.tjnu.tutor.system.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_STUDENT;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_TEACHER;
 
 /**
  * 首页控制器。
@@ -31,7 +39,12 @@ import java.util.Map;
  * @since 2.0
  */
 @RestController
-public class IndexController {
+@RequiredArgsConstructor
+@Secured({ROLE_STUDENT, ROLE_TEACHER})
+public class IndexController extends BaseController {
+
+    private final MenuService menuService;
+    private final UserService userService;
 
     /**
      * 后台首页展示内容。
@@ -40,7 +53,7 @@ public class IndexController {
      */
     @GetMapping({"/", "/index"})
     public AjaxResult<String> index() {
-        return AjaxResult.success("Hello World!");
+        return success("Hello World!");
     }
 
     /**
@@ -49,8 +62,8 @@ public class IndexController {
      * @return 用户信息
      */
     @GetMapping("/getInfo")
-    public AjaxResult<Map<String, Object>> getInfo() {
-        return AjaxResult.success(new HashMap<>(0));
+    public AjaxResult<UserVO> getInfo() {
+        return success(userService.getInfo(getUserId()));
     }
 
     /**
@@ -59,9 +72,8 @@ public class IndexController {
      * @return 路由信息
      */
     @GetMapping("/getRouters")
-    public AjaxResult<RouterVo> getRouters() {
-        return AjaxResult.success(new RouterVo());
+    public AjaxResult<List<RouterVO>> getRouters() {
+        return success(menuService.getRouters(getUserId()));
     }
-
 
 }

@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.repository;
 
-import cn.edu.tjnu.tutor.system.domain.Activity;
+import cn.edu.tjnu.tutor.system.domain.model.Activity;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**

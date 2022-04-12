@@ -14,67 +14,51 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * 学院信息。
+ * （学生）用户与生成的（教育实践）文档关联。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 @Data
-@TableName("sys_college")
-public class College implements Serializable {
+@TableName("gen_user_doc")
+public class UserDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 学院主键。
+     * 用户主键。
      */
-    @TableId(type = IdType.AUTO)
-    private Integer collegeId;
+    @TableId
+    private Integer userId;
 
     /**
-     * 学院编码。
+     * 文档主键。
      */
-    private Integer collegeCode;
+    private Integer docId;
 
     /**
-     * 学院名称。
+     * 生成的文档URL。
      */
-    private String collegeName;
+    private String docUrl;
 
     /**
-     * 学院负责人。
+     * 创建时间。
      */
-    private String leader;
+    private LocalDateTime createTime;
 
     /**
-     * 学院电话。
+     * 更新时间。
      */
-    private String phone;
-
-    /**
-     * 学院邮箱。
-     */
-    private String email;
-
-    /**
-     * 可见性（0可见，1不可见）。
-     */
-    private Integer visible;
-
-    /**
-     * 删除标志（0存在，1删除）。
-     */
-    private Integer delFlag;
+    private LocalDateTime updateTime;
 
 }

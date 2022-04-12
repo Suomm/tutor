@@ -36,6 +36,13 @@ public abstract class BaseController {
     }
 
     /**
+     * 返回成功数据。
+     */
+    protected <T> AjaxResult<T> success(T data) {
+        return AjaxResult.success(data);
+    }
+
+    /**
      * 返回失败消息。
      */
     protected AjaxResult<Void> error() {
@@ -63,10 +70,21 @@ public abstract class BaseController {
     }
 
     /**
+     * 获取当前登录用户主键。
+     *
+     * @return 用户主键
+     */
+    protected Integer getUserId() {
+        return getLoginUser().getUserId();
+    }
+
+    /**
      * 获取用户缓存信息。
+     *
+     * @return 登录用户
      */
     protected LoginUser getLoginUser() {
         return SecurityUtils.getLoginUser();
     }
-    
+
 }

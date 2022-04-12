@@ -14,46 +14,40 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain;
+package cn.edu.tjnu.tutor.system.domain.view;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.edu.tjnu.tutor.common.core.domain.TreeNode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * 班级信息。
+ * 文章评论显示信息。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 @Data
-@TableName("sys_class")
-public class TheClass implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class CommentVO extends TreeNode<CommentVO> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 班级主键。
-     */
-    @TableId(type = IdType.AUTO)
-    private Integer classId;
+    private static final long serialVersionUID = -441183386271447419L;
 
     /**
-     * 所属专业的主键。
+     * 评论人姓名。
      */
-    private Integer majorId;
+    private String reviewer;
 
     /**
-     * 班级名称。
+     * 评论内容。
      */
-    private String className;
+    private String content;
 
     /**
-     * 所属年级。
+     * 评论时间。
      */
-    private String grade;
+    private LocalDateTime createTime;
 
 }
