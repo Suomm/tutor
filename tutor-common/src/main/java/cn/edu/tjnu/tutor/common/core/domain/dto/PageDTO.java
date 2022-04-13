@@ -14,35 +14,38 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.domain;
+package cn.edu.tjnu.tutor.common.core.domain.dto;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 分页帮助。
+ * 分页查询对象。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-public final class PageQuery implements Serializable {
+public class PageDTO implements Serializable {
 
     private static final long serialVersionUID = 1325019744536935240L;
 
     /**
      * 当前页码。
      */
-    private Integer pageNum = 1;
+    @NotNull
+    private Integer pageNum;
 
     /**
      * 每页显示数量。
      */
-    private Integer pageSize = 10;
+    @NotNull
+    private Integer pageSize;
 
     /**
      * 生成 MyBatis Plus 分页对象。

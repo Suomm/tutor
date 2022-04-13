@@ -19,9 +19,8 @@ package cn.edu.tjnu.tutor.admin.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
-import cn.edu.tjnu.tutor.common.core.domain.Pagination;
-import cn.edu.tjnu.tutor.common.util.PageUtils;
+import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.system.domain.entity.Menu;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +34,9 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * 菜单信息控制层。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/menu")
@@ -47,12 +47,12 @@ public class MenuController extends BaseController {
     /**
      * 分页查询菜单信息。
      *
-     * @param pageQuery 分页帮助
+     * @param pageDTO 分页参数
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<Pagination<Menu>> list(PageQuery pageQuery) {
-        return success(PageUtils.convert(menuService.page(pageQuery.page())));
+    public AjaxResult<PageVO<Menu>> list(PageDTO pageDTO) {
+        return pageSuccess(menuService.page(pageDTO.page()));
     }
 
     /**
@@ -74,7 +74,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = MENU, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Menu menu) {
+    public AjaxResult<Void> save(@RequestBody Menu menu) {
         return toResult(menuService.save(menu));
     }
 
@@ -86,7 +86,7 @@ public class MenuController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = MENU, operType = UPDATE)
-    public AjaxResult<Void> update(@Validated @RequestBody Menu menu) {
+    public AjaxResult<Void> update(@RequestBody Menu menu) {
         return toResult(menuService.updateById(menu));
     }
 

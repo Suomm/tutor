@@ -19,9 +19,8 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
-import cn.edu.tjnu.tutor.common.core.domain.Pagination;
-import cn.edu.tjnu.tutor.common.util.PageUtils;
+import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.system.domain.entity.Team;
 import cn.edu.tjnu.tutor.system.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +36,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 2.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/team")
@@ -47,12 +47,12 @@ public class TeamController extends BaseController {
     /**
      * 分页查询导师团信息。
      *
-     * @param pageQuery 分页帮助
+     * @param pageDTO 分页参数
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<Pagination<Team>> list(PageQuery pageQuery) {
-        return success(PageUtils.convert(teamService.page(pageQuery.page())));
+    public AjaxResult<PageVO<Team>> list(PageDTO pageDTO) {
+        return pageSuccess(teamService.page(pageDTO.page()));
     }
 
     /**
@@ -74,7 +74,7 @@ public class TeamController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = TEAM, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Team team) {
+    public AjaxResult<Void> save(@RequestBody Team team) {
         return toResult(teamService.save(team));
     }
 
@@ -86,7 +86,7 @@ public class TeamController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = TEAM, operType = UPDATE)
-    public AjaxResult<Void> update(@Validated @RequestBody Team team) {
+    public AjaxResult<Void> update(@RequestBody Team team) {
         return toResult(teamService.updateById(team));
     }
 

@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
  * @since 2.0
  */
 @Data
-@Document(indexName = "txt_answer")
+@Document(indexName = "answer")
 public class Answer implements Serializable {
 
     private static final long serialVersionUID = -5407130919934194838L;

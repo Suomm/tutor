@@ -19,9 +19,8 @@ package cn.edu.tjnu.tutor.admin.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
-import cn.edu.tjnu.tutor.common.core.domain.Pagination;
-import cn.edu.tjnu.tutor.common.util.PageUtils;
+import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.system.domain.entity.Config;
 import cn.edu.tjnu.tutor.system.service.ConfigService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +36,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 2.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/config")
@@ -47,12 +47,12 @@ public class ConfigController extends BaseController {
     /**
      * 分页查询参数配置。
      *
-     * @param pageQuery 分页帮助
+     * @param pageDTO 分页参数
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<Pagination<Config>> list(PageQuery pageQuery) {
-        return success(PageUtils.convert(configService.page(pageQuery.page())));
+    public AjaxResult<PageVO<Config>> list(PageDTO pageDTO) {
+        return pageSuccess(configService.page(pageDTO.page()));
     }
 
     /**
@@ -74,7 +74,7 @@ public class ConfigController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = CONFIG, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Config config) {
+    public AjaxResult<Void> save(@RequestBody Config config) {
         return toResult(configService.save(config));
     }
 
@@ -86,7 +86,7 @@ public class ConfigController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = CONFIG, operType = UPDATE)
-    public AjaxResult<Void> update(@Validated @RequestBody Config config) {
+    public AjaxResult<Void> update(@RequestBody Config config) {
         return toResult(configService.updateById(config));
     }
 

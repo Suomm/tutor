@@ -19,9 +19,8 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
-import cn.edu.tjnu.tutor.common.core.domain.Pagination;
-import cn.edu.tjnu.tutor.common.util.PageUtils;
+import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +38,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 1.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/college")
@@ -49,13 +49,13 @@ public class CollegeController extends BaseController {
     /**
      * 分页查询学院信息。
      *
-     * @param pageQuery 分页帮助
+     * @param pageDTO 分页参数
      * @return 分页对象
      */
     @Secured(ROLE_ROOT)
     @GetMapping("list")
-    public AjaxResult<Pagination<College>> list(PageQuery pageQuery) {
-        return success(PageUtils.convert(collegeService.page(pageQuery.page())));
+    public AjaxResult<PageVO<College>> list(PageDTO pageDTO) {
+        return pageSuccess(collegeService.page(pageDTO.page()));
     }
 
     /**
@@ -77,7 +77,7 @@ public class CollegeController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = COLLEGE, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody College college) {
+    public AjaxResult<Void> save(@RequestBody College college) {
         return toResult(collegeService.save(college));
     }
 
@@ -89,7 +89,7 @@ public class CollegeController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = COLLEGE, operType = UPDATE)
-    public AjaxResult<Void> update(@Validated @RequestBody College college) {
+    public AjaxResult<Void> update(@RequestBody College college) {
         return toResult(collegeService.updateById(college));
     }
 

@@ -41,6 +41,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 2.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/answer")
@@ -70,7 +71,7 @@ public class AnswerController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = ANSWER, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Answer answer) {
+    public AjaxResult<Void> save(@RequestBody Answer answer) {
         return toResult(answerRepository.save(answer).getAnswerId() != null);
     }
 

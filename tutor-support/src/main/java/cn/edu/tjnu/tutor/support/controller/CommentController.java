@@ -41,6 +41,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 2.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/comment")
@@ -70,7 +71,7 @@ public class CommentController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = COMMENT, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Comment comment) {
+    public AjaxResult<Void> save(@RequestBody Comment comment) {
         return toResult(commentRepository.save(comment).getCommentId() != null);
     }
 

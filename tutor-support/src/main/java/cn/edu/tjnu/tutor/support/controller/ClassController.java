@@ -19,9 +19,8 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
-import cn.edu.tjnu.tutor.common.core.domain.Pagination;
-import cn.edu.tjnu.tutor.common.util.PageUtils;
+import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
 import cn.edu.tjnu.tutor.system.service.ClassService;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +38,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 1.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/class")
@@ -49,12 +49,12 @@ public class ClassController extends BaseController {
     /**
      * 分页查询班级信息。
      *
-     * @param pageQuery 分页帮助
+     * @param pageDTO 分页参数
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<Pagination<TheClass>> list(PageQuery pageQuery) {
-        return success(PageUtils.convert(classService.page(pageQuery.page())));
+    public AjaxResult<PageVO<TheClass>> list(PageDTO pageDTO) {
+        return pageSuccess(classService.page(pageDTO.page()));
     }
 
     /**
@@ -77,7 +77,7 @@ public class ClassController extends BaseController {
     @Secured(ROLE_ADMIN)
     @PostMapping("save")
     @Log(category = CLASS, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody TheClass theClass) {
+    public AjaxResult<Void> save(@RequestBody TheClass theClass) {
         return toResult(classService.save(theClass));
     }
 
@@ -89,7 +89,7 @@ public class ClassController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = CLASS, operType = UPDATE)
-    public AjaxResult<Void> update(@Validated @RequestBody TheClass theClass) {
+    public AjaxResult<Void> update(@RequestBody TheClass theClass) {
         return toResult(classService.updateById(theClass));
     }
 

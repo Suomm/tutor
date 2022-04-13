@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.domain;
+package cn.edu.tjnu.tutor.common.core.domain.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +33,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public final class Pagination<T> implements Serializable {
+public class PageVO<T> implements Serializable {
 
     private static final long serialVersionUID = -553124397223609762L;
 
@@ -45,6 +45,6 @@ public final class Pagination<T> implements Serializable {
     /**
      * 每页的数据内容。
      */
-    private List<T> content;
+    private transient List<T> content;
 
 }

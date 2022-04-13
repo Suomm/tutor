@@ -22,12 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
@@ -42,31 +40,17 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * 请求方式不支持。
-     *
-     * @see HttpRequestMethodNotSupportedException
-     */
-    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public AjaxResult<Void> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e,
-                                                                HttpServletRequest request) {
-        String requestUri = request.getRequestURI();
-        log.error("请求地址'{}',不支持'{}'请求", requestUri, e.getMethod());
-        return AjaxResult.error(e.getMessage());
-    }
+    private static final String DELIMITER = ", ";
 
     /**
-     * 处理自定义异常中，将异常的详细信息回显到前端界面。返回 HTTP 400 状态码，
-     * 表示请求因出现异常而未被处理，并包含响应文本 responseText 表示异常的详
-     * 细消息。
+     * 处理自定义异常中，将异常的详细信息回显到前端界面。
      *
      * @see ServiceException
      */
     @ExceptionHandler(ServiceException.class)
     public AjaxResult<Void> handleServiceException(ServiceException e) {
         log.error(e.getMessage(), e);
-        Integer code = e.getCode();
-        return code != null ? AjaxResult.error(code, e.getMessage()) : AjaxResult.error(e.getMessage());
+        return AjaxResult.error(e.getCode(), e.getMessage());
     }
 
     /**
@@ -75,9 +59,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     public AjaxResult<Void> handleBindException(BindException e) {
         log.error(e.getMessage(), e);
-        String message = e.getAllErrors().stream()
+        String message = e.getAllErrors()
+                .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
         return AjaxResult.error(message);
     }
 
@@ -87,9 +72,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public AjaxResult<Void> constraintViolationException(ConstraintViolationException e) {
         log.error(e.getMessage(), e);
-        String message = e.getConstraintViolations().stream()
+        String message = e.getConstraintViolations()
+                .stream()
                 .map(ConstraintViolation::getMessage)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
         return AjaxResult.error(message);
     }
 
@@ -99,9 +85,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public AjaxResult<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);
-        String message = e.getBindingResult().getFieldErrors().stream()
+        String message = e.getBindingResult()
+                .getFieldErrors()
+                .stream()
                 .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
         return AjaxResult.error(message);
     }
 

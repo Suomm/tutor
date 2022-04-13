@@ -37,16 +37,16 @@ public final class AjaxResult<T> implements Serializable {
     private static final long serialVersionUID = -589774230401895753L;
 
     /**
-     * 默认请求失败结果返回。
-     */
-    public static final AjaxResult<Void> ERROR =
-            new AjaxResult<>(HttpStatus.HTTP_INTERNAL_ERROR, "操作成功", null);
-
-    /**
      * 默认请求成功结果返回。
      */
     public static final AjaxResult<Void> SUCCESS =
             new AjaxResult<>(HttpStatus.HTTP_OK, "操作成功", null);
+
+    /**
+     * 默认请求失败结果返回。
+     */
+    public static final AjaxResult<Void> ERROR =
+            new AjaxResult<>(HttpStatus.HTTP_INTERNAL_ERROR, "操作失败", null);
 
     /**
      * 状态码。
@@ -90,18 +90,7 @@ public final class AjaxResult<T> implements Serializable {
      * @return 警告消息
      */
     public static AjaxResult<Void> error(String msg) {
-        return error(msg, null);
-    }
-
-    /**
-     * 返回错误消息。
-     *
-     * @param msg  返回内容
-     * @param data 数据对象
-     * @return 警告消息
-     */
-    public static <T> AjaxResult<T> error(String msg, T data) {
-        return new AjaxResult<>(HttpStatus.HTTP_INTERNAL_ERROR, msg, data);
+        return new AjaxResult<>(HttpStatus.HTTP_INTERNAL_ERROR, msg, null);
     }
 
     /**

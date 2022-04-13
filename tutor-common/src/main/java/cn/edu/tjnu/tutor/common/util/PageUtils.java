@@ -16,9 +16,11 @@
 
 package cn.edu.tjnu.tutor.common.util;
 
-import cn.edu.tjnu.tutor.common.core.domain.Pagination;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 /**
  * 分页工具类。
@@ -30,29 +32,25 @@ import lombok.NoArgsConstructor;
 public final class PageUtils {
 
     /**
-     * 将 Elasticsearch 分页对象转换为 {@link Pagination} 对象。
+     * 将 Elasticsearch 分页对象转换为 {@link PageVO} 对象。
      *
      * @param page 分页对象
      * @param <T> 数据类型
      * @return 分页数据
      */
-    public static <T> Pagination<T> convert(
-            org.springframework.data.domain.Page<T> page
-    ) {
-        return new Pagination<>(page.getTotalElements(), page.getContent());
+    public static <T> PageVO<T> convert(Page<T> page) {
+        return new PageVO<>(page.getTotalElements(), page.getContent());
     }
 
     /**
-     * 将 MyBatis Plus 分页对象转换为 {@link Pagination} 对象。
+     * 将 MyBatis Plus 分页对象转换为 {@link PageVO} 对象。
      *
      * @param page 分页对象
      * @param <T> 数据类型
      * @return 分页数据
      */
-    public static <T> Pagination<T> convert(
-            com.baomidou.mybatisplus.extension.plugins.pagination.Page<T> page
-    ) {
-        return new Pagination<>(page.getTotal(), page.getRecords());
+    public static <T> PageVO<T> convert(IPage<T> page) {
+        return new PageVO<>(page.getTotal(), page.getRecords());
     }
 
 }

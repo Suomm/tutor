@@ -67,7 +67,7 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 获取路由信息。
+     * 获取当前登录用户对应的路由信息。
      *
      * @return 路由信息
      */

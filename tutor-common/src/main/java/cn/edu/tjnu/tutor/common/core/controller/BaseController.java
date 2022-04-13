@@ -18,7 +18,11 @@ package cn.edu.tjnu.tutor.common.core.controller;
 
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.common.util.SecurityUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.data.domain.Page;
 
 /**
  * 基本控制器。
@@ -33,6 +37,20 @@ public abstract class BaseController {
      */
     protected <T> AjaxResult<T> success(T data) {
         return AjaxResult.success(data);
+    }
+
+    /**
+     * 返回分页成功数据。
+     */
+    protected <T> AjaxResult<PageVO<T>> pageSuccess(Page<T> page) {
+        return AjaxResult.success(PageUtils.convert(page));
+    }
+
+    /**
+     * 返回分页成功数据。
+     */
+    protected <T> AjaxResult<PageVO<T>> pageSuccess(IPage<T> page) {
+        return AjaxResult.success(PageUtils.convert(page));
     }
 
     /**

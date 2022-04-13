@@ -19,9 +19,8 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.PageQuery;
-import cn.edu.tjnu.tutor.common.core.domain.Pagination;
-import cn.edu.tjnu.tutor.common.util.PageUtils;
+import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.system.domain.model.Activity;
 import cn.edu.tjnu.tutor.system.domain.model.Record;
 import cn.edu.tjnu.tutor.system.repository.ActivityRepository;
@@ -42,25 +41,24 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 1.0
  */
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/activity")
 public class ActivityController extends BaseController {
 
+    private final RecordRepository   recordRepository;
     private final ActivityRepository activityRepository;
-
-    private final RecordRepository recordRepository;
 
     /**
      * 根据用户主键查询参加的的活动。
      *
-     * @param userId 用户主键
-     * @param pageQuery 分页帮助
+     * @param pageDTO 分页参数
      * @return 所有关联活动
      */
     @GetMapping("list")
-    public AjaxResult<Pagination<Record>> list(Integer userId, PageQuery pageQuery) {
-        return success(PageUtils.convert(recordRepository.findAllByUserId(userId, pageQuery.pageable())));
+    public AjaxResult<PageVO<Record>> list(PageDTO pageDTO) {
+        return pageSuccess(recordRepository.findAllByUserId(getUserId(), pageDTO.pageable()));
     }
 
     /**
@@ -83,7 +81,7 @@ public class ActivityController extends BaseController {
     @Secured(ROLE_TUTOR)
     @PostMapping("save")
     @Log(category = ACTIVITY, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Activity activity) {
+    public AjaxResult<Void> save(@RequestBody Activity activity) {
         return toResult(activityRepository.save(activity).getActivityId() != null);
     }
 
