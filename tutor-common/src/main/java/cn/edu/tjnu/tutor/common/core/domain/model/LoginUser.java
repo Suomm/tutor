@@ -49,6 +49,11 @@ public final class LoginUser implements UserDetails {
     private String userCode;
 
     /**
+     * 用户唯一标识。
+     */
+    private String uuid;
+
+    /**
      * 登录过期时间。
      */
     private Long expireTime;

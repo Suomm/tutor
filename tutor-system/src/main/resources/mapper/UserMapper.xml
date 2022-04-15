@@ -16,6 +16,18 @@
         <result property="introduce" column="introduce"/>
     </resultMap>
 
+    <insert id="bindRoleForUser">
+        insert into ref_user_role (user_id, role_id)
+        values (#{userId}, (select role_id from sys_role where role_key = #{roleKey}))
+    </insert>
+
+    <select id="selectRoleKeysById" resultType="java.lang.String">
+        select r.role_key
+        from sys_role r
+                 left join ref_user_role ur on ur.role_id = r.role_id
+        where ur.user_id = #{userId}
+    </select>
+
     <resultMap id="UserVOResult" type="cn.edu.tjnu.tutor.system.domain.view.UserVO">
         <result property="userCode" column="user_code"/>
         <result property="userName" column="user_name"/>
@@ -33,18 +45,6 @@
             <result property="email" column="college_email"/>
         </association>
     </resultMap>
-
-    <insert id="bindRoleForUser">
-        insert into ref_user_role (user_id, role_id)
-        values (#{userId}, (select role_id from sys_role where role_key = #{roleKey}))
-    </insert>
-
-    <select id="selectRoleKeysById" resultType="java.lang.String">
-        select r.role_key
-        from sys_role r
-                 left join ref_user_role ur on ur.role_id = r.role_id
-        where ur.user_id = #{userId}
-    </select>
 
     <select id="selectUserInfo" resultMap="UserVOResult">
         select u.user_code,
@@ -66,6 +66,18 @@
                  left join sys_class cl on cl.class_id = uc.class_id
                  left join sys_major m on m.major_id = cl.major_id
         where u.user_id = #{userId}
+    </select>
+
+    <resultMap id="LoginUserResult" type="cn.edu.tjnu.tutor.common.core.domain.model.LoginUser">
+        <result property="userId" column="user_id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="collegeId" column="college_id"/>
+    </resultMap>
+
+    <select id="selectByUserCode" resultMap="LoginUserResult">
+        select user_id, user_code, college_id
+        from sys_user
+        where user_code = #{userCode}
     </select>
 
 </mapper>

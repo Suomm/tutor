@@ -30,14 +30,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     /**
-     * 学生学号的正则匹配表达式。
+     * 学生学号的长度。
      */
-    String RE_STUDENT_CODE = "\\d{10}";
-
-    /**
-     * 教师工号的正则匹配表达式。
-     */
-    String RE_TEACHER_CODE = "\\d{6}";
+    int LEN_STUDENT_CODE = 10;
 
     /**
      * 用户登录并获取相应权限信息，如果用户不存在则注册用户。

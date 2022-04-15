@@ -19,13 +19,11 @@ package cn.edu.tjnu.tutor.support.filter;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.common.provider.TokenProvider;
 import cn.edu.tjnu.tutor.common.util.SecurityUtils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import cn.edu.tjnu.tutor.common.util.SpringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -40,31 +38,39 @@ import java.io.IOException;
  * @author 王帅
  * @since 2.0
  */
-@Component
-@RequiredArgsConstructor
-@ConditionalOnProperty(prefix = "token", name = "enable", havingValue = "true")
-public class JwtTokenFilter extends OncePerRequestFilter {
+public final class JwtTokenFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
+
+    /**
+     * 初始化变量。
+     */
+    public JwtTokenFilter() {
+        this.tokenProvider = SpringUtils.getBean(TokenProvider.class);
+    }
 
     @Override
     public void doFilterInternal(@NonNull HttpServletRequest request,
                                  @NonNull HttpServletResponse response,
                                  @NonNull FilterChain chain)
             throws ServletException, IOException {
-        // 根据 Token 请求头获取当前登录用户
+        // 根据认证请求头获取当前登录用户
         LoginUser loginUser = tokenProvider.getLoginUser(request);
-        // loginUser == null 用户没有令牌或者令牌不正确，拒绝访问任何资源
-        // SecurityUtils.getAuthentication() == null 用户未登录到系统
-        if (loginUser != null && SecurityUtils.getAuthentication() == null) {
+        // 用户持有令牌访问资源
+        if (loginUser != null) {
             // 校验令牌是否过期并增加可用时间
             tokenProvider.verifyToken(loginUser);
-            // 为持有令牌的用户创建登录信息
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            // 有令牌但没有认证信息，添加认证信息
+            if (SecurityUtils.getAuthentication() == null) {
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } else {
+            // 没有令牌时清空认证信息
+            SecurityContextHolder.clearContext();
         }
-        // 继续下一个过滤器
         chain.doFilter(request, response);
     }
 

@@ -21,8 +21,6 @@ import cn.edu.tjnu.tutor.system.domain.entity.User;
 import cn.edu.tjnu.tutor.system.domain.view.UserVO;
 import cn.edu.tjnu.tutor.system.mapper.UserMapper;
 import cn.edu.tjnu.tutor.system.service.UserService;
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.ReUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,27 +42,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional(rollbackFor = Exception.class)
     public LoginUser login(User user) {
-        LoginUser loginUser = new LoginUser();
+        LoginUser loginUser = baseMapper.selectByUserCode(user.getUserCode());
         // 查询不到用户编号则注册新用户
-        if (lambdaQuery()
-                .eq(User::getUserCode, user.getUserCode())
-                .count()
-                .intValue() == 0) {
+        if (loginUser == null) {
+            loginUser = new LoginUser();
             // 先插入用户数据生成用户主键
             baseMapper.insert(user);
             // 根据用户编号特征绑定初始角色
-            if (ReUtil.isMatch(RE_STUDENT_CODE, user.getUserCode())) {
+            if (user.getUserCode().length() == LEN_STUDENT_CODE) {
                 baseMapper.bindRoleForUser(user.getUserId(), ROLE_STUDENT);
                 loginUser.setAuthorities(createAuthorityList(ROLE_STUDENT));
-            } else if (ReUtil.isMatch(RE_TEACHER_CODE, user.getUserCode())){
+            } else {
                 baseMapper.bindRoleForUser(user.getUserId(), ROLE_TEACHER);
                 loginUser.setAuthorities(createAuthorityList(ROLE_TEACHER));
             }
+            // 复制信息到空的当前登录用户
+            loginUser.setUserId(user.getUserId());
+            loginUser.setUserCode(user.getUserCode());
+            loginUser.setCollegeId(user.getCollegeId());
         }
-        BeanUtil.copyProperties(loginUser, user);
         // 权限信息为空则查询权限信息
-        if (loginUser.getAuthorities() != null) {
-            String[] roleKeys = baseMapper.selectRoleKeysById(user.getUserId())
+        if (loginUser.getAuthorities() == null) {
+            String[] roleKeys = baseMapper.selectRoleKeysById(loginUser.getUserId())
                     .toArray(EMPTY_STRING_ARRAY);
             loginUser.setAuthorities(createAuthorityList(roleKeys));
         }

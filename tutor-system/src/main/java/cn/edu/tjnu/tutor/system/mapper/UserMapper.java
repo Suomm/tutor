@@ -17,6 +17,7 @@
 package cn.edu.tjnu.tutor.system.mapper;
 
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
+import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import cn.edu.tjnu.tutor.system.domain.view.UserVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -57,5 +58,13 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 用户信息
      */
     UserVO selectUserInfo(Integer userId);
+
+    /**
+     * 根据用户编号查询用户信息。
+     *
+     * @param userCode 用户编号
+     * @return 登录用户信息
+     */
+    LoginUser selectByUserCode(String userCode);
 
 }

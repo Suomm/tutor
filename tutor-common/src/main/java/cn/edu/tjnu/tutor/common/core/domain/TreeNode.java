@@ -32,7 +32,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class TreeNode<T extends TreeNode<T>> {
+public abstract class TreeNode<T extends TreeNode<T>> {
 
     /**
      * 树主键。

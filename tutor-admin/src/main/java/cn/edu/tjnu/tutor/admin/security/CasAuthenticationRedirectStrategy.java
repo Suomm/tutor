@@ -17,41 +17,30 @@
 package cn.edu.tjnu.tutor.admin.security;
 
 import cn.edu.tjnu.tutor.common.util.ServletUtils;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.jasig.cas.client.authentication.AuthenticationRedirectStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * CAS 授权失败处理器。
+ * CAS 单点登陆的重定向策略。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
-@NoArgsConstructor
-public class CasAuthenticationFailureHandler implements AuthenticationFailureHandler {
-
-    /**
-     * 登录认证 URL 地址。
-     */
-    @Setter
-    private String loginUrl;
+public class CasAuthenticationRedirectStrategy implements AuthenticationRedirectStrategy {
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request,
-                                        HttpServletResponse response,
-                                        AuthenticationException exception) throws IOException {
+    public void redirect(HttpServletRequest request, HttpServletResponse response,
+                         String potentialRedirectUrl) throws IOException {
         if (ServletUtils.isAjaxRequest(request)) {
             // 异步请求：返回 401 状态码和重定向地址
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write(loginUrl);
+            response.getWriter().write(potentialRedirectUrl);
         } else {
             // 非异步请求，直接重定向到 CAS 登录地址
-            response.sendRedirect(loginUrl);
+            response.sendRedirect(potentialRedirectUrl);
         }
     }
 

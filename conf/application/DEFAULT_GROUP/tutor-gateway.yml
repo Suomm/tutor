@@ -16,15 +16,10 @@ spring:
         - id: tutor-support-router
           uri: lb://tutor-support
           predicates:
-            - Header=Authentication, Bearer .+
+            - Header=Authorization, Bearer .+
         - id: tutor-auth-router
           uri: lb://tutor-admin
           predicates:
             - Path=/login,/logout
           filters:
             - PrefixPath=/auth
-# 关闭没有必要的功能
-management:
-  endpoint:
-    gateway:
-      enabled: false

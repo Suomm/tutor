@@ -1,15 +1,27 @@
 # Tutor Admin 专有配置
-# CAS 单点登录授权配置
-cas:
-  # 启用 CAS 授权功能
-  enable: true
-  # CAS 认证服务器相关地址
-  server: http://localhost:8443/cas
-  server-login-url: ${cas.server}/login
-  server-logout-url: ${cas.server}/logout
-  # 授权登陆地址
-  service: http://localhost/auth/login
 spring:
+  # CAS 单点登录授权配置
+  cas:
+    # 是否启用 CAS 认证功能
+    enable: true
+    # 认证拦截地址
+    authentication-url-patterns: /auth/*
+    # 其他过滤器拦截地址
+    validation-url-patterns: ${spring.cas.authentication-url-patterns}
+    request-wrapper-url-patterns: ${spring.cas.authentication-url-patterns}
+    assertion-thread-local-url-patterns: ${spring.cas.authentication-url-patterns}
+    # CAS 认证服务器地址
+    server-url-prefix: https://authserver.tjnu.edu.cn/authserver
+    # CAS 登陆地址
+    server-login-url: ${cas.server-url-prefix}/login
+    # CAS 登出地址
+    server-logout-url: ${cas.server-url-prefix}/logout
+    # 授权登陆地址
+    client-host-url: https://tutor.tjnu.edu.cn
+    # 登陆成功回调地址
+    callbackUrl: https://tutor.tjnu.edu.cn/login
+    # CAS Ticket 校验类型
+    validation-type: cas
   # 关闭 Thymeleaf 的一些警告
   thymeleaf:
     check-template: false

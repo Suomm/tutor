@@ -27,7 +27,15 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GlobalConst {
-    
+
+    /**
+     * UTF-8 字符集。
+     */
+    public static final String UTF_8 = "UTF-8";
+
+    /**
+     * 空字符串数组。
+     */
     public static final String[] EMPTY_STRING_ARRAY = {};
     
 }

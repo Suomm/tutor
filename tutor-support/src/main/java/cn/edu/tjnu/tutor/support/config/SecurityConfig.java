@@ -16,11 +16,14 @@
 
 package cn.edu.tjnu.tutor.support.config;
 
+import cn.edu.tjnu.tutor.common.provider.TokenProvider;
 import cn.edu.tjnu.tutor.support.filter.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -31,37 +34,38 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Spring Security 配置。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Order(1)
+    @RequiredArgsConstructor
     @Configuration(proxyBeanMethods = false)
     public static class HttpBasicConfig extends WebSecurityConfigurerAdapter {
 
+        private final WebEndpointProperties props;
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/actuator/**")
+            http.antMatcher(props.getBasePath() + "/**")
                     .authorizeRequests(authorize -> authorize.anyRequest().hasRole("MONITOR"))
-                    .httpBasic();
+                    .httpBasic(Customizer.withDefaults())
+                    .csrf().disable();
         }
 
     }
 
-    @RequiredArgsConstructor
+    @ConditionalOnBean(TokenProvider.class)
     @Configuration(proxyBeanMethods = false)
-    @ConditionalOnBean(JwtTokenFilter.class)
     @EnableGlobalMethodSecurity(securedEnabled = true)
     public static class JwtTokenConfig extends WebSecurityConfigurerAdapter {
-
-        private final JwtTokenFilter jwtTokenFilter;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
                     .exceptionHandling()
                     .authenticationEntryPoint(new Http403ForbiddenEntryPoint()).and()
-                    .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(new JwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                     .csrf().disable();
         }
 

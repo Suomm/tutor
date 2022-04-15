@@ -16,7 +16,6 @@
 
 package cn.edu.tjnu.tutor.common.core.domain;
 
-import cn.hutool.http.HttpStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,17 +35,21 @@ public final class AjaxResult<T> implements Serializable {
 
     private static final long serialVersionUID = -589774230401895753L;
 
-    /**
-     * 默认请求成功结果返回。
-     */
-    public static final AjaxResult<Void> SUCCESS =
-            new AjaxResult<>(HttpStatus.HTTP_OK, "操作成功", null);
+    private static final int DEFAULT_ERROR_CODE   = 500;
+    private static final int DEFAULT_SUCCESS_CODE = 200;
 
+    private static final String DEFAULT_ERROR_MESSAGE   = "操作失败";
     /**
      * 默认请求失败结果返回。
      */
     public static final AjaxResult<Void> ERROR =
-            new AjaxResult<>(HttpStatus.HTTP_INTERNAL_ERROR, "操作失败", null);
+            new AjaxResult<>(DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE, null);
+    private static final String DEFAULT_SUCCESS_MESSAGE = "操作成功";
+    /**
+     * 默认请求成功结果返回。
+     */
+    public static final AjaxResult<Void> SUCCESS =
+            new AjaxResult<>(DEFAULT_SUCCESS_CODE, DEFAULT_SUCCESS_MESSAGE, null);
 
     /**
      * 状态码。
@@ -69,7 +72,7 @@ public final class AjaxResult<T> implements Serializable {
      * @return 成功消息
      */
     public static <T> AjaxResult<T> success(T data) {
-        return success("操作成功", data);
+        return success(DEFAULT_SUCCESS_MESSAGE, data);
     }
 
     /**
@@ -80,7 +83,7 @@ public final class AjaxResult<T> implements Serializable {
      * @return 成功消息
      */
     public static  <T> AjaxResult<T> success(String msg, T data) {
-        return new AjaxResult<>(HttpStatus.HTTP_OK, msg, data);
+        return new AjaxResult<>(DEFAULT_SUCCESS_CODE, msg, data);
     }
 
     /**
@@ -90,7 +93,7 @@ public final class AjaxResult<T> implements Serializable {
      * @return 警告消息
      */
     public static AjaxResult<Void> error(String msg) {
-        return new AjaxResult<>(HttpStatus.HTTP_INTERNAL_ERROR, msg, null);
+        return new AjaxResult<>(DEFAULT_ERROR_CODE, msg, null);
     }
 
     /**

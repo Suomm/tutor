@@ -60,6 +60,7 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers(this.adminServer.path("/actuator/info")).permitAll()
                                 .antMatchers(this.adminServer.path("/actuator/health")).permitAll()
                                 .antMatchers(this.adminServer.path("/login")).permitAll()
+                                .antMatchers("/auth/*").permitAll()
                                 .anyRequest().hasRole("ROOT")
                 ).formLogin(
                         formLogin -> formLogin.loginPage(this.adminServer.path("/login")).successHandler(successHandler).and()
@@ -82,7 +83,7 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         SecurityProperties.User user = security.getUser();
         auth.inMemoryAuthentication().withUser(user.getName())
-                .password("{noop}".concat(user.getPassword()))
+                .password("{noop}" + user.getPassword())
                 .authorities(user.getRoles().toArray(EMPTY_STRING_ARRAY));
     }
 
