@@ -18,7 +18,9 @@ package cn.edu.tjnu.tutor.admin.controller;
 
 import cn.edu.tjnu.tutor.admin.config.CasClientConfig;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
+import cn.edu.tjnu.tutor.common.core.service.LoginInfoService;
 import cn.edu.tjnu.tutor.common.enums.ExceptionType;
+import cn.edu.tjnu.tutor.common.enums.UserStatus;
 import cn.edu.tjnu.tutor.common.exception.ServiceException;
 import cn.edu.tjnu.tutor.common.provider.TokenProvider;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
@@ -75,6 +77,7 @@ public class TokenController {
 
     private final UserService userService;
     private final CollegeService collegeService;
+    private final LoginInfoService loginInfoService;
 
     @Value("${spring.cas.callback-url}")
     private String callbackUrl;
@@ -101,7 +104,7 @@ public class TokenController {
      * </ul>
      */
     @GetMapping("login")
-    public String login() {
+    public String login(HttpServletRequest request) {
         // 获取 CAS 认证属性
         Map<String, Object> attributes = AssertionHolder.getAssertion()
                 .getPrincipal()
@@ -112,14 +115,16 @@ public class TokenController {
                 .eq(College::getCollegeCode, attributes.get(COLLEGE_CODE))
                 .oneOpt()
                 .orElseThrow(() -> new ServiceException(ExceptionType.COLLEGE_NOT_REGISTER));
-        // 构建基本用户实体
-        User user = User.builder()
+        // 如果没有登录信息，则注册这个用户
+        LoginUser loginUser = userService.login(User.builder()
                 .collegeId(college.getCollegeId())
                 .userCode(attributes.get(USER_CODE).toString())
                 .userName(attributes.get(USER_NAME).toString())
-                .build();
+                .build());
+        // 记录登录信息
+        loginInfoService.recordLoginInfo(request, loginUser, UserStatus.LOGIN);
         // 重定向到前端地址
-        return REDIRECT + callbackUrl + TOKEN + tokenProvider.createToken(userService.login(user));
+        return REDIRECT + callbackUrl + TOKEN + tokenProvider.createToken(loginUser);
     }
 
     /**
@@ -138,10 +143,12 @@ public class TokenController {
     @ResponseBody
     @PostMapping("logout")
     public String logout(HttpServletRequest request) {
-        // 删除用户令牌信息
         LoginUser loginUser = tokenProvider.getLoginUser(request);
         if (loginUser != null) {
+            // 删除用户令牌信息
             tokenProvider.deleteToken(loginUser.getUuid());
+            // 记录注销信息
+            loginInfoService.recordLoginInfo(request, loginUser, UserStatus.LOGOUT);
         }
         // 返回认证注销地址
         return serverLogoutUrl + SERVICE + URLEncoder.encode(clientHostUrl, UTF_8);

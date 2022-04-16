@@ -32,6 +32,6 @@ public enum OperStatus {
     /**
      * 失败
      */
-    FAIL;
+    ERROR
 
 }

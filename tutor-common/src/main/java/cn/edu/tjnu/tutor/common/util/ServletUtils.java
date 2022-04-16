@@ -16,7 +16,6 @@
 
 package cn.edu.tjnu.tutor.common.util;
 
-import cn.hutool.extra.servlet.ServletUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.web.context.request.RequestAttributes;
@@ -70,15 +69,6 @@ public final class ServletUtils {
     private static ServletRequestAttributes getRequestAttributes() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return (ServletRequestAttributes) Objects.requireNonNull(attributes);
-    }
-
-    /**
-     * 获取客户端 IP 地址。
-     *
-     * @return IP 地址
-     */
-    public static String getClientIp() {
-        return ServletUtil.getClientIP(getRequest());
     }
 
 }

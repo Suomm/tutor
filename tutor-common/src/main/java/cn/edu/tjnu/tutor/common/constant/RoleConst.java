@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 public final class RoleConst {
 
     /**
-     * 超级管理员：职能部门人员角色，用于设置系统相关参数，查看各个部门任务完成度。
+     * 超级管理员：职能部门人员角色，用于设置系统相关参数，查看各个学院任务完成度。
      */
     public static final String ROLE_ROOT = "ROLE_ROOT";
 

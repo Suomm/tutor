@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.admin;
 
+import cn.edu.tjnu.tutor.common.annotation.EnableCustomConfig;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +28,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2.0
  */
 @EnableAdminServer
-@SpringBootApplication(scanBasePackages = "cn.edu.tjnu.tutor")
+@EnableCustomConfig
+@SpringBootApplication
 public class TutorAdminApplication {
 
     public static void main(String[] args) {

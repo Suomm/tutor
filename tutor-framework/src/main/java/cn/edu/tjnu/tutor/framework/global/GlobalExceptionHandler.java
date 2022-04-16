@@ -26,6 +26,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
@@ -41,6 +42,15 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     private static final String DELIMITER = ", ";
+
+    /**
+     * 拦截未知的异常信息。
+     */
+    @ExceptionHandler(Exception.class)
+    public AjaxResult<Void> handleException(Exception e, HttpServletRequest request) {
+        log.error("请求地址 {} 发生了未知异常", request.getRequestURI(), e);
+        return AjaxResult.error(e.getMessage());
+    }
 
     /**
      * 处理自定义异常中，将异常的详细信息回显到前端界面。

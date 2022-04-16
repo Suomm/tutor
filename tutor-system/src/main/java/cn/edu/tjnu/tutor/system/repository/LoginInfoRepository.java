@@ -14,39 +14,16 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.domain;
+package cn.edu.tjnu.tutor.system.repository;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
+import cn.edu.tjnu.tutor.system.domain.model.LoginInfo;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * 树节点实体类。
+ * 活动章信息数据层。
  *
  * @author 王帅
  * @since 2.0
- * @param <T> 数据类型
  */
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class TreeNode<T extends TreeNode<T>> {
-
-    /**
-     * 树主键。
-     */
-    protected Integer id;
-
-    /**
-     * 父主键。
-     */
-    protected Integer parentId;
-
-    /**
-     * 子节点。
-     */
-    protected List<T> children;
-
+public interface LoginInfoRepository extends ElasticsearchRepository<LoginInfo, Long> {
 }

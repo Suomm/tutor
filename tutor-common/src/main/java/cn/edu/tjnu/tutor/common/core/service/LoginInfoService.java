@@ -14,39 +14,28 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.domain;
+package cn.edu.tjnu.tutor.common.core.service;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
+import cn.edu.tjnu.tutor.common.enums.UserStatus;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * 树节点实体类。
+ * 登录信息服务层。
  *
  * @author 王帅
  * @since 2.0
- * @param <T> 数据类型
  */
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class TreeNode<T extends TreeNode<T>> {
+public interface LoginInfoService {
 
     /**
-     * 树主键。
+     * 记录用户（登录/注销）状态。
+     *
+     * @param request 请求对象
+     * @param loginUser 登陆用户信息
+     * @param status 用户状态
      */
-    protected Integer id;
-
-    /**
-     * 父主键。
-     */
-    protected Integer parentId;
-
-    /**
-     * 子节点。
-     */
-    protected List<T> children;
+    void recordLoginInfo(HttpServletRequest request, LoginUser loginUser, UserStatus status);
 
 }

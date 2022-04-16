@@ -11,7 +11,7 @@ spring:
       config:
         server-addr: &serverAddr 47.94.200.151:8848
         file-extension: yml
-        extension-configs:
+        shared-configs:
           - data-id: application-logger.yml
           - data-id: application-sentinel.yml
         namespace: 68a35916-a3e4-4d69-8c66-22128b66dcb0

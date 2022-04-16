@@ -14,39 +14,28 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.domain;
+package cn.edu.tjnu.tutor.common.enums;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.Getter;
 
 /**
- * 树节点实体类。
+ * 用户状态。
  *
  * @author 王帅
  * @since 2.0
- * @param <T> 数据类型
  */
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class TreeNode<T extends TreeNode<T>> {
+public enum UserStatus {
 
-    /**
-     * 树主键。
-     */
-    protected Integer id;
+    // 登录注销两种状态
 
-    /**
-     * 父主键。
-     */
-    protected Integer parentId;
+    LOGIN("登录"),
+    LOGOUT("注销");
 
-    /**
-     * 子节点。
-     */
-    protected List<T> children;
+    @Getter
+    private final String status;
+
+    UserStatus(String status) {
+        this.status = status;
+    }
 
 }

@@ -29,6 +29,11 @@ import lombok.NoArgsConstructor;
 public final class GlobalConst {
 
     /**
+     * GBK 字符集。
+     */
+    public static final String GBK = "GBK";
+
+    /**
      * UTF-8 字符集。
      */
     public static final String UTF_8 = "UTF-8";
@@ -37,5 +42,5 @@ public final class GlobalConst {
      * 空字符串数组。
      */
     public static final String[] EMPTY_STRING_ARRAY = {};
-    
+
 }

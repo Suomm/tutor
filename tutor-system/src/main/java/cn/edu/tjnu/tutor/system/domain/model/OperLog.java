@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.system.domain.entity.User;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -27,68 +27,88 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 问题信息。
+ * 操作日志信息。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 @Data
-@Document(indexName = "problem")
-public class Problem implements Serializable {
+@Builder
+@Document(indexName = "oper_log")
+public class OperLog implements Serializable {
 
-    private static final long serialVersionUID = 5559693170878148296L;
+    private static final long serialVersionUID = -3652454157461927553L;
 
     /**
-     * 问题主键。
+     * 操作日志主键。
      */
     @Id
-    private Integer problemId;
+    private Long operId;
 
     /**
-     * 发布问题的用户主键。
-     *
-     * @see User#getUserId()
-     */
-    private Integer userId;
-
-    /**
-     * 提问者姓名。
-     *
-     * @see User#getUserName()
+     * 用户编号。
      */
     @Field(type = FieldType.Keyword)
-    private String questioner;
+    private String userCode;
 
     /**
-     * 发布问题者所属学院名称。
+     * 操作类别。
      */
     @Field(type = FieldType.Keyword)
-    private String collegeName;
+    private String category;
 
     /**
-     * 问题标题。
+     * 请求 IP 地址。
      */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private String title;
+    @Field(type = FieldType.Keyword)
+    private String operIp;
 
     /**
-     * 详细内容。
+     * 请求路径。
      */
-    private String content;
+    private String operUrl;
 
     /**
-     * 创建时间。
+     * 操作类型。
      */
-    private LocalDateTime createTime;
+    @Field(type = FieldType.Keyword)
+    private String operType;
 
     /**
-     * 可见范围（0导师小组/班级内可见，1精选问题/公开）。
+     * 请求参数。
      */
-    private Integer scope;
+    private String operParam;
 
     /**
-     * 当前状态（0 未解决，1 线上解决，2 线下解决）。
+     * 操作状态。
      */
-    private Integer status;
-    
+    @Field(type = FieldType.Keyword)
+    private String operStatus;
+
+    /**
+     * 操作方法。
+     */
+    private String method;
+
+    /**
+     * 请求方法。
+     */
+    @Field(type = FieldType.Keyword)
+    private String httpMethod;
+
+    /**
+     * 错误信息。
+     */
+    private String errorMsg;
+
+    /**
+     * 返回结果。
+     */
+    private String jsonResult;
+
+    /**
+     * 操作时间。
+     */
+    private LocalDateTime operTime;
+
 }

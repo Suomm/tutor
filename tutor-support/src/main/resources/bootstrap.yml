@@ -11,7 +11,7 @@ spring:
       config:
         server-addr: &serverAddr 47.94.200.151:8848
         file-extension: yml
-        extension-configs:
+        shared-configs:
           - data-id: application-druid.yml
           - data-id: application-minio.yml
           - data-id: application-redis.yml

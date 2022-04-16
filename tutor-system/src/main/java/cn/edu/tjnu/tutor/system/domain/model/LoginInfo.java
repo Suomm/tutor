@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.system.domain.entity.User;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -27,68 +27,65 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 问题信息。
+ * 用户登录信息。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 @Data
-@Document(indexName = "problem")
-public class Problem implements Serializable {
+@Builder
+@Document(indexName = "login_info")
+public class LoginInfo implements Serializable {
 
-    private static final long serialVersionUID = 5559693170878148296L;
+    private static final long serialVersionUID = 1713865713115996871L;
 
     /**
-     * 问题主键。
+     * 登陆信息主键。
      */
     @Id
-    private Integer problemId;
+    private Long id;
 
     /**
-     * 发布问题的用户主键。
-     *
-     * @see User#getUserId()
-     */
-    private Integer userId;
-
-    /**
-     * 提问者姓名。
-     *
-     * @see User#getUserName()
+     * 用户编号。
      */
     @Field(type = FieldType.Keyword)
-    private String questioner;
+    private String userCode;
 
     /**
-     * 发布问题者所属学院名称。
+     * 登录 IP 地址。
      */
     @Field(type = FieldType.Keyword)
-    private String collegeName;
+    private String ipaddr;
 
     /**
-     * 问题标题。
+     * 用户状态。
      */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private String title;
+    @Field(type = FieldType.Keyword)
+    private String status;
 
     /**
-     * 详细内容。
+     * 浏览器渲染引擎。
      */
-    private String content;
+    private String engine;
 
     /**
-     * 创建时间。
+     * 登录地点。
      */
-    private LocalDateTime createTime;
+    private String address;
 
     /**
-     * 可见范围（0导师小组/班级内可见，1精选问题/公开）。
+     * 浏览器类型。
      */
-    private Integer scope;
+    private String browser;
 
     /**
-     * 当前状态（0 未解决，1 线上解决，2 线下解决）。
+     * 操作系统。
      */
-    private Integer status;
-    
+    private String os;
+
+    /**
+     * 登录时间。
+     */
+    private LocalDateTime loginTime;
+
 }

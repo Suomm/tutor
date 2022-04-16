@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.config;
+package cn.edu.tjnu.tutor.common.util;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Elasticsearch 相关配置。
- *
  * @author 王帅
  * @since 2.0
  */
-@Configuration(proxyBeanMethods = false)
-@EnableElasticsearchRepositories("cn.edu.tjnu.tutor.system.repository")
-public class ElasticSearchConfig {
+class IpUtilsTest {
+
+    @Test
+    void getIpAddress() {
+        Assertions.assertEquals("北京市海淀区 联通ADSL", IpUtils.getIpAddress("221.218.209.125"));
+    }
+
 }

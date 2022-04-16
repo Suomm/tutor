@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.support;
 
+import cn.edu.tjnu.tutor.common.annotation.EnableCustomConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -25,7 +26,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author 王帅
  * @since 1.0
  */
-@SpringBootApplication(scanBasePackages = "cn.edu.tjnu.tutor")
+@EnableCustomConfig
+@SpringBootApplication
 public class TutorSupportApplication {
 
     public static void main(String[] args) {
