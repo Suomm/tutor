@@ -17,9 +17,11 @@
 package cn.edu.tjnu.tutor.admin.config;
 
 import cn.edu.tjnu.tutor.admin.security.CasAuthenticationRedirectStrategy;
+import cn.edu.tjnu.tutor.common.provider.TokenProvider;
 import org.jasig.cas.client.boot.configuration.CasClientConfigurationProperties;
 import org.jasig.cas.client.boot.configuration.CasClientConfigurer;
 import org.jasig.cas.client.boot.configuration.EnableCasClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -35,7 +37,8 @@ import org.springframework.context.annotation.Primary;
  */
 @EnableCasClient
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(name = {"spring.cas.enable", "token.enable"}, havingValue = "true")
+@ConditionalOnBean(TokenProvider.class)
+@ConditionalOnProperty(prefix = "spring.cas", name = "enable", havingValue = "true")
 public class CasClientConfig implements CasClientConfigurer {
 
     /**

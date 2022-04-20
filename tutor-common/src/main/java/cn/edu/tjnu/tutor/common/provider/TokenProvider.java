@@ -21,12 +21,13 @@ import cn.edu.tjnu.tutor.common.util.RedisUtils;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.jwt.JWTUtil;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +40,6 @@ import static cn.edu.tjnu.tutor.common.constant.RedisConst.PREFIX_LOGIN_USER;
  * @since 2.0
  */
 @Component
-@RequiredArgsConstructor
 @EnableConfigurationProperties(TokenProperties.class)
 @ConditionalOnProperty(prefix = "token", name = "enable", havingValue = "true")
 public class TokenProvider {
@@ -55,9 +55,20 @@ public class TokenProvider {
     private static final long TWENTY_MINUTES = 20 * 60 * 1000L;
 
     /**
+     * （默认）HS256（HmacSHA256）密钥。
+     */
+    private final byte[] key;
+
+    /**
      * Token 配置信息。
      */
     private final TokenProperties tokenProperties;
+
+    @Autowired
+    public TokenProvider(TokenProperties tokenProperties) {
+        this.tokenProperties = tokenProperties;
+        this.key = tokenProperties.getSecret().getBytes(StandardCharsets.UTF_8);
+    }
 
     /**
      * 根据 JWT 请求头获取当前登录用户信息。
@@ -96,7 +107,7 @@ public class TokenProvider {
         // 刷新存储令牌
         refreshToken(loginUser);
         // 生成 JWT 令牌
-        return JWTUtil.createToken(Collections.singletonMap(PREFIX_LOGIN_USER, uuid), tokenProperties.getSecret().getBytes());
+        return JWTUtil.createToken(Collections.singletonMap(PREFIX_LOGIN_USER, loginUser.getUserCode()), key);
     }
 
     /**

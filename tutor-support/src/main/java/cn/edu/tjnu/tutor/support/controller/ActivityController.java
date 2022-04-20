@@ -21,6 +21,7 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Activity;
 import cn.edu.tjnu.tutor.system.domain.model.Record;
 import cn.edu.tjnu.tutor.system.repository.ActivityRepository;
@@ -41,7 +42,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 1.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/activity")
@@ -57,7 +57,7 @@ public class ActivityController extends BaseController {
      * @return 所有关联活动
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Record>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Record>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(recordRepository.findAllByUserId(getUserId(), pageDTO.pageable()));
     }
 
@@ -81,7 +81,7 @@ public class ActivityController extends BaseController {
     @Secured(ROLE_TUTOR)
     @PostMapping("save")
     @Log(category = ACTIVITY, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Activity activity) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Activity activity) {
         return toResult(activityRepository.save(activity).getActivityId() != null);
     }
 

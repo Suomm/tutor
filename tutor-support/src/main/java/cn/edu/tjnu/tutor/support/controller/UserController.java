@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import cn.edu.tjnu.tutor.system.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 1.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -54,7 +55,7 @@ public class UserController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<User>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<User>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(userService.page(pageDTO.page()));
     }
 
@@ -78,7 +79,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = USER, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody User user) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) User user) {
         return toResult(userService.save(user));
     }
 
@@ -90,7 +91,7 @@ public class UserController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = USER, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody User user) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) User user) {
         return toResult(userService.updateById(user));
     }
 

@@ -1,4 +1,11 @@
 # Tutor Gateway 专有配置
+security:
+  # 开启 XSS 防御
+  xss:
+    enable: true
+    excludeUrls:
+      - /login
+      - /logout
 spring:
   cloud:
     gateway:

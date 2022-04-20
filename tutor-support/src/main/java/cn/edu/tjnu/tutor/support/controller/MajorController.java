@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Major;
 import cn.edu.tjnu.tutor.system.service.MajorService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 2.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/major")
@@ -54,7 +55,7 @@ public class MajorController extends BaseController {
      */
     @Secured(ROLE_ROOT)
     @GetMapping("list")
-    public AjaxResult<PageVO<Major>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Major>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(majorService.page(pageDTO.page()));
     }
 
@@ -77,7 +78,7 @@ public class MajorController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = MAJOR, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Major major) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Major major) {
         return toResult(majorService.save(major));
     }
 
@@ -89,7 +90,7 @@ public class MajorController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = MAJOR, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody Major major) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Major major) {
         return toResult(majorService.updateById(major));
     }
 

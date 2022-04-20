@@ -31,7 +31,7 @@ public enum ExceptionType {
 
     // 所有异常代码及其描述信息
 
-    COLLEGE_NOT_REGISTER(1000, "您所在的学院未注册！");
+    COLLEGE_NOT_REGISTER(501, "您所在的学院未注册！");
 
     /**
      * 异常代码。

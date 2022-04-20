@@ -20,6 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.util.TreeUtils;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Answer;
 import cn.edu.tjnu.tutor.system.domain.view.AnswerVO;
 import cn.edu.tjnu.tutor.system.repository.AnswerRepository;
@@ -41,12 +42,12 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 2.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/answer")
 public class AnswerController extends BaseController {
 
+    private final AnswerStruct answerStruct;
     private final AnswerRepository answerRepository;
 
     /**
@@ -59,7 +60,7 @@ public class AnswerController extends BaseController {
     public AjaxResult<List<AnswerVO>> list(@PathVariable Integer problemId) {
         return success(TreeUtils.build(answerRepository.findAllByProblemId(problemId)
                 .stream()
-                .map(AnswerStruct.INSTANCE::toVO)
+                .map(answerStruct::toVO)
                 .collect(Collectors.toList())));
     }
 
@@ -71,7 +72,7 @@ public class AnswerController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = ANSWER, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Answer answer) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Answer answer) {
         return toResult(answerRepository.save(answer).getAnswerId() != null);
     }
 

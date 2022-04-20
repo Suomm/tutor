@@ -20,7 +20,6 @@ import cn.edu.tjnu.tutor.system.domain.model.Answer;
 import cn.edu.tjnu.tutor.system.domain.view.AnswerVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 /**
  * 问题回复实体类结构映射接口。
@@ -28,10 +27,8 @@ import org.mapstruct.factory.Mappers;
  * @author 王帅
  * @since 2.0
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AnswerStruct {
-
-    AnswerStruct INSTANCE = Mappers.getMapper(AnswerStruct.class);
 
     /**
      * 转换到 VO 对象。

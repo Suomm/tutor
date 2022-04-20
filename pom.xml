@@ -53,6 +53,7 @@
         <druid.version>1.2.5</druid.version>
         <minio.version>8.2.2</minio.version>
         <p6spy.version>3.9.1</p6spy.version>
+        <jsoup.version>1.14.3</jsoup.version>
         <tutor.version>2.0-RC</tutor.version>
         <lock4j.version>2.2.1</lock4j.version>
         <hutool.version>5.7.15</hutool.version>
@@ -169,6 +170,11 @@
                 <version>${minio.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>cn.edu.tjnu</groupId>
                 <artifactId>tutor-common</artifactId>
                 <version>${tutor.version}</version>
@@ -218,6 +224,10 @@
                             <exclude>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
+                            </exclude>
+                            <exclude>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct</artifactId>
                             </exclude>
                         </excludes>
                     </configuration>

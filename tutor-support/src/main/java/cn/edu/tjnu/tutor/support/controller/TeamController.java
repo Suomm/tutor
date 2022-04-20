@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Team;
 import cn.edu.tjnu.tutor.system.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 2.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/team")
@@ -51,7 +52,7 @@ public class TeamController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Team>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Team>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(teamService.page(pageDTO.page()));
     }
 
@@ -74,7 +75,7 @@ public class TeamController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = TEAM, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Team team) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Team team) {
         return toResult(teamService.save(team));
     }
 
@@ -86,7 +87,7 @@ public class TeamController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = TEAM, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody Team team) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Team team) {
         return toResult(teamService.updateById(team));
     }
 

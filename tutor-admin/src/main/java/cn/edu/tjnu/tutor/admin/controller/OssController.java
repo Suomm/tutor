@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Oss;
 import cn.edu.tjnu.tutor.system.service.OssService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 2.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/oss")
@@ -51,19 +52,8 @@ public class OssController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Oss>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Oss>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(ossService.page(pageDTO.page()));
-    }
-
-    /**
-     * 根据对象存储主键获取详细信息。
-     *
-     * @param ossId 对象存储主键
-     * @return 对象存储信息详情
-     */
-    @GetMapping("getInfo/{ossId}")
-    public AjaxResult<Oss> getInfo(@PathVariable Integer ossId) {
-        return success(ossService.getById(ossId));
     }
 
     /**
@@ -74,7 +64,7 @@ public class OssController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = OSS, operType = INSERT)
-    public AjaxResult<Void> save(@Validated @RequestBody Oss oss) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Oss oss) {
         return toResult(ossService.save(oss));
     }
 
@@ -86,7 +76,7 @@ public class OssController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = OSS, operType = UPDATE)
-    public AjaxResult<Void> update(@Validated @RequestBody Oss oss) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Oss oss) {
         return toResult(ossService.updateById(oss));
     }
 

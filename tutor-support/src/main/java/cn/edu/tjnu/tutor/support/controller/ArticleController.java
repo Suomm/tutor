@@ -21,6 +21,7 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Article;
 import cn.edu.tjnu.tutor.system.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 1.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/article")
@@ -52,7 +52,7 @@ public class ArticleController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Article>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Article>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(articleRepository.findAll(pageDTO.pageable()));
     }
 
@@ -75,7 +75,7 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = ARTICLE, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Article article) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Article article) {
         return toResult(articleRepository.save(article).getArticleId() != null);
     }
 

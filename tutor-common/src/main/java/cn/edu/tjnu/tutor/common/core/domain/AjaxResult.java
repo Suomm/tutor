@@ -39,12 +39,14 @@ public final class AjaxResult<T> implements Serializable {
     private static final int DEFAULT_SUCCESS_CODE = 200;
 
     private static final String DEFAULT_ERROR_MESSAGE   = "操作失败";
+    private static final String DEFAULT_SUCCESS_MESSAGE = "操作成功";
+
     /**
      * 默认请求失败结果返回。
      */
     public static final AjaxResult<Void> ERROR =
             new AjaxResult<>(DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE, null);
-    private static final String DEFAULT_SUCCESS_MESSAGE = "操作成功";
+
     /**
      * 默认请求成功结果返回。
      */
@@ -90,7 +92,7 @@ public final class AjaxResult<T> implements Serializable {
      * 返回错误消息。
      *
      * @param msg 返回内容
-     * @return 警告消息
+     * @return 错误消息
      */
     public static AjaxResult<Void> error(String msg) {
         return new AjaxResult<>(DEFAULT_ERROR_CODE, msg, null);
@@ -101,7 +103,7 @@ public final class AjaxResult<T> implements Serializable {
      *
      * @param code 状态码
      * @param msg  返回内容
-     * @return 警告消息
+     * @return 错误消息
      */
     public static AjaxResult<Void> error(int code, String msg) {
         return new AjaxResult<>(code, msg, null);

@@ -20,6 +20,7 @@ import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.util.TreeUtils;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Comment;
 import cn.edu.tjnu.tutor.system.domain.view.CommentVO;
 import cn.edu.tjnu.tutor.system.repository.CommentRepository;
@@ -41,12 +42,12 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 2.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/comment")
 public class CommentController extends BaseController {
 
+    private final CommentStruct commentStruct;
     private final CommentRepository commentRepository;
 
     /**
@@ -59,7 +60,7 @@ public class CommentController extends BaseController {
     public AjaxResult<List<CommentVO>> list(@PathVariable Integer articleId) {
         return success(TreeUtils.build(commentRepository.findAllByArticleId(articleId)
                 .stream()
-                .map(CommentStruct.INSTANCE::toVO)
+                .map(commentStruct::toVO)
                 .collect(Collectors.toList())));
     }
 
@@ -71,7 +72,7 @@ public class CommentController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = COMMENT, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Comment comment) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Comment comment) {
         return toResult(commentRepository.save(comment).getCommentId() != null);
     }
 

@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Notice;
 import cn.edu.tjnu.tutor.system.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 1.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/notice")
@@ -51,7 +52,7 @@ public class NoticeController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Notice>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Notice>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(noticeService.page(pageDTO.page()));
     }
 
@@ -74,7 +75,7 @@ public class NoticeController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = NOTICE, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Notice notice) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Notice notice) {
         return toResult(noticeService.save(notice));
     }
 
@@ -86,7 +87,7 @@ public class NoticeController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = NOTICE, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody Notice notice) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Notice notice) {
         return toResult(noticeService.updateById(notice));
     }
 

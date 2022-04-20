@@ -20,7 +20,6 @@ import cn.edu.tjnu.tutor.system.domain.model.Comment;
 import cn.edu.tjnu.tutor.system.domain.view.CommentVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 /**
  * 文章评论实体类结构映射接口。
@@ -28,10 +27,8 @@ import org.mapstruct.factory.Mappers;
  * @author 王帅
  * @since 2.0
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CommentStruct {
-
-    CommentStruct INSTANCE = Mappers.getMapper(CommentStruct.class);
 
     /**
      * 转换到 VO 对象。

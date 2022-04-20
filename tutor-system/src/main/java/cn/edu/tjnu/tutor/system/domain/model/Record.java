@@ -18,6 +18,7 @@ package cn.edu.tjnu.tutor.system.domain.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -64,6 +65,7 @@ public class Record implements Serializable {
     /**
      * 活动完成的时间。
      */
+    @Field(format = DateFormat.date_time_no_millis)
     private LocalDateTime completeTime;
 
 }

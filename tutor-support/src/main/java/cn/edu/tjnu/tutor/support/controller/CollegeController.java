@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 1.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/college")
@@ -54,19 +55,8 @@ public class CollegeController extends BaseController {
      */
     @Secured(ROLE_ROOT)
     @GetMapping("list")
-    public AjaxResult<PageVO<College>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<College>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(collegeService.page(pageDTO.page()));
-    }
-
-    /**
-     * 根据学院主键获取详细信息。
-     *
-     * @param collegeId 学院主键
-     * @return 学院信息详情
-     */
-    @GetMapping("getInfo/{collegeId}")
-    public AjaxResult<College> getInfo(@PathVariable Integer collegeId) {
-        return success(collegeService.getById(collegeId));
     }
 
     /**
@@ -77,7 +67,7 @@ public class CollegeController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = COLLEGE, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody College college) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) College college) {
         return toResult(collegeService.save(college));
     }
 
@@ -89,7 +79,7 @@ public class CollegeController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = COLLEGE, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody College college) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) College college) {
         return toResult(collegeService.updateById(college));
     }
 

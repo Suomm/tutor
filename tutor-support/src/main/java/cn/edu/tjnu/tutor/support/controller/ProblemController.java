@@ -21,6 +21,7 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Problem;
 import cn.edu.tjnu.tutor.system.repository.ProblemRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
  * @author 王帅
  * @since 1.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/problem")
@@ -52,7 +52,7 @@ public class ProblemController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list}")
-    public AjaxResult<PageVO<Problem>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Problem>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(problemRepository.findAll(pageDTO.pageable()));
     }
 
@@ -75,7 +75,7 @@ public class ProblemController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = PROBLEM, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Problem problem) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Problem problem) {
         return toResult(problemRepository.save(problem).getProblemId() != null);
     }
 

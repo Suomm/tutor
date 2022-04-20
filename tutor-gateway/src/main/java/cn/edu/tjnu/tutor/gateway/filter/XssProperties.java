@@ -14,20 +14,34 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.service.impl;
+package cn.edu.tjnu.tutor.gateway.filter;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Config;
-import cn.edu.tjnu.tutor.system.mapper.ConfigMapper;
-import cn.edu.tjnu.tutor.system.service.ConfigService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 参数配置服务层实现。
+ * XSS 跨站脚本配置。
  *
  * @author 王帅
  * @since 2.0
  */
-@Service
-public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, Config> implements ConfigService {
+@Data
+@RefreshScope
+@ConfigurationProperties(prefix = "security.xss")
+public class XssProperties {
+
+    /**
+     * XSS 脚本过滤开关。
+     */
+    private boolean enable;
+
+    /**
+     * 过滤器排除路径。
+     */
+    private List<String> excludeUrls = new ArrayList<>();
+
 }

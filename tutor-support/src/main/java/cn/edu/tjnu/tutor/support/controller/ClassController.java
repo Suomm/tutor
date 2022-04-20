@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
 import cn.edu.tjnu.tutor.system.service.ClassService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 1.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/class")
@@ -53,19 +54,8 @@ public class ClassController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<TheClass>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<TheClass>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(classService.page(pageDTO.page()));
-    }
-
-    /**
-     * 根据班级主键获取详细信息。
-     *
-     * @param classId 班级主键
-     * @return 班级信息详情
-     */
-    @GetMapping("getInfo/{classId}")
-    public AjaxResult<TheClass> getInfo(@PathVariable Integer classId) {
-        return success(classService.getById(classId));
     }
 
     /**
@@ -77,7 +67,7 @@ public class ClassController extends BaseController {
     @Secured(ROLE_ADMIN)
     @PostMapping("save")
     @Log(category = CLASS, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody TheClass theClass) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) TheClass theClass) {
         return toResult(classService.save(theClass));
     }
 
@@ -89,7 +79,7 @@ public class ClassController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = CLASS, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody TheClass theClass) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) TheClass theClass) {
         return toResult(classService.updateById(theClass));
     }
 

@@ -18,6 +18,7 @@ package cn.edu.tjnu.tutor.support.controller;
 
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.entity.Document;
 import cn.edu.tjnu.tutor.system.domain.entity.Template;
 import cn.edu.tjnu.tutor.system.service.DocumentService;
@@ -56,7 +57,7 @@ public class GeneratorController extends BaseController {
      */
     @Secured(ROLE_INSTRUCTOR)
     @PostMapping("/upload/doc")
-    public AjaxResult<Void> uploadDoc(@Validated @RequestBody Document document) {
+    public AjaxResult<Void> uploadDoc(@RequestBody @Validated(Insert.class) Document document) {
         return toResult(documentService.save(document));
     }
 
@@ -68,7 +69,7 @@ public class GeneratorController extends BaseController {
      */
     @Secured(ROLE_INTERN)
     @PostMapping("/upload/tmpl")
-    public AjaxResult<Void> uploadTmpl(@Validated @RequestBody Template template) {
+    public AjaxResult<Void> uploadTmpl(@RequestBody @Validated(Insert.class) Template template) {
         return toResult(templateService.save(template));
     }
 

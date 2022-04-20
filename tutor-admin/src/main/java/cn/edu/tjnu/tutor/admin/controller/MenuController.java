@@ -19,13 +19,15 @@ package cn.edu.tjnu.tutor.admin.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
-import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Menu;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static cn.edu.tjnu.tutor.common.enums.Category.MENU;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
@@ -36,7 +38,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 2.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/menu")
@@ -45,25 +46,13 @@ public class MenuController extends BaseController {
     private final MenuService menuService;
 
     /**
-     * 分页查询菜单信息。
+     * 查询所有菜单信息。
      *
-     * @param pageDTO 分页参数
-     * @return 分页对象
+     * @return 菜单信息
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Menu>> list(PageDTO pageDTO) {
-        return pageSuccess(menuService.page(pageDTO.page()));
-    }
-
-    /**
-     * 根据菜单主键获取详细信息。
-     *
-     * @param menuId 菜单主键
-     * @return 菜单信息详情
-     */
-    @GetMapping("getInfo/{menuId}")
-    public AjaxResult<Menu> getInfo(@PathVariable Integer menuId) {
-        return success(menuService.getById(menuId));
+    public AjaxResult<List<Menu>> list() {
+        return success(menuService.list());
     }
 
     /**
@@ -74,7 +63,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = MENU, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Menu menu) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Menu menu) {
         return toResult(menuService.save(menu));
     }
 
@@ -86,7 +75,7 @@ public class MenuController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = MENU, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody Menu menu) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Menu menu) {
         return toResult(menuService.updateById(menu));
     }
 

@@ -21,6 +21,8 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Group;
 import cn.edu.tjnu.tutor.system.service.GroupService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @author 王帅
  * @since 2.0
  */
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/group")
@@ -51,7 +52,7 @@ public class GroupController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Group>> list(PageDTO pageDTO) {
+    public AjaxResult<PageVO<Group>> list(@Validated PageDTO pageDTO) {
         return pageSuccess(groupService.page(pageDTO.page()));
     }
 
@@ -74,7 +75,7 @@ public class GroupController extends BaseController {
      */
     @PostMapping("save")
     @Log(category = GROUP, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody Group group) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Group group) {
         return toResult(groupService.save(group));
     }
 
@@ -86,7 +87,7 @@ public class GroupController extends BaseController {
      */
     @PutMapping("update")
     @Log(category = GROUP, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody Group group) {
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Group group) {
         return toResult(groupService.updateById(group));
     }
 
