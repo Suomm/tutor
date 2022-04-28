@@ -17,36 +17,16 @@
 package cn.edu.tjnu.tutor.system.mapper;
 
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.entity.Menu;
-import cn.edu.tjnu.tutor.system.domain.view.RouterVO;
+import cn.edu.tjnu.tutor.system.domain.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 
-import java.util.List;
-
 /**
- * 菜单信息数据层。
+ * 角色信息数据层。
  *
  * @author 王帅
  * @since 1.0
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface MenuMapper extends BaseMapper<Menu> {
-
-    /**
-     * 根据用户主键查询菜单信息。
-     *
-     * @param userId 用户主键
-     * @return 菜单列表
-     */
-    List<RouterVO> findByUserId(Integer userId);
-
-    /**
-     * 根据菜单主键查询其所绑定角色的数量。
-     *
-     * @param menuId 菜单主键
-     * @return 绑定角色数量
-     */
-    Long selectRoleCountByMenuId(Integer menuId);
-
+public interface RoleMapper extends BaseMapper<Role> {
 }

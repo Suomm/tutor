@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.service;
+package cn.edu.tjnu.tutor.system.service.impl;
 
-import cn.edu.tjnu.tutor.common.enums.UserStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.servlet.http.HttpServletRequest;
+import cn.edu.tjnu.tutor.system.domain.entity.Role;
+import cn.edu.tjnu.tutor.system.mapper.RoleMapper;
+import cn.edu.tjnu.tutor.system.service.RoleService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 /**
- * 登录信息服务层。
+ * 角色信息服务层实现。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
-public interface LoginInfoService {
-
-    /**
-     * 记录用户（登录/注销）状态。
-     *
-     * @param request 请求对象
-     * @param userDetails 用户信息
-     * @param status 用户状态
-     */
-    void recordLoginInfo(HttpServletRequest request, UserDetails userDetails, UserStatus status);
-
+@Service
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 }

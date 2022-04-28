@@ -19,15 +19,19 @@ package cn.edu.tjnu.tutor.admin.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
+import cn.edu.tjnu.tutor.common.util.TreeUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Menu;
+import cn.edu.tjnu.tutor.system.domain.view.MenuVO;
 import cn.edu.tjnu.tutor.system.service.MenuService;
+import cn.edu.tjnu.tutor.system.structure.MenuStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static cn.edu.tjnu.tutor.common.enums.Category.MENU;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
@@ -43,16 +47,20 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 @RequestMapping("/menu")
 public class MenuController extends BaseController {
 
+    private final MenuStruct menuStruct;
     private final MenuService menuService;
 
     /**
-     * 查询所有菜单信息。
+     * 查询菜单树信息。
      *
      * @return 菜单信息
      */
-    @GetMapping("list")
-    public AjaxResult<List<Menu>> list() {
-        return success(menuService.list());
+    @GetMapping("treeList")
+    public AjaxResult<List<MenuVO>> treeList() {
+        return success(TreeUtils.build(menuService.list()
+                .stream()
+                .map(menuStruct::toVO)
+                .collect(Collectors.toList())));
     }
 
     /**
@@ -64,6 +72,9 @@ public class MenuController extends BaseController {
     @PostMapping("save")
     @Log(category = MENU, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Menu menu) {
+        if (menuService.hasMenuName(menu.getMenuName())) {
+            return error("新增菜单 '" + menu.getMenuName() + "' 失败，菜单名称已存在！");
+        }
         return toResult(menuService.save(menu));
     }
 
@@ -76,6 +87,12 @@ public class MenuController extends BaseController {
     @PutMapping("update")
     @Log(category = MENU, operType = UPDATE)
     public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Menu menu) {
+        if (menu.getMenuId().equals(menu.getParentId())) {
+            return error("修改菜单 '" + menu.getMenuName() + "' 失败，上级菜单不能选择自己！");
+        }
+        if (menuService.hasMenuName(menu.getMenuName())) {
+            return error("修改菜单 '" + menu.getMenuName() + "' 失败，菜单名称已存在！");
+        }
         return toResult(menuService.updateById(menu));
     }
 
@@ -88,6 +105,12 @@ public class MenuController extends BaseController {
     @DeleteMapping("remove/{menuId}")
     @Log(category = MENU, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable Integer menuId) {
+        if (menuService.hasChildMenu(menuId)) {
+            return error("存在子菜单，不允许删除！");
+        }
+        if (menuService.isMenuBindRole(menuId)) {
+            return error("菜单已分配角色，不允许删除！");
+        }
         return toResult(menuService.removeById(menuId));
     }
 

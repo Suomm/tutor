@@ -16,7 +16,6 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.common.core.service.LoginInfoService;
 import cn.edu.tjnu.tutor.common.enums.UserStatus;
 import cn.edu.tjnu.tutor.common.util.IpUtils;
@@ -27,6 +26,7 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,10 +51,10 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 
     @Async
     @Override
-    public void recordLoginInfo(HttpServletRequest request, LoginUser loginUser, UserStatus status) {
+    public void recordLoginInfo(HttpServletRequest request, UserDetails userDetails, UserStatus status) {
         // 用 Debug 日志级别来记录用户登录/注销信息
         if (log.isDebugEnabled()) {
-            log.debug("编号为 {} 的用户{}成功", loginUser.getUserCode(), status.getStatus());
+            log.debug("编号为 {} 的用户{}成功", userDetails.getUsername(), status.getStatus());
         }
         // 解析用户设备的相关信息
         String    ip = IpUtils.getClientIp(request);
@@ -65,7 +65,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
                 .status(status.name())
                 .loginTime(LocalDateTime.now())
                 .address(IpUtils.getIpAddress(ip))
-                .userCode(loginUser.getUserCode())
+                .userCode(userDetails.getUsername())
                 .os(ua.getOs() + SPACE + ua.getOsVersion())
                 .browser(ua.getBrowser() + SPACE + ua.getVersion())
                 .engine(ua.getEngine() + SPACE + ua.getEngineVersion())

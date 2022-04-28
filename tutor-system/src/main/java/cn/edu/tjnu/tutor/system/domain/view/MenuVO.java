@@ -14,50 +14,32 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.entity;
+package cn.edu.tjnu.tutor.system.domain.view;
 
-import cn.edu.tjnu.tutor.common.validation.groups.Insert;
-import cn.edu.tjnu.tutor.common.validation.groups.Update;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.edu.tjnu.tutor.common.core.domain.TreeNode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * 菜单信息。
+ * 菜单信息展示。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 @Data
-@TableName("sys_menu")
-public class Menu implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class MenuVO extends TreeNode<MenuVO> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 菜单主键。
-     */
-    @Null(groups = Insert.class)
-    @NotNull(groups = Update.class)
-    @TableId(type = IdType.AUTO)
-    private Integer menuId;
+    private static final long serialVersionUID = 2467683013639503307L;
 
     /**
      * 菜单名称。
      */
-    @NotBlank(groups = Insert.class)
     private String menuName;
-
-    /**
-     * 父菜单主键。
-     */
-    private Integer parentId;
 
     /**
      * 菜单排序。
@@ -67,7 +49,6 @@ public class Menu implements Serializable {
     /**
      * 路由地址。
      */
-    @NotBlank(groups = Insert.class)
     private String path;
 
     /**
@@ -79,5 +60,19 @@ public class Menu implements Serializable {
      * 菜单图标。
      */
     private String icon;
+
+    // 忽略路由主键和父主键的序列化
+
+    @Override
+    @JsonProperty("key")
+    public Integer getId() {
+        return super.getId();
+    }
+
+    @Override
+    @JsonIgnore
+    public Integer getParentId() {
+        return super.getParentId();
+    }
 
 }

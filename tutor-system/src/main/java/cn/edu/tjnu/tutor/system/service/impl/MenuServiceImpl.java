@@ -59,4 +59,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return routerVO;
     }
 
+    @Override
+    public boolean hasMenuName(String menuName) {
+        return lambdaQuery().eq(Menu::getMenuName, menuName).count() != 0L;
+    }
+
+    @Override
+    public boolean hasChildMenu(Integer menuId) {
+        return lambdaQuery().eq(Menu::getParentId, menuId).count() != 0L;
+    }
+
+    @Override
+    public boolean isMenuBindRole(Integer menuId) {
+        return baseMapper.selectRoleCountByMenuId(menuId) != 0L;
+    }
+
 }

@@ -17,7 +17,6 @@
 package cn.edu.tjnu.tutor.system.service.impl;
 
 import cn.edu.tjnu.tutor.common.annotation.Log;
-import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.common.core.service.OperLogService;
 import cn.edu.tjnu.tutor.common.enums.OperStatus;
 import cn.edu.tjnu.tutor.common.util.IpUtils;
@@ -26,6 +25,7 @@ import cn.edu.tjnu.tutor.system.repository.OperLogRepository;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +45,7 @@ public class OperLogServiceImpl implements OperLogService {
 
     @Async
     @Override
-    public void recordOperLog(HttpServletRequest request, LoginUser loginUser,
+    public void recordOperLog(HttpServletRequest request, UserDetails userDetails,
                               Log log, String method, Object[] paramsArray,
                               Exception e, Object jsonResult) {
         // 创建日志记录实体类
@@ -60,8 +60,8 @@ public class OperLogServiceImpl implements OperLogService {
                 .operStatus(OperStatus.SUCCESS.name())
                 .build();
         // 用户信息不为空
-        if (loginUser != null) {
-            operLog.setUserCode(loginUser.getUserCode());
+        if (userDetails != null) {
+            operLog.setUserCode(userDetails.getUsername());
         }
         // 请求处理时发生了异常
         if (e != null) {

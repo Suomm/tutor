@@ -37,8 +37,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class XssServerHttpRequest extends ServerHttpRequestDecorator {
 
+    private final NettyDataBufferFactory factory;
+
     public XssServerHttpRequest(ServerHttpRequest delegate) {
         super(delegate);
+        this.factory = new NettyDataBufferFactory(ByteBufAllocator.DEFAULT);
     }
 
     @NonNull
@@ -46,12 +49,8 @@ public class XssServerHttpRequest extends ServerHttpRequestDecorator {
     public Flux<DataBuffer> getBody() {
         return super.getBody()
                 .flatMap(dataBuffer -> {
-                    byte[] bytes = Jsoup.clean(dataBuffer.toString(UTF_8), Safelist.basic())
-                            .getBytes(UTF_8);
-                    DataBuffer buffer = new NettyDataBufferFactory(ByteBufAllocator.DEFAULT)
-                            .allocateBuffer(bytes.length);
-                    buffer.write(bytes);
-                    return Flux.just(buffer);
+                    byte[] bytes = Jsoup.clean(dataBuffer.toString(UTF_8), Safelist.basic()).getBytes(UTF_8);
+                    return Flux.just(factory.allocateBuffer(bytes.length).write(bytes));
                 });
     }
 

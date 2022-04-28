@@ -33,6 +33,13 @@ import org.springframework.data.domain.Page;
 public abstract class BaseController {
 
     /**
+     * 返回失败信息。
+     */
+    protected AjaxResult<Void> error(String msg) {
+        return AjaxResult.error(msg);
+    }
+
+    /**
      * 返回成功数据。
      */
     protected <T> AjaxResult<T> success(T data) {

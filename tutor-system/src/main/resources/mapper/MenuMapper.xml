@@ -37,7 +37,13 @@
         from sys_menu m
                  left join ref_role_menu rm on m.menu_id = rm.menu_id
                  left join ref_user_role ur on rm.role_id = ur.role_id
-        where ur.user_id = #{userid}
+        where ur.user_id = #{userId}
+    </select>
+
+    <select id="selectRoleCountByMenuId" resultType="java.lang.Long">
+        select count(1)
+        from ref_role_menu
+        where menu_id = #{menuId}
     </select>
 
 </mapper>

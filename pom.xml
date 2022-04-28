@@ -67,6 +67,7 @@
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <spring-boot.admin.version>2.3.1</spring-boot.admin.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <jrebel-maven-plugin.version>1.1.10</jrebel-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -155,6 +156,16 @@
                 <version>${mapstruct.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${lombok-mapstruct-binding.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
@@ -224,10 +235,6 @@
                             <exclude>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
-                            </exclude>
-                            <exclude>
-                                <groupId>org.mapstruct</groupId>
-                                <artifactId>mapstruct</artifactId>
                             </exclude>
                         </excludes>
                     </configuration>

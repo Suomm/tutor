@@ -17,7 +17,7 @@
 package cn.edu.tjnu.tutor.common.core.service;
 
 import cn.edu.tjnu.tutor.common.annotation.Log;
-import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,14 +33,14 @@ public interface OperLogService {
      * 记录操作日志信息。
      *
      * @param request 当前请求
-     * @param loginUser 登陆用户信息
+     * @param userDetails 用户信息
      * @param log {@link Log} 注解
      * @param method 方法名称
      * @param paramsArray 方法参数
      * @param e 异常信息
      * @param jsonResult 返回结果
      */
-    void recordOperLog(HttpServletRequest request, LoginUser loginUser,
+    void recordOperLog(HttpServletRequest request, UserDetails userDetails,
                        Log log, String method, Object[] paramsArray,
                        Exception e, Object jsonResult);
 

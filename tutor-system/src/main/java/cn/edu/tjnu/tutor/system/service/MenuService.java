@@ -38,4 +38,28 @@ public interface MenuService extends IService<Menu> {
      */
     List<RouterVO> getRouters(Integer userId);
 
+    /**
+     * 判断所给菜单名称是否重复。
+     *
+     * @param menuName 菜单名称
+     * @return {@code true} 名称重复，{@code false} 名称唯一
+     */
+    boolean hasMenuName(String menuName);
+
+    /**
+     * 判断菜单是否含有子菜单。
+     *
+     * @param menuId 菜单主键
+     * @return {@code true} 存在子菜单，{@code false} 没有子菜单
+     */
+    boolean hasChildMenu(Integer menuId);
+
+    /**
+     * 判断菜单是否绑定了角色。
+     *
+     * @param menuId 菜单主键
+     * @return {@code true} 已绑定角色，{@code false} 未绑定角色
+     */
+    boolean isMenuBindRole(Integer menuId);
+
 }

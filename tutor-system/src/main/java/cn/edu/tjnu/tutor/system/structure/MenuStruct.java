@@ -14,28 +14,30 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.service;
+package cn.edu.tjnu.tutor.system.structure;
 
-import cn.edu.tjnu.tutor.common.enums.UserStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.servlet.http.HttpServletRequest;
+import cn.edu.tjnu.tutor.system.domain.entity.Menu;
+import cn.edu.tjnu.tutor.system.domain.view.MenuVO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
- * 登录信息服务层。
+ * 菜单实体类结构映射接口。
  *
  * @author 王帅
  * @since 2.0
  */
-public interface LoginInfoService {
+@Mapper(componentModel = "spring")
+public interface MenuStruct {
 
     /**
-     * 记录用户（登录/注销）状态。
+     * 转换到 VO 对象。
      *
-     * @param request 请求对象
-     * @param userDetails 用户信息
-     * @param status 用户状态
+     * @param menu 实体类
+     * @return VO 对象
      */
-    void recordLoginInfo(HttpServletRequest request, UserDetails userDetails, UserStatus status);
+    @Mapping(target = "id", source = "menuId")
+    @Mapping(target = "children", ignore = true)
+    MenuVO toVO(Menu menu);
 
 }

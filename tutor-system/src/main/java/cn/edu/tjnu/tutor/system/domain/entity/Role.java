@@ -14,28 +14,41 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.core.service;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
-import cn.edu.tjnu.tutor.common.enums.UserStatus;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 
 /**
- * 登录信息服务层。
+ * 角色信息。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
-public interface LoginInfoService {
+@Data
+@TableName("sys_role")
+public class Role implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
-     * 记录用户（登录/注销）状态。
-     *
-     * @param request 请求对象
-     * @param userDetails 用户信息
-     * @param status 用户状态
+     * 角色主键。
      */
-    void recordLoginInfo(HttpServletRequest request, UserDetails userDetails, UserStatus status);
+    @TableId(type = IdType.AUTO)
+    private Integer roleId;
+
+    /**
+     * 角色键名。
+     */
+    private String roleKey;
+
+    /**
+     * 角色名称。
+     */
+    private String roleName;
 
 }
