@@ -16,15 +16,23 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
+import cn.edu.tjnu.tutor.common.util.SqlUtils;
 import cn.edu.tjnu.tutor.common.util.TreeUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.Menu;
+import cn.edu.tjnu.tutor.system.domain.extra.RoleMenu;
 import cn.edu.tjnu.tutor.system.domain.view.RouterVO;
 import cn.edu.tjnu.tutor.system.mapper.MenuMapper;
+import cn.edu.tjnu.tutor.system.mapper.RoleMenuMapper;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +43,40 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @Service
+@RequiredArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+
+    private final RoleMenuMapper roleMenuMapper;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean save(Menu entity) {
+        // 先插入菜单信息，然后绑定菜单角色信息
+        return super.save(entity) && saveRoleMenu(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateById(Menu entity) {
+        // 更新菜单信息之前，如果有角色绑定信息改变，先更新菜单的角色信息
+        if (entity.getRoleIds() != null) {
+            roleMenuMapper.deleteById(entity.getMenuId());
+            saveRoleMenu(entity);
+        }
+        return super.updateById(entity);
+    }
+
+    private boolean saveRoleMenu(Menu menu) {
+        List<RoleMenu> entityList = Arrays.stream(menu.getRoleIds())
+                .map(roleId -> new RoleMenu(roleId, menu.getMenuId()))
+                .collect(Collectors.toList());
+        // 插入角色与菜单的绑定到数据库
+        int rows = 0;
+        if (!entityList.isEmpty()) {
+            rows = roleMenuMapper.insertBatch(entityList);
+        }
+        return SqlUtils.toBool(rows);
+    }
 
     @Override
     public List<RouterVO> getRouters(Integer userId) {
@@ -60,18 +101,39 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public boolean hasMenuName(String menuName) {
-        return lambdaQuery().eq(Menu::getMenuName, menuName).count() != 0L;
+    public List<Integer> roleIdList(Integer menuId) {
+        return ChainWrappers.lambdaQueryChain(roleMenuMapper)
+                .select(RoleMenu::getRoleId)
+                .eq(RoleMenu::getMenuId, menuId)
+                .list()
+                .stream()
+                .map(RoleMenu::getRoleId)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean hasMenuName(Menu menu) {
+        // 默认同属于一个父菜单的子菜单名称不能重复
+        // 不指定父菜单的情况下全部菜单名称不能重复
+        Long count = lambdaQuery()
+                .eq(Menu::getMenuName, menu.getMenuName())
+                .eq(ObjectUtil.isNotNull(menu.getParentId()), Menu::getParentId, menu.getParentId())
+                .ne(ObjectUtil.isNotNull(menu.getMenuId()), Menu::getMenuId, menu.getMenuId())
+                .count();
+        return SqlUtils.toBool(count);
     }
 
     @Override
     public boolean hasChildMenu(Integer menuId) {
-        return lambdaQuery().eq(Menu::getParentId, menuId).count() != 0L;
+        return SqlUtils.toBool(lambdaQuery().eq(Menu::getParentId, menuId).count());
     }
 
     @Override
-    public boolean isMenuBindRole(Integer menuId) {
-        return baseMapper.selectRoleCountByMenuId(menuId) != 0L;
+    public boolean isBindingRole(Integer menuId) {
+        Long count = ChainWrappers.lambdaQueryChain(roleMenuMapper)
+                .eq(RoleMenu::getMenuId, menuId)
+                .count();
+        return SqlUtils.toBool(count);
     }
 
 }

@@ -95,7 +95,7 @@ CREATE TABLE `sys_menu`
     `menu_id`   int          NOT NULL AUTO_INCREMENT COMMENT '菜单主键',
     `menu_name` varchar(50)  NOT NULL COMMENT '菜单名称',
     `parent_id` int          NULL DEFAULT 0 COMMENT '父菜单主键',
-    `order`     int          NULL DEFAULT 1 COMMENT '菜单排序',
+    `weight`    int          NULL DEFAULT 1 COMMENT '菜单权重',
     `path`      varchar(200) NOT NULL COMMENT '路由地址',
     `component` varchar(255) NULL DEFAULT NULL COMMENT '组件路径',
     `icon`      varchar(100) NULL DEFAULT NULL COMMENT '菜单图标',

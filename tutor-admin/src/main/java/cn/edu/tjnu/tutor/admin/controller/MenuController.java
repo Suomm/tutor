@@ -60,7 +60,19 @@ public class MenuController extends BaseController {
         return success(TreeUtils.build(menuService.list()
                 .stream()
                 .map(menuStruct::toVO)
+                .sorted()
                 .collect(Collectors.toList())));
+    }
+
+    /**
+     * 查询菜单绑定的角色信息。
+     *
+     * @param menuId 菜单主键
+     * @return 角色信息
+     */
+    @GetMapping("roleIdList/{menuId}")
+    public AjaxResult<List<Integer>> roleIdList(@PathVariable Integer menuId) {
+        return success(menuService.roleIdList(menuId));
     }
 
     /**
@@ -72,7 +84,7 @@ public class MenuController extends BaseController {
     @PostMapping("save")
     @Log(category = MENU, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Menu menu) {
-        if (menuService.hasMenuName(menu.getMenuName())) {
+        if (menuService.hasMenuName(menu)) {
             return error("新增菜单 '" + menu.getMenuName() + "' 失败，菜单名称已存在！");
         }
         return toResult(menuService.save(menu));
@@ -90,7 +102,7 @@ public class MenuController extends BaseController {
         if (menu.getMenuId().equals(menu.getParentId())) {
             return error("修改菜单 '" + menu.getMenuName() + "' 失败，上级菜单不能选择自己！");
         }
-        if (menuService.hasMenuName(menu.getMenuName())) {
+        if (menuService.hasMenuName(menu)) {
             return error("修改菜单 '" + menu.getMenuName() + "' 失败，菜单名称已存在！");
         }
         return toResult(menuService.updateById(menu));
@@ -108,7 +120,7 @@ public class MenuController extends BaseController {
         if (menuService.hasChildMenu(menuId)) {
             return error("存在子菜单，不允许删除！");
         }
-        if (menuService.isMenuBindRole(menuId)) {
+        if (menuService.isBindingRole(menuId)) {
             return error("菜单已分配角色，不允许删除！");
         }
         return toResult(menuService.removeById(menuId));

@@ -16,13 +16,13 @@
 
 package cn.edu.tjnu.tutor.common.validation.groups;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import javax.validation.groups.Default;
 
 /**
+ * 插入操作分组。
+ *
  * @author 王帅
  * @since 2.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class Insert {
+public interface Insert extends Default {
 }

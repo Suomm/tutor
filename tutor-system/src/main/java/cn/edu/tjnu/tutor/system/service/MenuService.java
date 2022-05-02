@@ -39,12 +39,20 @@ public interface MenuService extends IService<Menu> {
     List<RouterVO> getRouters(Integer userId);
 
     /**
-     * 判断所给菜单名称是否重复。
+     * 查询菜单所对应的角色主键。
      *
-     * @param menuName 菜单名称
+     * @param menuId 菜单主键
+     * @return 角色主键
+     */
+    List<Integer> roleIdList(Integer menuId);
+
+    /**
+     * 判断所给菜单的名称是否重复。
+     *
+     * @param menu 菜单信息
      * @return {@code true} 名称重复，{@code false} 名称唯一
      */
-    boolean hasMenuName(String menuName);
+    boolean hasMenuName(Menu menu);
 
     /**
      * 判断菜单是否含有子菜单。
@@ -60,6 +68,6 @@ public interface MenuService extends IService<Menu> {
      * @param menuId 菜单主键
      * @return {@code true} 已绑定角色，{@code false} 未绑定角色
      */
-    boolean isMenuBindRole(Integer menuId);
+    boolean isBindingRole(Integer menuId);
 
 }

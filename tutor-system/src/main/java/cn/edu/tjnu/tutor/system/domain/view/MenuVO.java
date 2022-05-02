@@ -32,7 +32,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MenuVO extends TreeNode<MenuVO> implements Serializable {
+public class MenuVO extends TreeNode<MenuVO> implements Comparable<MenuVO>, Serializable {
 
     private static final long serialVersionUID = 2467683013639503307L;
 
@@ -44,7 +44,7 @@ public class MenuVO extends TreeNode<MenuVO> implements Serializable {
     /**
      * 菜单排序。
      */
-    private Integer order;
+    private Integer weight;
 
     /**
      * 路由地址。
@@ -73,6 +73,11 @@ public class MenuVO extends TreeNode<MenuVO> implements Serializable {
     @JsonIgnore
     public Integer getParentId() {
         return super.getParentId();
+    }
+
+    @Override
+    public int compareTo(MenuVO o) {
+        return this.weight.compareTo(o.weight);
     }
 
 }

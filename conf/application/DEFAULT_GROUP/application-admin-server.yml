@@ -6,7 +6,7 @@ spring:
       # 这个密码只能是项目管理人员知道
       name: root
       password: root
-      roles: ROLE_ROOT
+      roles: ROOT
   boot:
     admin:
       ui:

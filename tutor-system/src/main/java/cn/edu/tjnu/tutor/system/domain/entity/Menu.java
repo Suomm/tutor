@@ -19,13 +19,15 @@ package cn.edu.tjnu.tutor.system.domain.entity;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -51,33 +53,46 @@ public class Menu implements Serializable {
     /**
      * 菜单名称。
      */
-    @NotBlank(groups = Insert.class)
+    @NotNull
+    @Size(max = 50)
     private String menuName;
 
     /**
      * 父菜单主键。
      */
+    @Min(0)
     private Integer parentId;
 
     /**
-     * 菜单排序。
+     * 菜单权重。
      */
-    private Integer order;
+    @Min(1)
+    private Integer weight;
 
     /**
      * 路由地址。
      */
-    @NotBlank(groups = Insert.class)
+    @Size(max = 200)
+    @NotNull(groups = Insert.class)
     private String path;
 
     /**
      * 组件路径。
      */
+    @Size(max = 255)
     private String component;
 
     /**
      * 菜单图标。
      */
+    @Size(max = 100)
     private String icon;
+
+    /**
+     * 角色绑定。
+     */
+    @TableField(exist = false)
+    @NotNull(groups = Insert.class)
+    private Integer[] roleIds;
 
 }
