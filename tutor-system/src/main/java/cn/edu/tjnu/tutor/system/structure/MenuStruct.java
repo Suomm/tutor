@@ -17,6 +17,7 @@
 package cn.edu.tjnu.tutor.system.structure;
 
 import cn.edu.tjnu.tutor.system.domain.entity.Menu;
+import cn.edu.tjnu.tutor.system.domain.meta.MenuMeta;
 import cn.edu.tjnu.tutor.system.domain.view.MenuVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -39,5 +40,13 @@ public interface MenuStruct {
     @Mapping(target = "id", source = "menuId")
     @Mapping(target = "children", ignore = true)
     MenuVO toVO(Menu menu);
+
+    /**
+     * 转换到实体类对象。
+     *
+     * @param meta 元数据对象
+     * @return 实体类对象
+     */
+    Menu toEntity(MenuMeta meta);
 
 }

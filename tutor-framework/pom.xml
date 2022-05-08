@@ -11,6 +11,8 @@
 
     <artifactId>tutor-framework</artifactId>
 
+    <description>Web 层框架模块，定义通用配置、切面增强等。</description>
+
     <dependencies>
         <dependency>
             <groupId>p6spy</groupId>

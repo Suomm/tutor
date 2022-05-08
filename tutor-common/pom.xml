@@ -11,6 +11,8 @@
 
     <artifactId>tutor-common</artifactId>
 
+    <description>通用模块，定义基础的工具包，枚举类等。</description>
+
     <dependencies>
         <dependency>
             <groupId>cn.hutool</groupId>

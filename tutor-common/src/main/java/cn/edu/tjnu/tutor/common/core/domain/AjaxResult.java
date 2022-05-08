@@ -16,11 +16,10 @@
 
 package cn.edu.tjnu.tutor.common.core.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 操作消息结果提示。
@@ -29,8 +28,6 @@ import java.io.Serializable;
  * @since 2.0
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public final class AjaxResult<T> implements Serializable {
 
     private static final long serialVersionUID = -589774230401895753L;
@@ -69,23 +66,24 @@ public final class AjaxResult<T> implements Serializable {
     private transient T data;
 
     /**
+     * 时间戳。
+     */
+    private LocalDateTime timestamp;
+
+    private AjaxResult(Integer code, String message, T data) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
+        this.timestamp = LocalDateTime.now();
+    }
+
+    /**
      * 返回成功数据。
      *
      * @return 成功消息
      */
     public static <T> AjaxResult<T> success(T data) {
-        return success(DEFAULT_SUCCESS_MESSAGE, data);
-    }
-
-    /**
-     * 返回成功消息。
-     *
-     * @param msg  返回内容
-     * @param data 数据对象
-     * @return 成功消息
-     */
-    public static  <T> AjaxResult<T> success(String msg, T data) {
-        return new AjaxResult<>(DEFAULT_SUCCESS_CODE, msg, data);
+        return new AjaxResult<>(DEFAULT_SUCCESS_CODE, DEFAULT_SUCCESS_MESSAGE, data);
     }
 
     /**
@@ -96,17 +94,6 @@ public final class AjaxResult<T> implements Serializable {
      */
     public static AjaxResult<Void> error(String msg) {
         return new AjaxResult<>(DEFAULT_ERROR_CODE, msg, null);
-    }
-
-    /**
-     * 返回错误消息。
-     *
-     * @param code 状态码
-     * @param msg  返回内容
-     * @return 错误消息
-     */
-    public static AjaxResult<Void> error(int code, String msg) {
-        return new AjaxResult<>(code, msg, null);
     }
 
 }

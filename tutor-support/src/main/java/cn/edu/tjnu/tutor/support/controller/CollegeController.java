@@ -21,14 +21,22 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.event.ExcelReadListener;
+import cn.edu.tjnu.tutor.common.util.ExcelUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
+import cn.edu.tjnu.tutor.system.domain.dto.CollegeDTO;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
+import cn.edu.tjnu.tutor.system.structure.CollegeStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
@@ -41,10 +49,12 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @since 1.0
  */
 @RestController
+@Secured(ROLE_ROOT)
 @RequiredArgsConstructor
 @RequestMapping("/college")
 public class CollegeController extends BaseController {
 
+    private final CollegeStruct collegeStruct;
     private final CollegeService collegeService;
 
     /**
@@ -53,46 +63,71 @@ public class CollegeController extends BaseController {
      * @param pageDTO 分页参数
      * @return 分页对象
      */
-    @Secured(ROLE_ROOT)
     @GetMapping("list")
     public AjaxResult<PageVO<College>> list(@Validated PageDTO pageDTO) {
-        return pageSuccess(collegeService.page(pageDTO.page()));
+        return pageSuccess(collegeService.lambdaQuery()
+                .eq(College::getVisible, 0)
+                .page(pageDTO.page()));
     }
 
     /**
      * 添加学院信息。
      *
-     * @param college 学院信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @param collegeDTO 学院信息
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = COLLEGE, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) College college) {
-        return toResult(collegeService.save(college));
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) CollegeDTO collegeDTO) {
+        return toResult(collegeService.save(collegeStruct.toEntity(collegeDTO)));
     }
 
     /**
      * 更新学院信息。
      *
-     * @param college 学院信息
-     * @return {@code true} 更新成功，{@code false} 更新失败
+     * @param collegeDTO 学院信息
+     * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Log(category = COLLEGE, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) College college) {
-        return toResult(collegeService.updateById(college));
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) CollegeDTO collegeDTO) {
+        return toResult(collegeService.updateById(collegeStruct.toEntity(collegeDTO)));
     }
 
     /**
-     * 根据学院主键删除学院信息。
+     * 导入 Excel 文档中的数据到数据库。
      *
-     * @param collegeId 学院主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @param file Excel 文档
+     * @return {@code code = 200} 导入成功，{@code code = 500} 导入失败
+     * @throws IOException 出现 IO 资源异常
      */
-    @DeleteMapping("remove/{collegeId}")
-    @Log(category = COLLEGE, operType = DELETE)
-    public AjaxResult<Void> remove(@PathVariable Integer collegeId) {
-        return toResult(collegeService.removeById(collegeId));
+    @PostMapping("importData")
+    @Log(category = COLLEGE, operType = IMPORT)
+    public AjaxResult<Void> importData(MultipartFile file) throws IOException {
+        ExcelReadListener<College> listener = new ExcelReadListener<>(collegeService);
+        ExcelUtils.readExcel(file.getInputStream(), College.class, listener);
+        return toResult(listener.getResult());
+    }
+
+    /**
+     * 导出数据到 Excel 文档。
+     *
+     * @param response 响应对象
+     */
+    @GetMapping("exportData")
+    public void exportData(HttpServletResponse response) {
+        ExcelUtils.writeExcel(response, "学院信息汇总", College.class,
+                collegeService.lambdaQuery().eq(College::getVisible, 0).list());
+    }
+
+    /**
+     * 导出 Excel 模板。
+     *
+     * @param response 响应对象
+     */
+    @GetMapping("exportTmpl")
+    public void exportTmpl(HttpServletResponse response) {
+        ExcelUtils.writeTemplate(response, "学院信息模板", College.class);
     }
 
 }

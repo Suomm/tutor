@@ -92,6 +92,36 @@ public final class RedisUtils {
     }
 
     /**
+     * 向 Map 中存入数据。
+     *
+     * @param name 名称
+     * @param key 缓存的键值
+     * @param value 缓存的值
+     */
+    public static void setCacheMap(String name, String key, Object value) {
+        DB.getMap(name).put(key, value);
+    }
+
+    /**
+     * 从 Map 中删除数据。
+     *
+     * @param name 名称
+     * @param key 缓存的键值
+     */
+    public static void delCacheMap(String name, String key) {
+        DB.getMap(name).remove(key);
+    }
+
+    /**
+     * 删除 Map 对象。
+     *
+     * @param name 名称
+     */
+    public static void deleteMap(String name) {
+        DB.getMap(name).deleteAsync();
+    }
+
+    /**
      * 获得缓存的基本对象列表
      *
      * @param pattern 字符串前缀

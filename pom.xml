@@ -20,7 +20,7 @@
     <packaging>pom</packaging>
 
     <name>tutor</name>
-    <url>tutor.tjnu.edu.cn</url>
+    <url>https://tutor.tjnu.edu.cn</url>
     <inceptionYear>2021</inceptionYear>
     <description>天津师范大学师范生学业指导系统</description>
 

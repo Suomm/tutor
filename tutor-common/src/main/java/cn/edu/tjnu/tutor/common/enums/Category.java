@@ -41,7 +41,6 @@ public enum Category {
     NOTICE("公告信息管理"),
     OSS("对象存储信息管理"),
     PROBLEM("问题信息管理"),
-    ROLE("角色信息管理"),
     TEAM("导师团信息管理"),
     USER("用户信息管理");
 

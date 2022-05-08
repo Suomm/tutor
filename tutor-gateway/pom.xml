@@ -11,6 +11,8 @@
 
     <artifactId>tutor-gateway</artifactId>
 
+    <description>网关模块，提供数据过滤、资源限流等功能。</description>
+
     <dependencies>
         <dependency>
             <groupId>org.jsoup</groupId>

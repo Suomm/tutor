@@ -14,49 +14,46 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.component;
+package cn.edu.tjnu.tutor.system.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.io.Serializable;
 
 /**
- * Minio 的相关属性绑定。
+ * 参数配置。
  *
  * @author 王帅
- * @since 1.0
+ * @since 2.0
  */
 @Data
-@ConfigurationProperties(prefix = "minio")
-public class MinioProperties {
+@TableName("sys_config")
+public class Config implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
-     * 是否启用 Minio 功能。
+     * 参数主键。
      */
-    private boolean enable;
+    @TableId(type = IdType.AUTO)
+    private Integer configId;
 
     /**
-     * 连接地址。
+     * 参数名称。
      */
-    private String endpoint;
+    private String configName;
 
     /**
-     * 访问账户。
+     * 参数键名。
      */
-    private String accessKey;
+    private String configKey;
 
     /**
-     * 访问密码。
+     * 参数键值。
      */
-    private String secretKey;
-
-    /**
-     * 储存桶。
-     */
-    private String bucket;
-
-    /**
-     * 访问文件的根路径。
-     */
-    private String baseUrl;
+    private String configValue;
 
 }

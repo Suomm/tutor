@@ -31,6 +31,24 @@ import java.util.List;
 public interface MenuService extends IService<Menu> {
 
     /**
+     * 保存菜单信息，并绑定菜单对应的角色。
+     *
+     * @param menu 菜单信息
+     * @param roleIds 角色信息
+     * @return {@code true} 保存成功，{@code false} 保存失败
+     */
+    boolean save(Menu menu, Integer[] roleIds);
+
+    /**
+     * 更新菜单信息，并更新菜单对应的角色（如果需要的话）。
+     *
+     * @param menu 菜单信息
+     * @param roleIds 角色信息（可以为 {@code null}）
+     * @return {@code true} 更新成功，{@code false} 更新失败
+     */
+    boolean update(Menu menu, Integer[] roleIds);
+
+    /**
      * 根据用户主键查询路由权限信息。
      *
      * @param userId 用户主键

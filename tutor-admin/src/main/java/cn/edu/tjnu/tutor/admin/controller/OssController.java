@@ -60,7 +60,7 @@ public class OssController extends BaseController {
      * 添加对象存储信息。
      *
      * @param oss 对象存储信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = OSS, operType = INSERT)
@@ -72,7 +72,7 @@ public class OssController extends BaseController {
      * 更新对象存储信息。
      *
      * @param oss 对象存储信息
-     * @return {@code true} 更新成功，{@code false} 更新失败
+     * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Log(category = OSS, operType = UPDATE)
@@ -84,7 +84,7 @@ public class OssController extends BaseController {
      * 根据对象存储主键删除对象存储信息。
      *
      * @param ossId 对象存储主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{ossId}")
     @Log(category = OSS, operType = DELETE)

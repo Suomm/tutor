@@ -11,6 +11,8 @@
 
     <artifactId>tutor-system</artifactId>
 
+    <description>系统模块，提供通用业务，主要与数据层进行对接。</description>
+
     <dependencies>
         <dependency>
             <groupId>org.mapstruct</groupId>

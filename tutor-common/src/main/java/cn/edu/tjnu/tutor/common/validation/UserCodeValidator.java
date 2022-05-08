@@ -16,11 +16,11 @@
 
 package cn.edu.tjnu.tutor.common.validation;
 
-import cn.edu.tjnu.tutor.common.validation.constraints.Scope;
+import cn.edu.tjnu.tutor.common.constant.RegexConst;
+import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.stream.IntStream;
 
 /**
  * 用于校验 {@code Integer} 表示的类型是否符合要求。
@@ -28,18 +28,11 @@ import java.util.stream.IntStream;
  * @author 王帅
  * @since 1.0
  */
-public class ScopeValidator implements ConstraintValidator<Scope, Integer> {
-
-    private int[] ints;
+public class UserCodeValidator implements ConstraintValidator<UserCode, String> {
 
     @Override
-    public void initialize(Scope constraintAnnotation) {
-        this.ints = constraintAnnotation.value();
-    }
-
-    @Override
-    public boolean isValid(Integer value, ConstraintValidatorContext context) {
-        return IntStream.of(ints).anyMatch(i -> i == value);
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        return RegexConst.USER_CODE.matcher(value).matches();
     }
 
 }

@@ -16,8 +16,14 @@
 
 package cn.edu.tjnu.tutor.common.enums;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import cn.edu.tjnu.tutor.common.locale.Localizable;
+
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 异常类型枚举类。
@@ -25,22 +31,44 @@ import lombok.Getter;
  * @author 王帅
  * @since 2.0
  */
-@Getter
-@AllArgsConstructor
-public enum ExceptionType {
+public enum ExceptionType implements Localizable {
 
-    // 所有异常代码及其描述信息
+    // 所有异常类型及其描述信息
 
-    COLLEGE_NOT_REGISTER(501, "您所在的学院未注册！");
+    COLLEGE_NOT_REGISTER("您所在的学院未注册"),
+    EXCEL_EXPORT_FAILED("导出文档 {0}.xlsx 失败"),
+    EXCEL_IMPORT_FAILED("导入成功 {0} 条数据，失败 {1} 条数据，发生错误行号：{2}"),
+    MENU_NAME_ALREADY_EXISTS("菜单名称 '{0}' 已经存在，请换用其他名称"),
+    MENU_ALREADY_BIND_ROLE("菜单已绑定角色，不能删除"),
+    SUBMENU_ALREADY_EXISTS("存在子菜单，请先删除子菜单");
+
+    private static final Map<Locale, ResourceBundle> CACHED_RESOURCE_BUNDLES =
+            new ConcurrentHashMap<>();
 
     /**
-     * 异常代码。
+     * 默认消息。
      */
-    private final int code;
+    private final String sourceFormat;
 
-    /**
-     * 描述信息。
-     */
-    private final String message;
+    ExceptionType(String sourceFormat) {
+        this.sourceFormat = sourceFormat;
+    }
+
+    @Override
+    public String getLocalizedMessage(Locale locale, Object... args) {
+        String message = null;
+        try {
+            ResourceBundle bundle = CACHED_RESOURCE_BUNDLES.get(locale);
+            // 缓存 ResourceBundle 类
+            if (bundle == null) {
+                bundle = ResourceBundle.getBundle("ExceptionMessages", locale);
+                CACHED_RESOURCE_BUNDLES.put(locale, bundle);
+            }
+            message = bundle.getString(name());
+        } catch (MissingResourceException mre) {
+            // do nothing here.
+        }
+        return MessageFormat.format(message == null ? sourceFormat : message, args);
+    }
 
 }

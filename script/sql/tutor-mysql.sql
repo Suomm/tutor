@@ -54,6 +54,21 @@ CREATE TABLE `sys_college`
   COLLATE = utf8_general_ci COMMENT = '学院信息表';
 
 -- ----------------------------
+-- Table structure for sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_config`;
+CREATE TABLE `sys_config`
+(
+    `config_id`    int          NOT NULL AUTO_INCREMENT COMMENT '参数主键',
+    `config_name`  varchar(100) NOT NULL COMMENT '参数名称',
+    `config_key`   varchar(100) NOT NULL COMMENT '参数键名',
+    `config_value` varchar(500) NOT NULL COMMENT '参数键值',
+    PRIMARY KEY (`config_id`)
+) ENGINE = InnoDB
+  CHARACTER SET = utf8
+  COLLATE = utf8_general_ci COMMENT = '参数配置表';
+
+-- ----------------------------
 -- Table structure for sys_group
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_group`;

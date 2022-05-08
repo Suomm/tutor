@@ -71,7 +71,7 @@ public class TeamController extends BaseController {
      * 添加导师团信息。
      *
      * @param team 导师团信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = TEAM, operType = INSERT)
@@ -83,7 +83,7 @@ public class TeamController extends BaseController {
      * 更新导师团信息。
      *
      * @param team 导师团信息
-     * @return {@code true} 更新成功，{@code false} 更新失败
+     * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Log(category = TEAM, operType = UPDATE)
@@ -95,7 +95,7 @@ public class TeamController extends BaseController {
      * 根据导师团主键删除导师团信息。
      *
      * @param teamId 导师团主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{teamId}")
     @Log(category = TEAM, operType = DELETE)

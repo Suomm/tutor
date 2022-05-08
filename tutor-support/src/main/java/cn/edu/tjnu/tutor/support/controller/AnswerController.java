@@ -68,7 +68,7 @@ public class AnswerController extends BaseController {
      * 添加答复信息。
      *
      * @param answer 答复信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = ANSWER, operType = INSERT)
@@ -80,7 +80,7 @@ public class AnswerController extends BaseController {
      * 根据答复主键删除答复信息。
      *
      * @param commentId 答复主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{commentId}")
     @Log(category = ANSWER, operType = DELETE)

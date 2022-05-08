@@ -23,6 +23,7 @@ import cn.edu.tjnu.tutor.common.util.TreeUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Menu;
+import cn.edu.tjnu.tutor.system.domain.meta.MenuMeta;
 import cn.edu.tjnu.tutor.system.domain.view.MenuVO;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import cn.edu.tjnu.tutor.system.structure.MenuStruct;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static cn.edu.tjnu.tutor.common.enums.Category.MENU;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.*;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
 /**
@@ -65,10 +67,10 @@ public class MenuController extends BaseController {
     }
 
     /**
-     * 查询菜单绑定的角色信息。
+     * 查询菜单绑定的角色主键。
      *
      * @param menuId 菜单主键
-     * @return 角色信息
+     * @return 角色主键
      */
     @GetMapping("roleIdList/{menuId}")
     public AjaxResult<List<Integer>> roleIdList(@PathVariable Integer menuId) {
@@ -78,50 +80,49 @@ public class MenuController extends BaseController {
     /**
      * 添加菜单信息。
      *
-     * @param menu 菜单信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @param menuMeta 菜单信息
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = MENU, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Menu menu) {
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) MenuMeta menuMeta) {
+        Menu menu = menuStruct.toEntity(menuMeta);
         if (menuService.hasMenuName(menu)) {
-            return error("新增菜单 '" + menu.getMenuName() + "' 失败，菜单名称已存在！");
+            return error(MENU_NAME_ALREADY_EXISTS, menu.getMenuName());
         }
-        return toResult(menuService.save(menu));
+        return toResult(menuService.save(menu, menuMeta.getRoleIds()));
     }
 
     /**
      * 更新菜单信息。
      *
-     * @param menu 菜单信息
-     * @return {@code true} 更新成功，{@code false} 更新失败
+     * @param menuMeta 菜单信息
+     * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Log(category = MENU, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Menu menu) {
-        if (menu.getMenuId().equals(menu.getParentId())) {
-            return error("修改菜单 '" + menu.getMenuName() + "' 失败，上级菜单不能选择自己！");
-        }
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) MenuMeta menuMeta) {
+        Menu menu = menuStruct.toEntity(menuMeta);
         if (menuService.hasMenuName(menu)) {
-            return error("修改菜单 '" + menu.getMenuName() + "' 失败，菜单名称已存在！");
+            return error(MENU_NAME_ALREADY_EXISTS, menu.getMenuName());
         }
-        return toResult(menuService.updateById(menu));
+        return toResult(menuService.update(menu, menuMeta.getRoleIds()));
     }
 
     /**
      * 根据菜单主键删除菜单信息。
      *
      * @param menuId 菜单主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{menuId}")
     @Log(category = MENU, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable Integer menuId) {
         if (menuService.hasChildMenu(menuId)) {
-            return error("存在子菜单，不允许删除！");
+            return error(SUBMENU_ALREADY_EXISTS);
         }
         if (menuService.isBindingRole(menuId)) {
-            return error("菜单已分配角色，不允许删除！");
+            return error(MENU_ALREADY_BIND_ROLE);
         }
         return toResult(menuService.removeById(menuId));
     }

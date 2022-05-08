@@ -71,7 +71,7 @@ public class ArticleController extends BaseController {
      * 添加文章信息。
      *
      * @param article 文章信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = ARTICLE, operType = INSERT)
@@ -83,7 +83,7 @@ public class ArticleController extends BaseController {
      * 根据文章主键删除文章信息。
      *
      * @param articleId 文章主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{articleId}")
     @Log(category = ARTICLE, operType = DELETE)

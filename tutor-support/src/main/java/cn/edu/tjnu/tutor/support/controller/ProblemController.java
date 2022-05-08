@@ -71,7 +71,7 @@ public class ProblemController extends BaseController {
      * 添加问题信息。
      *
      * @param problem 问题信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = PROBLEM, operType = INSERT)
@@ -83,7 +83,7 @@ public class ProblemController extends BaseController {
      * 根据问题主键删除问题信息。
      *
      * @param problemId 问题主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{problemId}")
     @Log(category = PROBLEM, operType = DELETE)

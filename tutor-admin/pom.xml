@@ -11,6 +11,8 @@
 
     <artifactId>tutor-admin</artifactId>
 
+    <description>综合系统配置、数据监控、单点登录等功能的管理模块。</description>
+
     <dependencies>
         <dependency>
             <groupId>com.xuxueli</groupId>

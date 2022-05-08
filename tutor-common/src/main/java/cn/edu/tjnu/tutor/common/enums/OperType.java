@@ -42,6 +42,11 @@ public enum OperType {
     /**
      * 删除操作。
      */
-    DELETE;
+    DELETE,
+
+    /**
+     * 导入操作。
+     */
+    IMPORT
 
 }

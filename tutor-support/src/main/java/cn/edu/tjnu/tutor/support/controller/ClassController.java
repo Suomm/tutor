@@ -42,7 +42,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/class")
+@RequestMapping("/theClass")
 public class ClassController extends BaseController {
 
     private final ClassService classService;
@@ -62,7 +62,7 @@ public class ClassController extends BaseController {
      * 添加班级信息。
      *
      * @param theClass 班级信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @Secured(ROLE_ADMIN)
     @PostMapping("save")
@@ -75,7 +75,7 @@ public class ClassController extends BaseController {
      * 更新班级信息。
      *
      * @param theClass 班级信息
-     * @return {@code true} 更新成功，{@code false} 更新失败
+     * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Log(category = CLASS, operType = UPDATE)
@@ -87,7 +87,7 @@ public class ClassController extends BaseController {
      * 根据班级主键删除班级信息。
      *
      * @param classId 班级主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{classId}")
     @Log(category = CLASS, operType = DELETE)

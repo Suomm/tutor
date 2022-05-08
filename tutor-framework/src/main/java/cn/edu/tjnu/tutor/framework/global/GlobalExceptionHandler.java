@@ -19,18 +19,13 @@ package cn.edu.tjnu.tutor.framework.global;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.stream.Collectors;
 
 /**
  * 全局异常处理器。
@@ -39,11 +34,8 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @Slf4j
-@ResponseStatus
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    private static final String DELIMITER = ", ";
 
     /**
      * 拦截未知的异常信息。
@@ -62,47 +54,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     public AjaxResult<Void> handleServiceException(ServiceException e) {
         log.error(e.getMessage(), e);
-        return AjaxResult.error(e.getCode(), e.getMessage());
+        return AjaxResult.error(e.getLocalizedMessage());
     }
 
     /**
      * 自定义验证异常。
      */
-    @ExceptionHandler(BindException.class)
-    public AjaxResult<Void> handleBindException(BindException e) {
+    @ExceptionHandler({
+            BindException.class,
+            ConstraintViolationException.class,
+            MethodArgumentNotValidException.class
+    })
+    public AjaxResult<Void> handleValidationException(Exception e) {
         log.error(e.getMessage(), e);
-        String message = e.getAllErrors()
-                .stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.joining(DELIMITER));
-        return AjaxResult.error(message);
-    }
-
-    /**
-     * 自定义验证异常。
-     */
-    @ExceptionHandler(ConstraintViolationException.class)
-    public AjaxResult<Void> constraintViolationException(ConstraintViolationException e) {
-        log.error(e.getMessage(), e);
-        String message = e.getConstraintViolations()
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .collect(Collectors.joining(DELIMITER));
-        return AjaxResult.error(message);
-    }
-
-    /**
-     * 自定义验证异常。
-     */
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public AjaxResult<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.error(e.getMessage(), e);
-        String message = e.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(DELIMITER));
-        return AjaxResult.error(message);
+        return AjaxResult.error("ExceptionType.DATA_ENTITY_NOT_VALID");
     }
 
 }

@@ -53,7 +53,7 @@ public class GeneratorController extends BaseController {
      * 添加实践手册样例文档。
      *
      * @param document 文档信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @Secured(ROLE_INSTRUCTOR)
     @PostMapping("/upload/doc")
@@ -65,13 +65,12 @@ public class GeneratorController extends BaseController {
      * 添加实践手册模板。
      *
      * @param template 模板信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @Secured(ROLE_INTERN)
     @PostMapping("/upload/tmpl")
     public AjaxResult<Void> uploadTmpl(@RequestBody @Validated(Insert.class) Template template) {
         return toResult(templateService.save(template));
     }
-
 
 }

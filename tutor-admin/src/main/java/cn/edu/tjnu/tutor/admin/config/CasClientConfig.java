@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.admin.config;
 
-import cn.edu.tjnu.tutor.admin.security.CasAuthenticationRedirectStrategy;
+import cn.edu.tjnu.tutor.admin.strategy.CasAuthenticationRedirectStrategy;
 import cn.edu.tjnu.tutor.common.provider.TokenProvider;
 import org.jasig.cas.client.boot.configuration.CasClientConfigurationProperties;
 import org.jasig.cas.client.boot.configuration.CasClientConfigurer;

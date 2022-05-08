@@ -76,7 +76,7 @@ public class ActivityController extends BaseController {
      * 添加活动信息。
      *
      * @param activity 活动信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @Secured(ROLE_TUTOR)
     @PostMapping("save")
@@ -89,7 +89,7 @@ public class ActivityController extends BaseController {
      * 根据活动主键删除活动信息。
      *
      * @param activityId 活动主键
-     * @return 总是返回 {@code true} 删除成功
+     * @return 总是返回 {@code code = 200} 删除成功
      */
     @Secured(ROLE_TUTOR)
     @DeleteMapping("remove/{activityId}")

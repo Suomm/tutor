@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.admin.security;
+package cn.edu.tjnu.tutor.admin.strategy;
 
 import cn.edu.tjnu.tutor.common.util.ServletUtils;
 import org.jasig.cas.client.authentication.AuthenticationRedirectStrategy;

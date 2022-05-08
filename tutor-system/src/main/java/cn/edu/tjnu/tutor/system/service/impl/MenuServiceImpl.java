@@ -50,25 +50,25 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(Menu entity) {
+    public boolean save(Menu menu, Integer[] roleIds) {
         // 先插入菜单信息，然后绑定菜单角色信息
-        return super.save(entity) && saveRoleMenu(entity);
+        return save(menu) && saveRoleMenu(menu.getMenuId(), roleIds);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateById(Menu entity) {
+    public boolean update(Menu menu, Integer[] roleIds) {
         // 更新菜单信息之前，如果有角色绑定信息改变，先更新菜单的角色信息
-        if (entity.getRoleIds() != null) {
-            roleMenuMapper.deleteById(entity.getMenuId());
-            saveRoleMenu(entity);
+        if (roleIds != null) {
+            roleMenuMapper.deleteById(menu.getMenuId());
+            saveRoleMenu(menu.getMenuId(), roleIds);
         }
-        return super.updateById(entity);
+        return updateById(menu);
     }
 
-    private boolean saveRoleMenu(Menu menu) {
-        List<RoleMenu> entityList = Arrays.stream(menu.getRoleIds())
-                .map(roleId -> new RoleMenu(roleId, menu.getMenuId()))
+    private boolean saveRoleMenu(Integer menuId, Integer[] roleIds) {
+        List<RoleMenu> entityList = Arrays.stream(roleIds)
+                .map(roleId -> new RoleMenu(roleId, menuId))
                 .collect(Collectors.toList());
         // 插入角色与菜单的绑定到数据库
         int rows = 0;

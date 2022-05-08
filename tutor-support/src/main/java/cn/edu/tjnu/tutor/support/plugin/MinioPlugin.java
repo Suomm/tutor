@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.component;
+package cn.edu.tjnu.tutor.support.plugin;
 
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
@@ -37,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @EnableConfigurationProperties(MinioProperties.class)
 @ConditionalOnProperty(prefix = "minio", name = "enable", havingValue = "true")
-public class MinioTemplate implements InitializingBean {
+public class MinioPlugin implements InitializingBean {
 
     private final MinioProperties minioProperties;
 

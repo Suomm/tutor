@@ -71,7 +71,7 @@ public class NoticeController extends BaseController {
      * 添加公告信息。
      *
      * @param notice 公告信息
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = NOTICE, operType = INSERT)
@@ -83,7 +83,7 @@ public class NoticeController extends BaseController {
      * 更新公告信息。
      *
      * @param notice 公告信息
-     * @return {@code true} 更新成功，{@code false} 更新失败
+     * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Log(category = NOTICE, operType = UPDATE)
@@ -95,7 +95,7 @@ public class NoticeController extends BaseController {
      * 根据公告主键删除公告信息。
      *
      * @param noticeId 公告主键
-     * @return {@code true} 删除成功，{@code false} 删除失败
+     * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{noticeId}")
     @Log(category = NOTICE, operType = DELETE)

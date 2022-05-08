@@ -19,6 +19,7 @@ package cn.edu.tjnu.tutor.system.service.impl;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.service.OperLogService;
 import cn.edu.tjnu.tutor.common.enums.OperStatus;
+import cn.edu.tjnu.tutor.common.enums.OperType;
 import cn.edu.tjnu.tutor.common.util.IpUtils;
 import cn.edu.tjnu.tutor.system.domain.model.OperLog;
 import cn.edu.tjnu.tutor.system.repository.OperLogRepository;
@@ -69,11 +70,11 @@ public class OperLogServiceImpl implements OperLogService {
             operLog.setOperStatus(OperStatus.ERROR.name());
         }
         // 是否需要保存 Request 中的参数和值
-        if (log.isSaveRequestData()) {
+        if (log.operType() != OperType.IMPORT && log.isSaveRequestData()) {
             operLog.setOperParam(JSONUtil.toJsonStr(paramsArray));
         }
         // 是否需要保存 Response 中的参数和值
-        if (log.isSaveResponseData() && jsonResult != null) {
+        if (jsonResult != null && log.isSaveResponseData()) {
             operLog.setJsonResult(JSONUtil.toJsonStr(jsonResult));
         }
         // 将日志存入 ES 中方便数据分析

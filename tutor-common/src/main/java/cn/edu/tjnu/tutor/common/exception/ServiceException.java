@@ -17,13 +17,9 @@
 package cn.edu.tjnu.tutor.common.exception;
 
 import cn.edu.tjnu.tutor.common.enums.ExceptionType;
-import lombok.Getter;
-
-import java.util.Objects;
 
 /**
- * 运行时异常的消息回显，是所有需要回显给用户的异常信息的父类。该异常会被全局异常解析器解析，
- * 回显错误的详细信息。
+ * 服务层异常信息，会被全局异常解析器解析，回显错误的详细信息。
  *
  * @author 王帅
  * @since 1.0
@@ -33,33 +29,24 @@ public class ServiceException extends RuntimeException {
     private static final long serialVersionUID = 7180827225792980724L;
 
     /**
-     * 状态码。
-     */
-    @Getter
-    private final Integer code;
-
-    /**
-     * 用指定的详细消息构造一个新的运行时异常。其中的详细消息用于回显到前端界面，
-     * 详细消息的内容不应该为 {@code null}。
+     * 用指定的异常类型构造一个新的运行时异常。
      *
      * @param exceptionType 异常的类型
-     * @throws NullPointerException 如果回显详细消息为 {@code null}
+     * @param args 格式化参数
      */
-    public ServiceException(ExceptionType exceptionType) {
-        this(exceptionType.getCode(), exceptionType.getMessage());
+    public ServiceException(ExceptionType exceptionType, Object... args) {
+        super(exceptionType.getMessage(args));
     }
 
     /**
-     * 用指定的详细消息构造一个新的运行时异常。其中的详细消息用于回显到前端界面，
-     * 详细消息的内容不应该为 {@code null}。
+     * 用指定的引发原因和异常类型构造一个新的运行时异常。
      *
-     * @param code 异常状态码
-     * @param message 需要回显的消息信息
-     * @throws NullPointerException 如果回显详细消息为 {@code null}
+     * @param cause 引发原因
+     * @param exceptionType 异常类型
+     * @param args 格式化参数
      */
-    public ServiceException(Integer code, String message) {
-        super(Objects.requireNonNull(message));
-        this.code = code;
+    public ServiceException(Throwable cause, ExceptionType exceptionType, Object... args) {
+        super(exceptionType.getMessage(args), cause);
     }
 
 }

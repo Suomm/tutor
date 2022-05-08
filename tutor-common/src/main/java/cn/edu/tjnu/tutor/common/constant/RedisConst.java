@@ -33,4 +33,9 @@ public final class RedisConst {
      */
     public static final String PREFIX_LOGIN_USER = "loginUsers:login_user_";
 
+    /**
+     * 配置参数名称（{@link org.redisson.api.RMap}）。
+     */
+    public static final String CONFIG_MAP_NAME = "sys_config";
+
 }

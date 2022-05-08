@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.common.validation.constraints;
 
-import cn.edu.tjnu.tutor.common.validation.ScopeValidator;
+import cn.edu.tjnu.tutor.common.validation.UserCodeValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -29,22 +29,20 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 校验 {@code Integer} 所表示的类型取值范围。
+ * 校验 {@code String} 所表示的类型取值范围。
  *
  * @author 王帅
  * @since 1.0
- * @see ScopeValidator
+ * @see UserCodeValidator
  */
 @Documented
 @Retention(RUNTIME)
-@Repeatable(Scope.List.class)
-@Constraint(validatedBy = ScopeValidator.class)
+@Repeatable(UserCode.List.class)
+@Constraint(validatedBy = UserCodeValidator.class)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
-public @interface Scope {
+public @interface UserCode {
 
-    String message() default "数字范围不在规定之内！";
-
-    int[] value() default {0, 1};
+    String message() default "{cn.edu.tjnu.tutor.common.validation.constraints.UserCode}";
 
     Class<?>[] groups() default { };
 
@@ -54,7 +52,9 @@ public @interface Scope {
     @Retention(RUNTIME)
     @Documented
     @interface List {
-        Scope[] value();
+
+        UserCode[] value();
+
     }
 
 }

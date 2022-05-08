@@ -11,6 +11,8 @@
 
     <artifactId>tutor-support</artifactId>
 
+    <description>支持模块，提供业务需求的实现。</description>
+
     <dependencies>
         <dependency>
             <groupId>io.minio</groupId>
