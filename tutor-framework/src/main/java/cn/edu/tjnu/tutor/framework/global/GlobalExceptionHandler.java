@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
+import java.util.stream.Collectors;
 
 /**
  * 全局异常处理器。
@@ -47,27 +48,50 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 处理自定义异常中，将异常的详细信息回显到前端界面。
+     * 处理自定义异常，将异常的详细信息回显到前端界面。
      *
      * @see ServiceException
      */
     @ExceptionHandler(ServiceException.class)
     public AjaxResult<Void> handleServiceException(ServiceException e) {
-        log.error(e.getMessage(), e);
-        return AjaxResult.error(e.getLocalizedMessage());
+        return AjaxResult.error(e.getMessage());
     }
 
     /**
-     * 自定义验证异常。
+     * 处理自定义校验异常。
      */
-    @ExceptionHandler({
-            BindException.class,
-            ConstraintViolationException.class,
-            MethodArgumentNotValidException.class
-    })
-    public AjaxResult<Void> handleValidationException(Exception e) {
-        log.error(e.getMessage(), e);
-        return AjaxResult.error("ExceptionType.DATA_ENTITY_NOT_VALID");
+    @ExceptionHandler(BindException.class)
+    public AjaxResult<Void> handleBindException(BindException e) {
+        String message = e.getFieldErrors()
+                .stream()
+                .map(o -> o.getField() + ": " + o.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+        return AjaxResult.error(message);
+    }
+
+    /**
+     * 处理自定义校验异常。
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public AjaxResult<Void> handleConstraintViolationException(ConstraintViolationException e) {
+        String message = e.getConstraintViolations()
+                .stream()
+                .map(o -> o.getPropertyPath() + ": " + o.getMessage())
+                .collect(Collectors.joining(", "));
+        return AjaxResult.error(message);
+    }
+
+    /**
+     * 处理自定义校验异常。
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public AjaxResult<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        String message = e.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(o -> o.getField() + ": " + o.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+        return AjaxResult.error(message);
     }
 
 }

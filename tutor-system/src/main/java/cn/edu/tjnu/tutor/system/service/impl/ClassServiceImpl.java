@@ -16,11 +16,22 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
+import cn.edu.tjnu.tutor.system.domain.entity.Major;
 import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
+import cn.edu.tjnu.tutor.system.domain.query.ClassQuery;
+import cn.edu.tjnu.tutor.system.domain.view.ClassVO;
 import cn.edu.tjnu.tutor.system.mapper.ClassMapper;
+import cn.edu.tjnu.tutor.system.mapper.MajorMapper;
 import cn.edu.tjnu.tutor.system.service.ClassService;
+import cn.edu.tjnu.tutor.system.structure.ClassStruct;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 班级信息服务层实现。
@@ -29,5 +40,45 @@ import org.springframework.stereotype.Service;
  * @since 1.0
  */
 @Service
+@RequiredArgsConstructor
 public class ClassServiceImpl extends ServiceImpl<ClassMapper, TheClass> implements ClassService {
+
+    private final ClassStruct classStruct;
+    private final MajorMapper majorMapper;
+
+    @Override
+    public IPage<ClassVO> pageVO(ClassQuery query) {
+        return baseMapper.selectPageVO(query.page(), query);
+    }
+
+    @Override
+    public Class<ClassVO> getExcelHead() {
+        return ClassVO.class;
+    }
+
+    @Override
+    public List<ClassVO> getExcelData() {
+        return baseMapper.selectExcelDataList();
+    }
+
+    @Override
+    public boolean saveExcelData(ClassVO vo, Map<Object, Object> cachedMap) {
+        Integer majorId = (Integer) cachedMap.computeIfAbsent(vo.getMajorName(), key -> {
+            // 查询并且缓存专业主键，没有结果返回 -1
+            Major major = ChainWrappers.lambdaQueryChain(majorMapper)
+                    .eq(Major::getMajorName, key)
+                    .one();
+            if (major == null) {
+                return -1;
+            }
+            return major.getMajorId();
+        });
+        if (majorId == -1) {
+            return false;
+        }
+        TheClass theClass = classStruct.toEntity(vo);
+        theClass.setMajorId(majorId);
+        return save(theClass);
+    }
+
 }

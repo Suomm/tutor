@@ -32,9 +32,9 @@ public interface ConfigService {
      *
      * @param page 分页对象
      * @return 分页数据
-     * @param <E> 分页对象类型
+     * @param <P> 分页对象类型
      */
-    <E extends IPage<Config>> E page(E page);
+    <P extends IPage<Config>> P page(P page);
 
     /**
      * 保存

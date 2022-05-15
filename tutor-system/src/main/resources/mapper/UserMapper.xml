@@ -28,7 +28,7 @@
         where ur.user_id = #{userId}
     </select>
 
-    <resultMap id="UserVOResult" type="cn.edu.tjnu.tutor.system.domain.view.UserVO">
+    <resultMap id="ProfileVoResult" type="cn.edu.tjnu.tutor.system.domain.view.ProfileVO">
         <result property="userCode" column="user_code"/>
         <result property="userName" column="user_name"/>
         <result property="email" column="user_email"/>
@@ -39,14 +39,14 @@
         <result property="className" column="class_name"/>
         <result property="majorName" column="major_name"/>
         <association property="college" javaType="cn.edu.tjnu.tutor.system.domain.view.CollegeVO">
-            <result property="name" column="college_name"/>
+            <result property="collegeName" column="college_name"/>
             <result property="leader" column="leader"/>
             <result property="phone" column="college_phone"/>
             <result property="email" column="college_email"/>
         </association>
     </resultMap>
 
-    <select id="selectUserInfo" resultMap="UserVOResult">
+    <select id="selectUserInfo" resultMap="ProfileVoResult">
         select u.user_code,
                u.user_name,
                u.email as user_email,
@@ -68,13 +68,7 @@
         where u.user_id = #{userId}
     </select>
 
-    <resultMap id="LoginUserResult" type="cn.edu.tjnu.tutor.common.core.domain.model.LoginUser">
-        <result property="userId" column="user_id"/>
-        <result property="userCode" column="user_code"/>
-        <result property="collegeId" column="college_id"/>
-    </resultMap>
-
-    <select id="selectByUserCode" resultMap="LoginUserResult">
+    <select id="selectByUserCode" resultType="cn.edu.tjnu.tutor.common.core.domain.model.LoginUser">
         select user_id, user_code, college_id
         from sys_user
         where user_code = #{userCode}

@@ -19,34 +19,42 @@ package cn.edu.tjnu.tutor.system.domain.meta;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
  * <p>菜单元数据信息，用于后台操作数据。
  *
- * <p>插入菜单数据时：<br>
- * {@code
+ * <p>插入菜单数据时：
+ * <blockquote><pre>
  *     {
  *         "menuName": "系统管理",
+ *         "parentId": 0,
+ *         "weight": 1,
  *         "path": "system",
- *         "roleIds": [],
- *         ... // 其他可选数据插入项
+ *         "component": null
+ *         "icon": "system",
+ *         "roleIds": []
  *     }
- * }
+ * </pre></blockquote>
  *
- * <p>更新菜单数据时：<br>
- * {@code
+ * <p>更新菜单数据时：
+ * <blockquote><pre>
  *     {
  *         "menuId": 1,
  *         "menuName": "系统管理",
- *         ... // 需要更新的数据项
+ *         "parentId": 0,
+ *         "weight": 1,
+ *         "path": "system",
+ *         "component": null
+ *         "icon": "system",
+ *         "roleIds": []
  *     }
- * }
+ * </pre></blockquote>
  *
  * @author 王帅
  * @since 2.0
@@ -67,7 +75,7 @@ public class MenuMeta implements Serializable {
      * 菜单名称。
      */
     @NotNull
-    @Size(max = 50)
+    @Length(max = 50)
     private String menuName;
 
     /**
@@ -85,20 +93,20 @@ public class MenuMeta implements Serializable {
     /**
      * 路由地址。
      */
-    @Size(max = 200)
+    @Length(max = 200)
     @NotNull(groups = Insert.class)
     private String path;
 
     /**
      * 组件路径。
      */
-    @Size(max = 255)
+    @Length(max = 255)
     private String component;
 
     /**
      * 菜单图标。
      */
-    @Size(max = 100)
+    @Length(max = 100)
     private String icon;
 
     /**

@@ -36,6 +36,7 @@ public enum ExceptionType implements Localizable {
     // 所有异常类型及其描述信息
 
     COLLEGE_NOT_REGISTER("您所在的学院未注册"),
+    EXCEL_FILE_OPEN_FAILED("打开 Excel 文档 {0} 失败"),
     EXCEL_EXPORT_FAILED("导出文档 {0}.xlsx 失败"),
     EXCEL_IMPORT_FAILED("导入成功 {0} 条数据，失败 {1} 条数据，发生错误行号：{2}"),
     MENU_NAME_ALREADY_EXISTS("菜单名称 '{0}' 已经存在，请换用其他名称"),

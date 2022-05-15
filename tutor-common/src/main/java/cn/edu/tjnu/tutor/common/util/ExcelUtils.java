@@ -17,16 +17,19 @@
 package cn.edu.tjnu.tutor.common.util;
 
 import cn.edu.tjnu.tutor.common.constant.GlobalConst;
+import cn.edu.tjnu.tutor.common.core.domain.ExcelResult;
+import cn.edu.tjnu.tutor.common.core.service.ExcelDataService;
 import cn.edu.tjnu.tutor.common.enums.ExceptionType;
+import cn.edu.tjnu.tutor.common.event.ExcelReadListener;
 import cn.edu.tjnu.tutor.common.exception.ServiceException;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,15 +46,22 @@ public final class ExcelUtils {
     /**
      * 从 Excel 中读取数据，并写入到数据库中。
      *
-     * @param in   需要读取的流
-     * @param head 数据类
-     * @param <T>  数据类型
+     * @param file    上传的 Excel 文件
+     * @param service Excel 数据服务
+     * @param <T>     数据类型
+     * @return Excel 解析结果
      */
-    public static <T> void readExcel(InputStream in, Class<T> head, ReadListener<T> readListener) {
-        EasyExcel.read(in, head, readListener)
-                .autoCloseStream(false)
-                .sheet()
-                .doRead();
+    public static <T> ExcelResult readExcel(MultipartFile file, ExcelDataService<T> service) {
+        ExcelReadListener<T> readListener = new ExcelReadListener<>(service);
+        try {
+            EasyExcel.read(file.getInputStream(), service.getExcelHead(), readListener)
+                    .autoCloseStream(false)
+                    .sheet()
+                    .doRead();
+        } catch (IOException e) {
+            throw new ServiceException(e, ExceptionType.EXCEL_FILE_OPEN_FAILED, file.getOriginalFilename());
+        }
+        return readListener.getResult();
     }
 
     /**
@@ -63,7 +73,7 @@ public final class ExcelUtils {
      * @param data     数据
      * @param <T>      数据类型
      */
-    public static <T> void writeExcel(HttpServletResponse response, String fileName, Class<T> head, Collection<T> data) {
+    private static <T> void writeExcel(HttpServletResponse response, String fileName, Class<T> head, Collection<T> data) {
         try {
             String name = URLEncoder.encode(fileName, GlobalConst.UTF_8);
             response.addHeader("Content-Disposition", "attachment;filename=" + name + ".xlsx");
@@ -79,15 +89,27 @@ public final class ExcelUtils {
     }
 
     /**
+     * 向流中写入 Excel 文件。
+     *
+     * @param response 需要写入的流
+     * @param fileName 文件名称
+     * @param service  Excel 数据服务
+     * @param <T>      数据类型
+     */
+    public static <T> void writeExcel(HttpServletResponse response, String fileName, ExcelDataService<T> service) {
+        writeExcel(response, fileName, service.getExcelHead(), service.getExcelData());
+    }
+
+    /**
      * 向流中写入 Excel 模板。
      *
      * @param response 需要写入的流
      * @param fileName 文件名称
-     * @param head     数据类
+     * @param service  Excel 数据服务
      * @param <T>      数据类型
      */
-    public static <T> void writeTemplate(HttpServletResponse response, String fileName, Class<T> head) {
-        writeExcel(response, fileName, head, new ArrayList<>());
+    public static <T> void writeTemplate(HttpServletResponse response, String fileName, ExcelDataService<T> service) {
+        writeExcel(response, fileName, service.getExcelHead(), new ArrayList<>());
     }
 
 }

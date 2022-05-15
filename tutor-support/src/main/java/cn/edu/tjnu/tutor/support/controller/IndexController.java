@@ -18,8 +18,8 @@ package cn.edu.tjnu.tutor.support.controller;
 
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
+import cn.edu.tjnu.tutor.system.domain.view.ProfileVO;
 import cn.edu.tjnu.tutor.system.domain.view.RouterVO;
-import cn.edu.tjnu.tutor.system.domain.view.UserVO;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import cn.edu.tjnu.tutor.system.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +62,7 @@ public class IndexController extends BaseController {
      * @return 用户信息
      */
     @GetMapping("/getInfo")
-    public AjaxResult<UserVO> getInfo() {
+    public AjaxResult<ProfileVO> getInfo() {
         return success(userService.getInfo(getUserId()));
     }
 

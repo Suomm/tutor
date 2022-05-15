@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 问题答复显示信息。
+ * 问题答复信息。
  *
  * @author 王帅
  * @since 2.0

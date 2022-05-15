@@ -11,4 +11,42 @@
         <result property="grade" column="grade"/>
     </resultMap>
 
+    <sql id="selectBasic">
+        select c.class_name,
+               c.grade,
+               sm.major_name,
+               sc.college_name
+        from sys_class c
+                 left join sys_major sm on c.major_id = sm.major_id
+                 left join sys_college sc on sm.college_id = sc.college_id
+    </sql>
+
+    <resultMap id="ClassVoResult" type="cn.edu.tjnu.tutor.system.domain.view.ClassVO">
+        <result property="collegeName" column="college_name"/>
+        <result property="majorName" column="major_name"/>
+        <result property="className" column="class_name"/>
+        <result property="grade" column="grade"/>
+    </resultMap>
+
+    <select id="selectExcelDataList" resultMap="ClassVoResult">
+        <include refid="selectBasic"/>
+    </select>
+
+    <select id="selectPageVO"
+            resultMap="ClassVoResult"
+            parameterType="cn.edu.tjnu.tutor.system.domain.query.ClassQuery">
+        <include refid="selectBasic"/>
+        <where>
+            <if test="query.collegeId != null">
+                and sm.college_id = #{query.collegeId}
+            </if>
+            <if test="query.majorId != null">
+                and sm.major_id = #{query.majorId}
+            </if>
+            <if test="query.grade != null">
+                and c.grade = #{query.grade}
+            </if>
+        </where>
+    </select>
+
 </mapper>

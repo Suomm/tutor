@@ -18,7 +18,7 @@ package cn.edu.tjnu.tutor.system.service.impl;
 
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
-import cn.edu.tjnu.tutor.system.domain.view.UserVO;
+import cn.edu.tjnu.tutor.system.domain.view.ProfileVO;
 import cn.edu.tjnu.tutor.system.mapper.UserMapper;
 import cn.edu.tjnu.tutor.system.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -71,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserVO getInfo(Integer userId) {
+    public ProfileVO getInfo(Integer userId) {
         return baseMapper.selectUserInfo(userId);
     }
 

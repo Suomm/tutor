@@ -21,7 +21,6 @@ import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
-import cn.edu.tjnu.tutor.common.event.ExcelReadListener;
 import cn.edu.tjnu.tutor.common.util.ExcelUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
@@ -36,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.util.List;
 
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
@@ -63,11 +62,25 @@ public class CollegeController extends BaseController {
      * @param pageDTO 分页参数
      * @return 分页对象
      */
-    @GetMapping("list")
-    public AjaxResult<PageVO<College>> list(@Validated PageDTO pageDTO) {
+    @GetMapping("page")
+    public AjaxResult<PageVO<College>> page(@Validated PageDTO pageDTO) {
         return pageSuccess(collegeService.lambdaQuery()
                 .eq(College::getVisible, 0)
                 .page(pageDTO.page()));
+    }
+
+    /**
+     * 学院信息的下拉列表。
+     *
+     * @return 所有学院主键和名称
+     */
+    @GetMapping("selectList")
+    public AjaxResult<List<College>> selectList() {
+        return success(collegeService.lambdaQuery()
+                .select(College::getCollegeId)
+                .select(College::getCollegeName)
+                .eq(College::getVisible, 0)
+                .list());
     }
 
     /**
@@ -99,14 +112,11 @@ public class CollegeController extends BaseController {
      *
      * @param file Excel 文档
      * @return {@code code = 200} 导入成功，{@code code = 500} 导入失败
-     * @throws IOException 出现 IO 资源异常
      */
     @PostMapping("importData")
     @Log(category = COLLEGE, operType = IMPORT)
-    public AjaxResult<Void> importData(MultipartFile file) throws IOException {
-        ExcelReadListener<College> listener = new ExcelReadListener<>(collegeService);
-        ExcelUtils.readExcel(file.getInputStream(), College.class, listener);
-        return toResult(listener.getResult());
+    public AjaxResult<Void> importData(MultipartFile file) {
+        return toResult(ExcelUtils.readExcel(file, collegeService));
     }
 
     /**
@@ -116,8 +126,7 @@ public class CollegeController extends BaseController {
      */
     @GetMapping("exportData")
     public void exportData(HttpServletResponse response) {
-        ExcelUtils.writeExcel(response, "学院信息汇总", College.class,
-                collegeService.lambdaQuery().eq(College::getVisible, 0).list());
+        ExcelUtils.writeExcel(response, "学院信息汇总", collegeService);
     }
 
     /**
@@ -127,7 +136,7 @@ public class CollegeController extends BaseController {
      */
     @GetMapping("exportTmpl")
     public void exportTmpl(HttpServletResponse response) {
-        ExcelUtils.writeTemplate(response, "学院信息模板", College.class);
+        ExcelUtils.writeTemplate(response, "学院信息模板", collegeService);
     }
 
 }

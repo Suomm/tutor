@@ -16,69 +16,54 @@
 
 package cn.edu.tjnu.tutor.system.domain.view;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 用户基本信息。
+ * 班级信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-public class UserVO implements Serializable {
+public class ClassVO implements Serializable {
 
-    private static final long serialVersionUID = 6553711926701165612L;
-
-    /**
-     * 用户编号（学号或工号）。
-     */
-    private String userCode;
+    private static final long serialVersionUID = 4735551938253218880L;
 
     /**
-     * 用户名称。
+     * 学院名称。
      */
-    private String userName;
+    @NotNull
+    @Length(max = 50)
+    @ExcelProperty("学院名称")
+    private String collegeName;
 
     /**
-     * 用户邮箱。
+     * 专业名称。
      */
-    private String email;
-
-    /**
-     * 手机号码。
-     */
-    private String phone;
-
-    /**
-     * 用户性别（0女，1男，2保密）。
-     */
-    private Integer gender;
-
-    /**
-     * 头像地址。
-     */
-    private String avatar;
-
-    /**
-     * 自我介绍。
-     */
-    private String introduce;
-
-    /**
-     * （学生）所属专业详细信息。
-     */
+    @NotNull
+    @Length(max = 50)
+    @ExcelProperty("专业名称")
     private String majorName;
 
     /**
-     * （学生）所属班级详细信息。
+     * 班级名称。
      */
+    @NotNull
+    @Length(max = 50)
+    @ExcelProperty("班级名称")
     private String className;
 
     /**
-     * 所属学院详细信息。
+     * 所属年级。
      */
-    private CollegeVO college;
+    @NotNull
+    @Length(min = 2, max = 2)
+    @ExcelProperty("所属年级")
+    private String grade;
 
 }

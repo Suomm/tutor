@@ -16,7 +16,9 @@
 
 package cn.edu.tjnu.tutor.system.service;
 
+import cn.edu.tjnu.tutor.common.core.service.ExcelDataService;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
+import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -25,5 +27,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 王帅
  * @since 1.0
  */
-public interface CollegeService extends IService<College> {
+public interface CollegeService extends IService<College>, ExcelDataService<CollegeVO> {
 }

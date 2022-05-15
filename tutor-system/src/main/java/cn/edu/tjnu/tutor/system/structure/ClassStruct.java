@@ -14,10 +14,30 @@
  * limitations under the License.
  */
 
+package cn.edu.tjnu.tutor.system.structure;
+
+import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
+import cn.edu.tjnu.tutor.system.domain.view.ClassVO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 /**
- * 数据传输对象（Data Transfer Object），用于普通用户操作数据。
+ * 班级实体类结构映射接口。
  *
  * @author 王帅
  * @since 2.0
  */
-package cn.edu.tjnu.tutor.system.domain.dto;
+@Mapper(componentModel = "spring")
+public interface ClassStruct {
+
+    /**
+     * 转换到实体类对象。
+     *
+     * @param vo 视图对象
+     * @return 实体类对象
+     */
+    @Mapping(target = "majorId", ignore = true)
+    @Mapping(target = "classId", ignore = true)
+    TheClass toEntity(ClassVO vo);
+
+}

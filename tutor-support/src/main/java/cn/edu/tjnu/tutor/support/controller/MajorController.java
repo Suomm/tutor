@@ -19,18 +19,28 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.util.ExcelUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
+import cn.edu.tjnu.tutor.system.domain.dto.MajorDTO;
 import cn.edu.tjnu.tutor.system.domain.entity.Major;
+import cn.edu.tjnu.tutor.system.domain.query.MajorQuery;
+import cn.edu.tjnu.tutor.system.domain.view.MajorVO;
 import cn.edu.tjnu.tutor.system.service.MajorService;
+import cn.edu.tjnu.tutor.system.structure.MajorStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ADMIN;
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
+import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
 import static cn.edu.tjnu.tutor.common.enums.Category.MAJOR;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
@@ -41,57 +51,92 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @since 2.0
  */
 @RestController
+@Secured(ROLE_ROOT)
 @RequiredArgsConstructor
 @RequestMapping("/major")
 public class MajorController extends BaseController {
 
+    private final MajorStruct majorStruct;
     private final MajorService majorService;
 
     /**
-     * （超级管理员）分页查询所有专业信息。
+     * 分页查询所有专业信息。
      *
-     * @param pageDTO 分页参数
+     * @param query 分页参数
      * @return 分页对象
      */
     @Secured(ROLE_ROOT)
-    @GetMapping("list")
-    public AjaxResult<PageVO<Major>> list(@Validated PageDTO pageDTO) {
-        return pageSuccess(majorService.page(pageDTO.page()));
+    @GetMapping("page")
+    public AjaxResult<PageVO<MajorVO>> page(@Validated MajorQuery query) {
+        return pageSuccess(majorService.pageVO(query));
     }
 
     /**
-     * 根据专业主键获取详细信息。
+     * 查询所有专业信息。
      *
-     * @param majorId 专业主键
-     * @return 专业信息详情
+     * @return 专业信息
      */
-    @GetMapping("getInfo/{majorId}")
-    public AjaxResult<Major> getInfo(@PathVariable Integer majorId) {
-        return success(majorService.getById(majorId));
+    @Secured(ROLE_ADMIN)
+    @GetMapping("list")
+    public AjaxResult<PageVO<MajorVO>> list() {
+        return page(new MajorQuery().setCollegeId(getCollegeId()));
+    }
+
+    /**
+     * 专业信息的下拉列表。
+     *
+     * @return 专业主键和名称
+     */
+    @Secured(ROLE_ADMIN)
+    @GetMapping("selectList")
+    public AjaxResult<List<Major>> selectList() {
+        return success(majorService.lambdaQuery()
+                .select(Major::getMajorId)
+                .select(Major::getMajorName)
+                .eq(Major::getCollegeId, getCollegeId())
+                .list());
+    }
+
+    /**
+     * 专业信息的下拉列表。
+     *
+     * @param collegeId 学院分类
+     * @return 专业主键和名称
+     */
+    @Secured(ROLE_ROOT)
+    @GetMapping("selectList/{collegeId}")
+    public AjaxResult<List<Major>> selectList(@PathVariable Integer collegeId) {
+        return success(majorService.lambdaQuery()
+                .select(Major::getMajorId)
+                .select(Major::getMajorName)
+                .eq(Major::getCollegeId, collegeId)
+                .list());
     }
 
     /**
      * 添加专业信息。
      *
-     * @param major 专业信息
+     * @param majorDTO 专业信息
      * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
+    @Secured({ROLE_ROOT, ROLE_ADMIN})
     @Log(category = MAJOR, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Major major) {
-        return toResult(majorService.save(major));
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) MajorDTO majorDTO) {
+        return toResult(majorService.save(majorStruct.toEntity(majorDTO)));
     }
 
     /**
      * 更新专业信息。
      *
-     * @param major 专业信息
+     * @param majorDTO 专业信息
      * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
+    @Secured({ROLE_ROOT, ROLE_ADMIN})
     @Log(category = MAJOR, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Major major) {
-        return toResult(majorService.updateById(major));
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) MajorDTO majorDTO) {
+        return toResult(majorService.updateById(majorStruct.toEntity(majorDTO)));
     }
 
     /**
@@ -100,10 +145,46 @@ public class MajorController extends BaseController {
      * @param majorId 专业主键
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
+    @Secured({ROLE_ROOT, ROLE_ADMIN})
     @DeleteMapping("remove/{majorId}")
     @Log(category = MAJOR, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable Integer majorId) {
         return toResult(majorService.removeById(majorId));
+    }
+
+    /**
+     * 导入 Excel 文档中的数据到数据库。
+     *
+     * @param file Excel 文档
+     * @return {@code code = 200} 导入成功，{@code code = 500} 导入失败
+     */
+    @PostMapping("importData")
+    @Secured({ROLE_ROOT, ROLE_ADMIN})
+    @Log(category = COLLEGE, operType = IMPORT)
+    public AjaxResult<Void> importData(MultipartFile file) {
+        return toResult(ExcelUtils.readExcel(file, majorService));
+    }
+
+    /**
+     * 导出数据到 Excel 文档。
+     *
+     * @param response 响应对象
+     */
+    @Secured(ROLE_ROOT)
+    @GetMapping("exportData")
+    public void exportData(HttpServletResponse response) {
+        ExcelUtils.writeExcel(response, "专业信息汇总", majorService);
+    }
+
+    /**
+     * 导出 Excel 模板。
+     *
+     * @param response 响应对象
+     */
+    @GetMapping("exportTmpl")
+    @Secured({ROLE_ROOT, ROLE_ADMIN})
+    public void exportTmpl(HttpServletResponse response) {
+        ExcelUtils.writeTemplate(response, "专业信息模板", majorService);
     }
 
 }

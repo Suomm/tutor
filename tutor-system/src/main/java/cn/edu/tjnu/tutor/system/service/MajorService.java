@@ -16,7 +16,11 @@
 
 package cn.edu.tjnu.tutor.system.service;
 
+import cn.edu.tjnu.tutor.common.core.service.ExcelDataService;
 import cn.edu.tjnu.tutor.system.domain.entity.Major;
+import cn.edu.tjnu.tutor.system.domain.query.MajorQuery;
+import cn.edu.tjnu.tutor.system.domain.view.MajorVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -25,5 +29,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 王帅
  * @since 2.0
  */
-public interface MajorService extends IService<Major> {
+public interface MajorService extends IService<Major>, ExcelDataService<MajorVO> {
+
+    /**
+     * 分页查询班级信息。
+     *
+     * @param query 分页查询对象
+     * @return 分页对象
+     */
+    IPage<MajorVO> pageVO(MajorQuery query);
+
 }

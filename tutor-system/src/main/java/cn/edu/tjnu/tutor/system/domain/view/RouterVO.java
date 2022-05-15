@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * 路由信息展示。
+ * 路由信息。
  *
  * @author 王帅
  * @since 2.0

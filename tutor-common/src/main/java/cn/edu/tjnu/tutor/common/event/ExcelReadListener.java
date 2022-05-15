@@ -17,14 +17,14 @@
 package cn.edu.tjnu.tutor.common.event;
 
 import cn.edu.tjnu.tutor.common.core.domain.ExcelResult;
+import cn.edu.tjnu.tutor.common.core.service.ExcelDataService;
 import cn.edu.tjnu.tutor.common.util.ValidUtils;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
-import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 默认的 Excel 数据读取监听器。
@@ -35,64 +35,57 @@ import java.util.Collection;
 public class ExcelReadListener<T> implements ReadListener<T> {
 
     /**
-     * 批处理数量，达到这个数量就去插入数据库。
-     */
-    private static final int BATCH_SIZE = 100;
-
-    /**
-     * Service 层引用，用于保存解析成功的数据。
-     */
-    private final IService<T> service;
-
-    /**
-     * 解析成功的数据存放集合，达到一定数量批量插入数据库。
-     */
-    private final Collection<T> dataList;
-
-    /**
      * Excel 解析结果保存。
      */
     @Getter
     private final ExcelResult result;
 
     /**
+     * Excel 解析服务引用，用于保存解析成功的数据。
+     */
+    private final ExcelDataService<T> service;
+
+    /**
+     * 查询缓存数据存。
+     */
+    private final Map<Object, Object> cachedMap;
+
+    /**
      * 初始化 Excel 数据读取监听器。
      *
      * @param service 服务层对象
      */
-    public ExcelReadListener(IService<T> service) {
+    public ExcelReadListener(ExcelDataService<T> service) {
         this.service = service;
-        this.dataList = new ArrayList<>();
         this.result = new ExcelResult();
+        this.cachedMap = new HashMap<>();
     }
 
     @Override
-    public void invoke(T data, AnalysisContext context) {
+    public final void invoke(T data, AnalysisContext context) {
         ValidUtils.validate(data);
-        dataList.add(data);
-        if (dataList.size() >= BATCH_SIZE) {
-            saveData();
+        if (service.saveExcelData(data, cachedMap)) {
+            result.increment();
+        } else {
+            setError(context);
         }
     }
 
     @Override
-    public void doAfterAllAnalysed(AnalysisContext context) {
-        saveData();
+    public final void doAfterAllAnalysed(AnalysisContext context) {
+        cachedMap.clear();
     }
 
     @Override
-    public void onException(Exception exception, AnalysisContext context) {
-        // 标记错误行号，这里不抛出异常，继续读取下一行数据
-        result.setErrorRow(context.readRowHolder().getRowIndex() + 1);
+    public final void onException(Exception exception, AnalysisContext context) {
+        setError(context);
     }
 
     /**
-     * 保存数据、记录结果并清理数据缓存。
+     * 标记解析失败行号。
      */
-    private void saveData() {
-        service.saveBatch(dataList);
-        result.addTotal(dataList.size());
-        dataList.clear();
+    private void setError(AnalysisContext context) {
+        result.setErrorRow(context.readRowHolder().getRowIndex() + 1);
     }
 
 }

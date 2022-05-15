@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * 菜单信息展示。
+ * 菜单信息。
  *
  * @author 王帅
  * @since 2.0

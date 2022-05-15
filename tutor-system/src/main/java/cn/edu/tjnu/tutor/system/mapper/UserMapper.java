@@ -19,7 +19,7 @@ package cn.edu.tjnu.tutor.system.mapper;
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
-import cn.edu.tjnu.tutor.system.domain.view.UserVO;
+import cn.edu.tjnu.tutor.system.domain.view.ProfileVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 
@@ -57,7 +57,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param userId 用户主键
      * @return 用户信息
      */
-    UserVO selectUserInfo(Integer userId);
+    ProfileVO selectUserInfo(Integer userId);
 
     /**
      * 根据用户编号查询用户信息。

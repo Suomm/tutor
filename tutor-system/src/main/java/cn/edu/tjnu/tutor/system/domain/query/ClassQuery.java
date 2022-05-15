@@ -14,10 +14,39 @@
  * limitations under the License.
  */
 
+package cn.edu.tjnu.tutor.system.domain.query;
+
+import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 /**
- * 数据传输对象（Data Transfer Object），用于普通用户操作数据。
+ * 班级信息查询对象。
  *
  * @author 王帅
  * @since 2.0
  */
-package cn.edu.tjnu.tutor.system.domain.dto;
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+public class ClassQuery extends PageDTO {
+
+    private static final long serialVersionUID = -6288224397032646380L;
+
+    /**
+     * 学院主键。
+     */
+    private Integer collegeId;
+
+    /**
+     * 专业主键。
+     */
+    private Integer majorId;
+
+    /**
+     * 所属年级。
+     */
+    private String grade;
+
+}

@@ -18,8 +18,14 @@ package cn.edu.tjnu.tutor.system.mapper;
 
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
 import cn.edu.tjnu.tutor.system.domain.entity.Major;
+import cn.edu.tjnu.tutor.system.domain.query.MajorQuery;
+import cn.edu.tjnu.tutor.system.domain.view.MajorVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 专业信息数据层。
@@ -29,4 +35,22 @@ import org.apache.ibatis.annotations.CacheNamespace;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface MajorMapper extends BaseMapper<Major> {
+
+    /**
+     * 查询所有专业数据。
+     *
+     * @return 专业信息
+     */
+    List<MajorVO> selectExcelDataList();
+
+    /**
+     * 分页查询专业信息。
+     *
+     * @param <P>   分页对象类型
+     * @param page  分页参数
+     * @param query 查询信息
+     * @return 分页对象
+     */
+    <P extends IPage<MajorVO>> P selectPageVO(P page, @Param("query") MajorQuery query);
+
 }

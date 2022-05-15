@@ -16,21 +16,20 @@
 
 package cn.edu.tjnu.tutor.system.structure;
 
-import cn.edu.tjnu.tutor.system.domain.dto.CollegeDTO;
-import cn.edu.tjnu.tutor.system.domain.entity.College;
-import cn.edu.tjnu.tutor.system.domain.meta.CollegeMeta;
-import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
+import cn.edu.tjnu.tutor.system.domain.dto.MajorDTO;
+import cn.edu.tjnu.tutor.system.domain.entity.Major;
+import cn.edu.tjnu.tutor.system.domain.view.MajorVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
- * 学院实体类结构映射接口。
+ * 专业实体类结构映射接口。
  *
  * @author 王帅
  * @since 2.0
  */
 @Mapper(componentModel = "spring")
-public interface CollegeStruct {
+public interface MajorStruct {
 
     /**
      * 转换到实体类对象。
@@ -38,19 +37,7 @@ public interface CollegeStruct {
      * @param dto DTO 对象
      * @return 实体类对象
      */
-    @Mapping(target = "visible", ignore = true)
-    College toEntity(CollegeDTO dto);
-
-    /**
-     * 转换到实体类对象。
-     *
-     * @param meta 元数据对象
-     * @return 实体类对象
-     */
-    @Mapping(target = "email", ignore = true)
-    @Mapping(target = "phone", ignore = true)
-    @Mapping(target = "leader", ignore = true)
-    College toEntity(CollegeMeta meta);
+    Major toEntity(MajorDTO dto);
 
     /**
      * 转换到实体类对象。
@@ -58,16 +45,8 @@ public interface CollegeStruct {
      * @param vo 视图对象
      * @return 实体类对象
      */
-    @Mapping(target = "visible", ignore = true)
+    @Mapping(target = "majorId", ignore = true)
     @Mapping(target = "collegeId", ignore = true)
-    College toEntity(CollegeVO vo);
-
-    /**
-     * 转换为视图对象。
-     *
-     * @param college 实体类对象
-     * @return 视图对象
-     */
-    CollegeVO toVO(College college);
+    Major toEntity(MajorVO vo);
 
 }

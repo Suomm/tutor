@@ -21,32 +21,28 @@ import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>学院信息传输对象，用于超级管理员（ROLE_ROOT）操作学院信息。
+ * <p>专业信息数据传输对象，用于超级管理员（ROLE_ROOT）操作专业信息。
  *
- * <p>插入学院信息时：
- * <blockquote><pre>
- *     {
- *         "collegeCode": "413",
- *         "collegeName": "化学学院",
- *         "leader": "负责人",
- *         "phone": "13000000001",
- *         "email": "chemistry@email.com"
- *     }
- * </pre></blockquote>
- *
- * <p>更新学院信息时：
+ * <p>插入专业信息时：
  * <blockquote><pre>
  *     {
  *         "collegeId": 1,
- *         "leader": "负责人",
- *         "phone": "13000000001",
- *         "email": "chemistry@email.com"
+ *         "majorName": "化学（师范）",
+ *         "majorAbbr": "化学"
+ *     }
+ * </pre></blockquote>
+ *
+ * <p>更新专业信息时：
+ * <blockquote><pre>
+ *     {
+ *         "majorId": 1,
+ *         "majorName": "化学（师范）",
+ *         "majorAbbr": "化学"
  *     }
  * </pre></blockquote>
  *
@@ -54,48 +50,36 @@ import java.io.Serializable;
  * @since 2.0
  */
 @Data
-public class CollegeDTO implements Serializable {
+public class MajorDTO implements Serializable {
 
-    private static final long serialVersionUID = 2217010167021543775L;
+    private static final long serialVersionUID = -8588941613994070798L;
 
     /**
-     * 学院主键。
+     * 专业主键。
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
+    private Integer majorId;
+
+    /**
+     * 所属学院的主键。
+     */
+    @Null(groups = Update.class)
+    @NotNull(groups = Insert.class)
     private Integer collegeId;
 
     /**
-     * 学院编码。
-     */
-    @Null(groups = Update.class)
-    @NotNull(groups = Insert.class)
-    private Integer collegeCode;
-
-    /**
-     * 学院名称。
+     * 专业名称。
      */
     @Length(max = 50)
-    @Null(groups = Update.class)
     @NotNull(groups = Insert.class)
-    private String collegeName;
+    private String majorName;
 
     /**
-     * 学院负责人。
+     * 专业简称。
      */
-    @Length(max = 50)
-    private String leader;
-
-    /**
-     * 学院电话。
-     */
-    @Length(max = 11)
-    private String phone;
-
-    /**
-     * 学院邮箱。
-     */
-    @Email
-    private String email;
+    @Length(max = 10)
+    @NotNull(groups = Insert.class)
+    private String majorAbbr;
 
 }

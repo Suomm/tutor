@@ -21,7 +21,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 路由元数据。
+ * 路由元数据信息。
  *
  * @author 王帅
  * @since 2.0

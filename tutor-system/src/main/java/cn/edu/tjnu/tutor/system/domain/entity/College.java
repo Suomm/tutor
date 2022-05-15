@@ -16,16 +16,12 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
-import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -36,6 +32,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("sys_college")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class College implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,53 +40,37 @@ public class College implements Serializable {
     /**
      * 学院主键。
      */
-    @ExcelIgnore
     @TableId(type = IdType.AUTO)
     private Integer collegeId;
 
     /**
      * 学院编码。
      */
-    @NotNull
-    @ExcelProperty("学院编码")
     private Integer collegeCode;
 
     /**
      * 学院名称。
      */
-    @NotNull
-    @Size(max = 50)
-    @ExcelProperty("学院名称")
     private String collegeName;
 
     /**
      * 学院负责人。
      */
-    @NotNull
-    @Size(max = 50)
-    @ExcelProperty("学院负责人")
     private String leader;
 
     /**
      * 学院电话。
      */
-    @NotNull
-    @Size(max = 11)
-    @ExcelProperty("学院电话")
     private String phone;
 
     /**
      * 学院邮箱。
      */
-    @Email
-    @NotNull
-    @ExcelProperty("学院邮箱")
     private String email;
 
     /**
      * 可见性（0可见，1不可见）。
      */
-    @ExcelIgnore
     private Integer visible;
 
 }

@@ -17,32 +17,22 @@
 package cn.edu.tjnu.tutor.system.domain.view;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 学院信息。
+ * 专业信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-public class CollegeVO implements Serializable {
+public class MajorVO implements Serializable {
 
-    private static final long serialVersionUID = -1614808098749200598L;
-
-    /**
-     * 学院编码。
-     */
-    @NotNull
-    @JsonIgnore
-    @ExcelProperty("学院编码")
-    private Integer collegeCode;
+    private static final long serialVersionUID = -2366588138981170768L;
 
     /**
      * 学院名称。
@@ -53,27 +43,19 @@ public class CollegeVO implements Serializable {
     private String collegeName;
 
     /**
-     * 学院负责人。
+     * 专业名称。
      */
     @NotNull
     @Length(max = 50)
-    @ExcelProperty("学院负责人")
-    private String leader;
+    @ExcelProperty("专业名称")
+    private String majorName;
 
     /**
-     * 学院电话。
+     * 专业简称。
      */
     @NotNull
-    @Length(max = 11)
-    @ExcelProperty("学院电话")
-    private String phone;
-
-    /**
-     * 学院邮箱。
-     */
-    @Email
-    @NotNull
-    @ExcelProperty("学院邮箱")
-    private String email;
+    @Length(max = 10)
+    @ExcelProperty("专业简称")
+    private String majorAbbr;
 
 }

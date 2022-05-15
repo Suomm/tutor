@@ -110,6 +110,15 @@ public abstract class BaseController {
     }
 
     /**
+     * 获取当前登录用户所属专业主键。
+     *
+     * @return 所属专业主键
+     */
+    protected Integer getCollegeId() {
+        return getLoginUser().getCollegeId();
+    }
+
+    /**
      * 获取用户缓存信息。
      *
      * @return 登录用户

@@ -15,9 +15,9 @@
  */
 
 /**
- * 数据传输对象（Data Transfer Object），用于普通用户操作数据。
+ * 查询对象（Query），用于用户查询相关信息。
  *
  * @author 王帅
  * @since 2.0
  */
-package cn.edu.tjnu.tutor.system.domain.dto;
+package cn.edu.tjnu.tutor.system.domain.query;

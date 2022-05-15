@@ -19,32 +19,32 @@ package cn.edu.tjnu.tutor.system.domain.meta;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
  * <p>学院元数据信息，用于后台操作数据。
  *
- * <p>插入学院信息时：<br>
- * {@code
+ * <p>插入学院信息时：
+ * <blockquote><pre>
  *     {
  *         "collegeCode": "413",
  *         "collegeName": "化学学院",
- *         "visible": 0 // （可选）默认为可见
+ *         "visible": 0
  *     }
- * }
+ * </pre></blockquote>
  *
- * <p>更新学院信息时：<br>
- * {@code
+ * <p>更新学院信息时：
+ * <blockquote><pre>
  *     {
  *         "collegeId": 1,
- *         ... // 需要更新的数据项
+ *         "visible": 0
  *     }
- * }
+ * </pre></blockquote>
  *
  * @author 王帅
  * @since 2.0
@@ -70,7 +70,7 @@ public class CollegeMeta implements Serializable {
     /**
      * 学院名称。
      */
-    @Size(max = 50)
+    @Length(max = 50)
     @NotNull(groups = Insert.class)
     private String collegeName;
 

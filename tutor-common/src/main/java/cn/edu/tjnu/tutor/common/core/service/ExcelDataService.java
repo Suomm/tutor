@@ -14,40 +14,41 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.view;
+package cn.edu.tjnu.tutor.common.core.service;
 
-import cn.edu.tjnu.tutor.common.core.domain.TreeNode;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 /**
- * 文章评论信息。
+ * Excel 数据服务。
  *
+ * @param <T> 数据类型
  * @author 王帅
  * @since 2.0
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class CommentVO extends TreeNode<CommentVO> implements Serializable {
-
-    private static final long serialVersionUID = -441183386271447419L;
+public interface ExcelDataService<T> {
 
     /**
-     * 评论人姓名。
+     * 获取 Excel 文档头部标题信息。
+     *
+     * @return 标题信息
      */
-    private String reviewer;
+    Class<T> getExcelHead();
 
     /**
-     * 评论内容。
+     * 获取 Excel 填充数据。
+     *
+     * @return 数据集合
      */
-    private String content;
+    List<T> getExcelData();
 
     /**
-     * 评论时间。
+     * 保存从 Excel 解析到的数据。
+     *
+     * @param vo 视图数据
+     * @param cachedMap 缓存数据
+     * @return {@code true} 保存成功，{@code false} 保存失败
      */
-    private LocalDateTime createTime;
+    boolean saveExcelData(T vo, Map<Object, Object> cachedMap);
 
 }

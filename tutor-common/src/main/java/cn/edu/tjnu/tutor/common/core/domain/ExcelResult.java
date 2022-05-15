@@ -31,13 +31,14 @@ import java.util.Collection;
 public final class ExcelResult {
 
     /**
-     * 错误行号信息。
-     */
-    private final Collection<Integer> errorRows;
-    /**
      * 解析成功数据量。
      */
     private int total;
+
+    /**
+     * 错误行号信息。
+     */
+    private final Collection<Integer> errorRows;
 
     /**
      * 初始化 Excel 解析结果。
@@ -48,11 +49,9 @@ public final class ExcelResult {
 
     /**
      * 增加解析成功数据数量。
-     *
-     * @param size 解析成功数量
      */
-    public void addTotal(int size) {
-        total += size;
+    public void increment() {
+        total++;
     }
 
     /**
