@@ -26,7 +26,7 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>专业信息数据传输对象，用于超级管理员（ROLE_ROOT）操作专业信息。
+ * <p>专业信息数据传输对象，用于超级管理员（ROLE_ROOT）与学院管理员（ROLE_ADMIN）操作专业信息。
  *
  * <p>插入专业信息时：
  * <blockquote><pre>

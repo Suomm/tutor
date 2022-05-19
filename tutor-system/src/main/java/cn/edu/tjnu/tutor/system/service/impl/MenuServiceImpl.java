@@ -25,7 +25,6 @@ import cn.edu.tjnu.tutor.system.mapper.MenuMapper;
 import cn.edu.tjnu.tutor.system.mapper.RoleMenuMapper;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
 import lombok.RequiredArgsConstructor;
@@ -112,28 +111,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public boolean hasMenuName(Menu menu) {
-        // 默认同属于一个父菜单的子菜单名称不能重复
-        // 不指定父菜单的情况下全部菜单名称不能重复
-        Long count = lambdaQuery()
-                .eq(Menu::getMenuName, menu.getMenuName())
-                .eq(ObjectUtil.isNotNull(menu.getParentId()), Menu::getParentId, menu.getParentId())
-                .ne(ObjectUtil.isNotNull(menu.getMenuId()), Menu::getMenuId, menu.getMenuId())
-                .count();
-        return SqlUtils.toBool(count);
-    }
-
-    @Override
-    public boolean hasChildMenu(Integer menuId) {
-        return SqlUtils.toBool(lambdaQuery().eq(Menu::getParentId, menuId).count());
-    }
-
-    @Override
     public boolean isBindingRole(Integer menuId) {
-        Long count = ChainWrappers.lambdaQueryChain(roleMenuMapper)
+        return ChainWrappers.lambdaQueryChain(roleMenuMapper)
                 .eq(RoleMenu::getMenuId, menuId)
-                .count();
-        return SqlUtils.toBool(count);
+                .exists();
     }
 
 }

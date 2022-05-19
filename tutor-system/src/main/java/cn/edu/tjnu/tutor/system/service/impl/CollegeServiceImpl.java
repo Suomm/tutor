@@ -21,6 +21,7 @@ import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
 import cn.edu.tjnu.tutor.system.mapper.CollegeMapper;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
 import cn.edu.tjnu.tutor.system.structure.CollegeStruct;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,11 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> impl
     @Override
     public boolean saveExcelData(CollegeVO vo, Map<Object, Object> cachedMap) {
         return save(collegeStruct.toEntity(vo));
+    }
+
+    @Override
+    public <P extends IPage<CollegeVO>> P pageVO(P page) {
+        return baseMapper.selectPageVO(page);
     }
 
 }

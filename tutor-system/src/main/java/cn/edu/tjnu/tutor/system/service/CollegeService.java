@@ -19,6 +19,7 @@ package cn.edu.tjnu.tutor.system.service;
 import cn.edu.tjnu.tutor.common.core.service.ExcelDataService;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -28,4 +29,50 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 1.0
  */
 public interface CollegeService extends IService<College>, ExcelDataService<CollegeVO> {
+
+    /**
+     * 分页查询学院信息。
+     *
+     * @param page 分页对象
+     * @param <P>  分页对象类型
+     * @return 分页数据
+     */
+    <P extends IPage<CollegeVO>> P pageVO(P page);
+
+    /**
+     * 判断是否包含给定的学院名称。
+     *
+     * @param collegeName 学院名称
+     * @return {@code true} 包含给定的学院名称，{@code false} 不包含给定的学院名称
+     * @implSpec 对于学院信息服务，该默认实现为：
+     * <pre>{@code
+     * return lambdaQuery()
+     *         .eq(College::getCollegeName, collegeName)
+     *         .exists();
+     * }</pre>
+     */
+    default boolean containsName(String collegeName) {
+        return lambdaQuery()
+                .eq(College::getCollegeName, collegeName)
+                .exists();
+    }
+
+    /**
+     * 判断是否包含给定的学院编号。
+     *
+     * @param collegeCode 学院编号
+     * @return {@code true} 包含给定的学院编号，{@code false} 不包含给定的学院编号
+     * @implSpec 对于学院信息服务，该默认实现为：
+     * <pre>{@code
+     * return lambdaQuery()
+     *         .eq(College::getCollegeCode, collegeCode)
+     *         .exists();
+     * }</pre>
+     */
+    default boolean containsCode(Integer collegeCode) {
+        return lambdaQuery()
+                .eq(College::getCollegeCode, collegeCode)
+                .exists();
+    }
+
 }

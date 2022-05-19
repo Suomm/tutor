@@ -17,22 +17,22 @@
 package cn.edu.tjnu.tutor.common.validation;
 
 import cn.edu.tjnu.tutor.common.constant.RegexConst;
-import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
+import cn.edu.tjnu.tutor.common.validation.constraints.ClassName;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * 用于校验用户编号是否符合要求。
+ * 用于校验手机号是否符合要求。
  *
  * @author 王帅
  * @since 2.0
  */
-public class UserCodeValidator implements ConstraintValidator<UserCode, String> {
+public class ClassNameValidator implements ConstraintValidator<ClassName, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return RegexConst.USER_CODE.matcher(value).matches();
+        return RegexConst.CLASS_NAME.matcher(value).matches();
     }
 
 }

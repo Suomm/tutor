@@ -34,9 +34,27 @@ public interface ClassService extends IService<TheClass>, ExcelDataService<Class
     /**
      * 分页查询班级信息。
      *
-     * @param query 分页查询对象
+     * @param query 分页查询参数
      * @return 分页对象
      */
     IPage<ClassVO> pageVO(ClassQuery query);
+
+    /**
+     * 判断是否包含给定的班级名称。
+     *
+     * @param className 班级名称
+     * @return {@code true} 包含给定的班级名称，{@code false} 不包含给定的班级名称
+     * @implSpec 对于班级信息服务，该默认实现为：
+     * <pre>{@code
+     * return lambdaQuery()
+     *         .eq(TheClass::getClassName, className)
+     *         .exists();
+     * }</pre>
+     */
+    default boolean containsName(String className) {
+        return lambdaQuery()
+                .eq(TheClass::getClassName, className)
+                .exists();
+    }
 
 }

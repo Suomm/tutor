@@ -16,6 +16,8 @@
 
 package cn.edu.tjnu.tutor.system.structure;
 
+import cn.edu.tjnu.tutor.common.util.StringUtils;
+import cn.edu.tjnu.tutor.system.domain.dto.ClassDTO;
 import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
 import cn.edu.tjnu.tutor.system.domain.view.ClassVO;
 import org.mapstruct.Mapper;
@@ -27,8 +29,17 @@ import org.mapstruct.Mapping;
  * @author 王帅
  * @since 2.0
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = StringUtils.class)
 public interface ClassStruct {
+
+    /**
+     * 转换到实体类对象。
+     *
+     * @param dto 数据传输对象
+     * @return 实体类对象
+     */
+    @Mapping(target = "grade", expression = "java(StringUtils.trimGrade(dto.getClassName()))")
+    TheClass toEntity(ClassDTO dto);
 
     /**
      * 转换到实体类对象。
@@ -38,6 +49,7 @@ public interface ClassStruct {
      */
     @Mapping(target = "majorId", ignore = true)
     @Mapping(target = "classId", ignore = true)
+    @Mapping(target = "grade", expression = "java(StringUtils.trimGrade(vo.getClassName()))")
     TheClass toEntity(ClassVO vo);
 
 }

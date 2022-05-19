@@ -22,11 +22,16 @@ import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.util.ExcelUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
+import cn.edu.tjnu.tutor.common.validation.groups.Select;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
+import cn.edu.tjnu.tutor.system.domain.dto.ClassDTO;
+import cn.edu.tjnu.tutor.system.domain.entity.Major;
 import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
 import cn.edu.tjnu.tutor.system.domain.query.ClassQuery;
 import cn.edu.tjnu.tutor.system.domain.view.ClassVO;
 import cn.edu.tjnu.tutor.system.service.ClassService;
+import cn.edu.tjnu.tutor.system.service.MajorService;
+import cn.edu.tjnu.tutor.system.structure.ClassStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
@@ -34,11 +39,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ADMIN;
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.*;
 import static cn.edu.tjnu.tutor.common.enums.Category.CLASS;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.CLASS_NAME_ALREADY_EXISTS;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.MAJOR_NOT_EXISTS;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
 /**
@@ -52,56 +59,85 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 @RequestMapping("/theClass")
 public class ClassController extends BaseController {
 
+    private final ClassStruct classStruct;
     private final ClassService classService;
+    private final MajorService majorService;
 
     /**
-     * 分页查询班级信息。
+     * 分页查询所有班级信息。
      *
-     * @param query 分页参数
+     * @param classQuery 班级信息查询参数
      * @return 分页对象
      */
     @Secured(ROLE_ROOT)
     @GetMapping("page")
-    public AjaxResult<PageVO<ClassVO>> page(@Validated ClassQuery query) {
-        return pageSuccess(classService.pageVO(query));
+    public AjaxResult<PageVO<ClassVO>> page(@Validated ClassQuery classQuery) {
+        return pageSuccess(classService.pageVO(classQuery));
     }
 
     /**
-     * 分页查询班级信息。
+     * 分页查询本学院下的班级信息。
      *
-     * @param query 分页参数
+     * @param classQuery 班级信息查询参数
      * @return 分页对象
      */
     @Secured(ROLE_ADMIN)
     @GetMapping("list")
-    public AjaxResult<PageVO<ClassVO>> list(@Validated ClassQuery query) {
-        return page(query.setCollegeId(getCollegeId()));
+    public AjaxResult<PageVO<ClassVO>> list(@Validated(Select.class) ClassQuery classQuery) {
+        classQuery.setCollegeId(getCollegeId());
+        return page(classQuery);
+    }
+
+    /**
+     * 班级信息的下拉列表。
+     *
+     * @param majorId 所属专业主键
+     * @param grade   所属年级信息
+     * @return 班级主键和名称
+     */
+    @Secured(ROLE_STUDENT)
+    @GetMapping("selectList/{majorId}/{grade}")
+    public AjaxResult<List<TheClass>> selectList(@PathVariable String grade,
+                                                 @PathVariable Integer majorId) {
+        return success(classService.lambdaQuery()
+                .select(TheClass::getClassId, TheClass::getClassName)
+                .eq(TheClass::getMajorId, majorId)
+                .eq(TheClass::getGrade, grade)
+                .list());
     }
 
     /**
      * 添加班级信息。
      *
-     * @param theClass 班级信息
+     * @param classDTO 班级信息
      * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Secured({ROLE_ROOT, ROLE_ADMIN})
     @Log(category = CLASS, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) TheClass theClass) {
-        return toResult(classService.save(theClass));
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) ClassDTO classDTO) {
+        if (!majorService.lambdaQuery()
+                .eq(Major::getMajorId, classDTO.getMajorId())
+                .exists()) {
+            return error(MAJOR_NOT_EXISTS);
+        }
+        if (classService.containsName(classDTO.getClassName())) {
+            return error(CLASS_NAME_ALREADY_EXISTS, classDTO.getClassName());
+        }
+        return toResult(classService.save(classStruct.toEntity(classDTO)));
     }
 
     /**
      * 更新班级信息。
      *
-     * @param theClass 班级信息
+     * @param classDTO 班级信息
      * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Secured({ROLE_ROOT, ROLE_ADMIN})
     @Log(category = CLASS, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) TheClass theClass) {
-        return toResult(classService.updateById(theClass));
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) ClassDTO classDTO) {
+        return toResult(classService.updateById(classStruct.toEntity(classDTO)));
     }
 
     /**

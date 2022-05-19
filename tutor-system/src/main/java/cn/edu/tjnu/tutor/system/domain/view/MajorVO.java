@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.view;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,12 @@ import java.io.Serializable;
 public class MajorVO implements Serializable {
 
     private static final long serialVersionUID = -2366588138981170768L;
+
+    /**
+     * 专业主键。
+     */
+    @ExcelIgnore
+    private Integer majorId;
 
     /**
      * 学院名称。

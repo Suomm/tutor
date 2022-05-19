@@ -16,14 +16,17 @@
 
 package cn.edu.tjnu.tutor.system.domain.view;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 /**
  * 学院信息。
@@ -37,10 +40,17 @@ public class CollegeVO implements Serializable {
     private static final long serialVersionUID = -1614808098749200598L;
 
     /**
+     * 学院主键。
+     */
+    @ExcelIgnore
+    @JsonInclude(NON_NULL)
+    private Integer collegeId;
+
+    /**
      * 学院编码。
      */
     @NotNull
-    @JsonIgnore
+    @JsonInclude(NON_NULL)
     @ExcelProperty("学院编码")
     private Integer collegeCode;
 

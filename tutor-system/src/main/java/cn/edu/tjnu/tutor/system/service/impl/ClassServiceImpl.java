@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 班级信息服务层实现。
@@ -58,21 +59,23 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, TheClass> impleme
 
     @Override
     public List<ClassVO> getExcelData() {
-        return baseMapper.selectExcelDataList();
+        return baseMapper.selectExcelDataList()
+                .stream()
+                .peek(vo -> vo.setGrade("20" + vo.getGrade() + "级"))
+                .collect(Collectors.toList());
     }
 
     @Override
     public boolean saveExcelData(ClassVO vo, Map<Object, Object> cachedMap) {
-        Integer majorId = (Integer) cachedMap.computeIfAbsent(vo.getMajorName(), key -> {
-            // 查询并且缓存专业主键，没有结果返回 -1
-            Major major = ChainWrappers.lambdaQueryChain(majorMapper)
-                    .eq(Major::getMajorName, key)
-                    .one();
-            if (major == null) {
-                return -1;
-            }
-            return major.getMajorId();
-        });
+        Integer majorId = (Integer) cachedMap.computeIfAbsent(vo.getMajorName(), key ->
+                // 查询并且缓存专业主键，没有结果则返回 -1
+                ChainWrappers.lambdaQueryChain(majorMapper)
+                        .select(Major::getMajorId)
+                        .eq(Major::getMajorName, key)
+                        .oneOpt()
+                        .map(Major::getMajorId)
+                        .orElse(-1)
+        );
         if (majorId == -1) {
             return false;
         }

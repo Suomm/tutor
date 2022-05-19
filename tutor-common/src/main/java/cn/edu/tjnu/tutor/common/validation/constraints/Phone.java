@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.common.validation.constraints;
 
-import cn.edu.tjnu.tutor.common.validation.UserCodeValidator;
+import cn.edu.tjnu.tutor.common.validation.PhoneValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -29,20 +29,20 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 校验用户编号是否符合要求。
+ * 校验手机号是否符合要求。
  *
  * @author 王帅
- * @see UserCodeValidator
+ * @see PhoneValidator
  * @since 2.0
  */
 @Documented
 @Retention(RUNTIME)
-@Repeatable(UserCode.List.class)
-@Constraint(validatedBy = UserCodeValidator.class)
+@Repeatable(Phone.List.class)
+@Constraint(validatedBy = PhoneValidator.class)
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
-public @interface UserCode {
+public @interface Phone {
 
-    String message() default "{cn.edu.tjnu.tutor.common.validation.constraints.UserCode}";
+    String message() default "{cn.edu.tjnu.tutor.common.validation.constraints.Phone}";
 
     Class<?>[] groups() default {};
 
@@ -53,7 +53,7 @@ public @interface UserCode {
     @Documented
     @interface List {
 
-        UserCode[] value();
+        Phone[] value();
 
     }
 

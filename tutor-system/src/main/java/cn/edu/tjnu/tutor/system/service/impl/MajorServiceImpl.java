@@ -63,17 +63,15 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
 
     @Override
     public boolean saveExcelData(MajorVO vo, Map<Object, Object> cachedMap) {
-        Integer collegeId = (Integer) cachedMap.computeIfAbsent(vo.getCollegeName(), key -> {
-            // 查询并且缓存学院主键，没有结果返回 -1
-            College college = ChainWrappers.lambdaQueryChain(collegeMapper)
-                    .select(College::getCollegeId)
-                    .eq(College::getCollegeName, key)
-                    .one();
-            if (college == null) {
-                return -1;
-            }
-            return college.getCollegeId();
-        });
+        Integer collegeId = (Integer) cachedMap.computeIfAbsent(vo.getCollegeName(), key ->
+                // 查询并且缓存学院主键，没有结果则返回 -1
+                ChainWrappers.lambdaQueryChain(collegeMapper)
+                        .select(College::getCollegeId)
+                        .eq(College::getCollegeName, key)
+                        .oneOpt()
+                        .map(College::getCollegeId)
+                        .orElse(-1)
+        );
         if (collegeId == -1) {
             return false;
         }

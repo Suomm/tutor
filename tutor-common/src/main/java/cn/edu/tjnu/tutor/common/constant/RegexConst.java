@@ -31,8 +31,18 @@ import java.util.regex.Pattern;
 public final class RegexConst {
 
     /**
+     * 手机号正则，用于校验手机号。
+     */
+    public static final Pattern PHONE = Pattern.compile("1[3456789]\\d{9}");
+
+    /**
      * 用户编号正则，教师六位数字，学生十位数字。
      */
     public static final Pattern USER_CODE = Pattern.compile("\\d{6}|\\d{10}");
+
+    /**
+     * 班级名称正则表达式，用于提取年级信息。
+     */
+    public static final Pattern CLASS_NAME = Pattern.compile(".+\\d{4}");
 
 }

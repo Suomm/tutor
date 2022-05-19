@@ -16,38 +16,31 @@
 
 package cn.edu.tjnu.tutor.system.domain.dto;
 
-import cn.edu.tjnu.tutor.common.validation.constraints.Phone;
+import cn.edu.tjnu.tutor.common.validation.constraints.ClassName;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>学院信息传输对象，用于超级管理员（ROLE_ROOT）操作学院信息。
+ * <p>班级信息数据传输对象，用于超级管理员（ROLE_ROOT）与学院管理员（ROLE_ADMIN）操作班级信息。
  *
- * <p>插入学院信息时：
+ * <p>插入班级信息时：
  * <blockquote><pre>
  *     {
- *         "collegeCode": "413",
- *         "collegeName": "化学学院",
- *         "leader": "负责人",
- *         "phone": "13000000001",
- *         "email": "chemistry@email.com"
+ *         "majorId": 1,
+ *         "className": "化学2001"
  *     }
  * </pre></blockquote>
  *
- * <p>更新学院信息时：
+ * <p>更新班级信息时：
  * <blockquote><pre>
  *     {
- *         "collegeId": 1,
- *         "leader": "负责人",
- *         "phone": "13000000001",
- *         "email": "chemistry@email.com"
+ *         "classId": 1,
+ *         "className": "化学2001"
  *     }
  * </pre></blockquote>
  *
@@ -55,48 +48,29 @@ import java.io.Serializable;
  * @since 2.0
  */
 @Data
-public class CollegeDTO implements Serializable {
+public class ClassDTO implements Serializable {
 
-    private static final long serialVersionUID = 2217010167021543775L;
+    private static final long serialVersionUID = 1617141803307959986L;
 
     /**
-     * 学院主键。
+     * 班级主键。
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
-    private Integer collegeId;
+    private Integer classId;
 
     /**
-     * 学院编码。
+     * 所属专业的主键。
      */
     @Null(groups = Update.class)
     @NotNull(groups = Insert.class)
-    private Integer collegeCode;
+    private Integer majorId;
 
     /**
-     * 学院名称。
+     * 班级名称。
      */
-    @Length(max = 50)
-    @Null(groups = Update.class)
+    @ClassName
     @NotNull(groups = Insert.class)
-    private String collegeName;
-
-    /**
-     * 学院负责人。
-     */
-    @Length(max = 50)
-    private String leader;
-
-    /**
-     * 学院电话。
-     */
-    @Phone
-    private String phone;
-
-    /**
-     * 学院邮箱。
-     */
-    @Email
-    private String email;
+    private String className;
 
 }

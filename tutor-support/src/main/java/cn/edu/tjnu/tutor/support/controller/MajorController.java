@@ -24,9 +24,11 @@ import cn.edu.tjnu.tutor.common.util.ExcelUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.dto.MajorDTO;
+import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.domain.entity.Major;
 import cn.edu.tjnu.tutor.system.domain.query.MajorQuery;
 import cn.edu.tjnu.tutor.system.domain.view.MajorVO;
+import cn.edu.tjnu.tutor.system.service.CollegeService;
 import cn.edu.tjnu.tutor.system.service.MajorService;
 import cn.edu.tjnu.tutor.system.structure.MajorStruct;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +44,8 @@ import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ADMIN;
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
 import static cn.edu.tjnu.tutor.common.enums.Category.MAJOR;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.COLLEGE_NOT_EXISTS;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.MAJOR_NAME_ALREADY_EXISTS;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
 /**
@@ -51,35 +55,37 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @since 2.0
  */
 @RestController
-@Secured(ROLE_ROOT)
 @RequiredArgsConstructor
 @RequestMapping("/major")
 public class MajorController extends BaseController {
 
     private final MajorStruct majorStruct;
     private final MajorService majorService;
+    private final CollegeService collegeService;
 
     /**
-     * 分页查询所有专业信息。
+     * 分页查询所有的专业信息。
      *
-     * @param query 分页参数
+     * @param majorQuery 专业信息查询参数
      * @return 分页对象
      */
     @Secured(ROLE_ROOT)
     @GetMapping("page")
-    public AjaxResult<PageVO<MajorVO>> page(@Validated MajorQuery query) {
-        return pageSuccess(majorService.pageVO(query));
+    public AjaxResult<PageVO<MajorVO>> page(@Validated MajorQuery majorQuery) {
+        return pageSuccess(majorService.pageVO(majorQuery));
     }
 
     /**
-     * 查询所有专业信息。
+     * 分页查询所在学院内的所有专业信息。
      *
      * @return 专业信息
      */
     @Secured(ROLE_ADMIN)
     @GetMapping("list")
     public AjaxResult<PageVO<MajorVO>> list() {
-        return page(new MajorQuery().setCollegeId(getCollegeId()));
+        MajorQuery majorQuery = new MajorQuery();
+        majorQuery.setCollegeId(getCollegeId());
+        return page(majorQuery);
     }
 
     /**
@@ -90,25 +96,20 @@ public class MajorController extends BaseController {
     @Secured(ROLE_ADMIN)
     @GetMapping("selectList")
     public AjaxResult<List<Major>> selectList() {
-        return success(majorService.lambdaQuery()
-                .select(Major::getMajorId)
-                .select(Major::getMajorName)
-                .eq(Major::getCollegeId, getCollegeId())
-                .list());
+        return selectList(getCollegeId());
     }
 
     /**
-     * 专业信息的下拉列表。
+     * 指定学院下专业信息的下拉列表。
      *
-     * @param collegeId 学院分类
+     * @param collegeId 学院主键
      * @return 专业主键和名称
      */
     @Secured(ROLE_ROOT)
     @GetMapping("selectList/{collegeId}")
     public AjaxResult<List<Major>> selectList(@PathVariable Integer collegeId) {
         return success(majorService.lambdaQuery()
-                .select(Major::getMajorId)
-                .select(Major::getMajorName)
+                .select(Major::getMajorId, Major::getMajorName)
                 .eq(Major::getCollegeId, collegeId)
                 .list());
     }
@@ -123,6 +124,14 @@ public class MajorController extends BaseController {
     @Secured({ROLE_ROOT, ROLE_ADMIN})
     @Log(category = MAJOR, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) MajorDTO majorDTO) {
+        if (!collegeService.lambdaQuery()
+                .eq(College::getCollegeId, majorDTO.getCollegeId())
+                .exists()) {
+            return error(COLLEGE_NOT_EXISTS);
+        }
+        if (majorService.containsName(majorDTO.getMajorName())) {
+            return error(MAJOR_NAME_ALREADY_EXISTS, majorDTO.getMajorName());
+        }
         return toResult(majorService.save(majorStruct.toEntity(majorDTO)));
     }
 

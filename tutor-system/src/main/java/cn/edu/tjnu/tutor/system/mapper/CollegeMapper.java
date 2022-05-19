@@ -18,7 +18,9 @@ package cn.edu.tjnu.tutor.system.mapper;
 
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
+import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.CacheNamespace;
 
 /**
@@ -29,4 +31,14 @@ import org.apache.ibatis.annotations.CacheNamespace;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface CollegeMapper extends BaseMapper<College> {
+
+    /**
+     * 分页查询学院信息。
+     *
+     * @param page 分页参数
+     * @param <P>  分页对象类型
+     * @return 分页对象
+     */
+    <P extends IPage<CollegeVO>> P selectPageVO(P page);
+
 }

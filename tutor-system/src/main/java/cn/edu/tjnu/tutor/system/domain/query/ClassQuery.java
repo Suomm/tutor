@@ -17,9 +17,11 @@
 package cn.edu.tjnu.tutor.system.domain.query;
 
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.validation.groups.Select;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import javax.validation.constraints.Null;
 
 /**
  * 班级信息查询对象。
@@ -28,7 +30,6 @@ import lombok.experimental.Accessors;
  * @since 2.0
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class ClassQuery extends PageDTO {
 
@@ -37,6 +38,7 @@ public class ClassQuery extends PageDTO {
     /**
      * 学院主键。
      */
+    @Null(groups = Select.class)
     private Integer collegeId;
 
     /**

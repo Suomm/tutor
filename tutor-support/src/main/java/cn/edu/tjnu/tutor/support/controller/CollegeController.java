@@ -26,6 +26,7 @@ import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.dto.CollegeDTO;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
+import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
 import cn.edu.tjnu.tutor.system.service.CollegeService;
 import cn.edu.tjnu.tutor.system.structure.CollegeStruct;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,8 @@ import java.util.List;
 
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.COLLEGE_CODE_ALREADY_EXISTS;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.COLLEGE_NAME_ALREADY_EXISTS;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
 /**
@@ -63,10 +66,8 @@ public class CollegeController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public AjaxResult<PageVO<College>> page(@Validated PageDTO pageDTO) {
-        return pageSuccess(collegeService.lambdaQuery()
-                .eq(College::getVisible, 0)
-                .page(pageDTO.page()));
+    public AjaxResult<PageVO<CollegeVO>> page(@Validated PageDTO pageDTO) {
+        return pageSuccess(collegeService.pageVO(pageDTO.page()));
     }
 
     /**
@@ -77,8 +78,7 @@ public class CollegeController extends BaseController {
     @GetMapping("selectList")
     public AjaxResult<List<College>> selectList() {
         return success(collegeService.lambdaQuery()
-                .select(College::getCollegeId)
-                .select(College::getCollegeName)
+                .select(College::getCollegeId, College::getCollegeName)
                 .eq(College::getVisible, 0)
                 .list());
     }
@@ -92,6 +92,12 @@ public class CollegeController extends BaseController {
     @PostMapping("save")
     @Log(category = COLLEGE, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) CollegeDTO collegeDTO) {
+        if (collegeService.containsCode(collegeDTO.getCollegeCode())) {
+            return error(COLLEGE_CODE_ALREADY_EXISTS, collegeDTO.getCollegeCode());
+        }
+        if (collegeService.containsName(collegeDTO.getCollegeName())) {
+            return error(COLLEGE_NAME_ALREADY_EXISTS, collegeDTO.getCollegeName());
+        }
         return toResult(collegeService.save(collegeStruct.toEntity(collegeDTO)));
     }
 

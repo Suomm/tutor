@@ -46,10 +46,10 @@ public interface ClassMapper extends BaseMapper<TheClass> {
     /**
      * 分页查询班级信息。
      *
-     * @param page 分页参数
+     * @param page  分页参数
      * @param query 查询信息
+     * @param <P>   分页对象类型
      * @return 分页对象
-     * @param <P> 分页对象类型
      */
     <P extends IPage<ClassVO>> P selectPageVO(P page, @Param("query") ClassQuery query);
 

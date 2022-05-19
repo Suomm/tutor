@@ -11,8 +11,17 @@
         <result property="grade" column="grade"/>
     </resultMap>
 
+    <resultMap id="ClassVoResult" type="cn.edu.tjnu.tutor.system.domain.view.ClassVO">
+        <id property="classId" column="class_id"/>
+        <result property="collegeName" column="college_name"/>
+        <result property="majorName" column="major_name"/>
+        <result property="className" column="class_name"/>
+        <result property="grade" column="grade"/>
+    </resultMap>
+
     <sql id="selectBasic">
-        select c.class_name,
+        select c.class_id,
+               c.class_name,
                c.grade,
                sm.major_name,
                sc.college_name
@@ -20,13 +29,6 @@
                  left join sys_major sm on c.major_id = sm.major_id
                  left join sys_college sc on sm.college_id = sc.college_id
     </sql>
-
-    <resultMap id="ClassVoResult" type="cn.edu.tjnu.tutor.system.domain.view.ClassVO">
-        <result property="collegeName" column="college_name"/>
-        <result property="majorName" column="major_name"/>
-        <result property="className" column="class_name"/>
-        <result property="grade" column="grade"/>
-    </resultMap>
 
     <select id="selectExcelDataList" resultMap="ClassVoResult">
         <include refid="selectBasic"/>

@@ -14,4 +14,24 @@
         <result property="visible" column="visible"/>
     </resultMap>
 
+    <resultMap id="CollegeVoResult" type="cn.edu.tjnu.tutor.system.domain.view.CollegeVO">
+        <id property="collegeId" column="college_id"/>
+        <result property="collegeCode" column="college_code"/>
+        <result property="collegeName" column="college_name"/>
+        <result property="leader" column="leader"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <select id="selectPageVO" resultMap="CollegeVoResult">
+        select college_id,
+               college_code,
+               college_name,
+               leader,
+               phone,
+               email
+        from sys_college
+        where `visible` = 0
+    </select>
+
 </mapper>

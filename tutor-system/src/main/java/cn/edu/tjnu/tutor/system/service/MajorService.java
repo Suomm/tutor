@@ -32,11 +32,29 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface MajorService extends IService<Major>, ExcelDataService<MajorVO> {
 
     /**
-     * 分页查询班级信息。
+     * 分页查询专业信息。
      *
      * @param query 分页查询对象
      * @return 分页对象
      */
     IPage<MajorVO> pageVO(MajorQuery query);
+
+    /**
+     * 判断是否包含给定的专业名称。
+     *
+     * @param majorName 专业名称
+     * @return {@code true} 包含给定的专业名称，{@code false} 不包含给定的专业名称
+     * @implSpec 对于专业信息服务，该默认实现为：
+     * <pre>{@code
+     * return lambdaQuery()
+     *         .eq(Major::getMajorName, majorName)
+     *         .exists();
+     * }</pre>
+     */
+    default boolean containsName(String majorName) {
+        return lambdaQuery()
+                .eq(Major::getMajorName, majorName)
+                .exists();
+    }
 
 }

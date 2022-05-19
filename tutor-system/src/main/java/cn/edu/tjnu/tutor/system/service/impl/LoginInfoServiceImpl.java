@@ -57,7 +57,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
             log.debug("编号为 {} 的用户{}成功", userDetails.getUsername(), status.getStatus());
         }
         // 解析用户设备的相关信息
-        String    ip = IpUtils.getClientIp(request);
+        String ip = IpUtils.getClientIp(request);
         UserAgent ua = UserAgentUtil.parse(request.getHeader(USER_AGENT));
         // 将登陆/注销状态存入 ES 中方便数据分析
         repository.save(LoginInfo.builder()

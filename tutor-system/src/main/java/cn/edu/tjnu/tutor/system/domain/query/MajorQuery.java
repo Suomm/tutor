@@ -19,7 +19,6 @@ package cn.edu.tjnu.tutor.system.domain.query;
 import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * 专业信息查询对象。
@@ -28,7 +27,6 @@ import lombok.experimental.Accessors;
  * @since 2.0
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class MajorQuery extends PageDTO {
 

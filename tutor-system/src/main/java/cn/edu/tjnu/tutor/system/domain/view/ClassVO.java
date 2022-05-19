@@ -16,6 +16,8 @@
 
 package cn.edu.tjnu.tutor.system.domain.view;
 
+import cn.edu.tjnu.tutor.common.validation.constraints.ClassName;
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +35,12 @@ import java.io.Serializable;
 public class ClassVO implements Serializable {
 
     private static final long serialVersionUID = 4735551938253218880L;
+
+    /**
+     * 班级主键。
+     */
+    @ExcelIgnore
+    private Integer classId;
 
     /**
      * 学院名称。
@@ -54,16 +62,14 @@ public class ClassVO implements Serializable {
      * 班级名称。
      */
     @NotNull
-    @Length(max = 50)
+    @ClassName
     @ExcelProperty("班级名称")
     private String className;
 
     /**
      * 所属年级。
      */
-    @NotNull
-    @Length(min = 2, max = 2)
-    @ExcelProperty("所属年级")
+    @ExcelIgnore
     private String grade;
 
 }

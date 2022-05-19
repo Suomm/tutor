@@ -14,25 +14,15 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.validation;
+package cn.edu.tjnu.tutor.common.validation.groups;
 
-import cn.edu.tjnu.tutor.common.constant.RegexConst;
-import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import javax.validation.groups.Default;
 
 /**
- * 用于校验用户编号是否符合要求。
+ * 查询操作分组。
  *
  * @author 王帅
  * @since 2.0
  */
-public class UserCodeValidator implements ConstraintValidator<UserCode, String> {
-
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        return RegexConst.USER_CODE.matcher(value).matches();
-    }
-
+public interface Select extends Default {
 }

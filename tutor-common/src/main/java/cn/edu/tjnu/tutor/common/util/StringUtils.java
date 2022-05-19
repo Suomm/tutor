@@ -14,25 +14,29 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.validation;
+package cn.edu.tjnu.tutor.common.util;
 
-import cn.edu.tjnu.tutor.common.constant.RegexConst;
-import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
- * 用于校验用户编号是否符合要求。
+ * 字符串工具类。
  *
  * @author 王帅
  * @since 2.0
  */
-public class UserCodeValidator implements ConstraintValidator<UserCode, String> {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class StringUtils {
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        return RegexConst.USER_CODE.matcher(value).matches();
+    /**
+     * 根据班级名称截取年级信息。
+     *
+     * @param className 班级名称
+     * @return 年级信息
+     */
+    public static String trimGrade(String className) {
+        int length = className.length();
+        return className.substring(length - 4, length - 2);
     }
 
 }

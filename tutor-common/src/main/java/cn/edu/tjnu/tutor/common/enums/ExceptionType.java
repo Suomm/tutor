@@ -35,13 +35,20 @@ public enum ExceptionType implements Localizable {
 
     // 所有异常类型及其描述信息
 
-    COLLEGE_NOT_REGISTER("您所在的学院未注册"),
-    EXCEL_FILE_OPEN_FAILED("打开 Excel 文档 {0} 失败"),
-    EXCEL_EXPORT_FAILED("导出文档 {0}.xlsx 失败"),
-    EXCEL_IMPORT_FAILED("导入成功 {0} 条数据，失败 {1} 条数据，发生错误行号：{2}"),
-    MENU_NAME_ALREADY_EXISTS("菜单名称 '{0}' 已经存在，请换用其他名称"),
-    MENU_ALREADY_BIND_ROLE("菜单已绑定角色，不能删除"),
-    SUBMENU_ALREADY_EXISTS("存在子菜单，请先删除子菜单");
+    COLLEGE_NOT_REGISTER("您所在的学院未注册！"),
+    COLLEGE_NOT_EXISTS("您所选择的学院不存在！"),
+    COLLEGE_CODE_ALREADY_EXISTS("学院编号 “{0}” 已经存在！"),
+    COLLEGE_NAME_ALREADY_EXISTS("学院名称 “{0}” 已经存在！"),
+    CONFIG_NAME_ALREADY_EXISTS("参数配置键值 “{0}” 已经存在！"),
+    CLASS_NAME_ALREADY_EXISTS("班级名称 “{0}” 已经存在！"),
+    EXCEL_EXPORT_FAILED("导出文档 “{0}.xlsx” 失败！"),
+    EXCEL_IMPORT_FAILED("导入成功 {0} 条数据，失败 {1} 条数据，发生错误行号：{2}！"),
+    EXCEL_FILE_OPEN_FAILED("打开 Excel 文档 “{0}” 失败！"),
+    MAJOR_NOT_EXISTS("您所选择的专业不存在！"),
+    MAJOR_NAME_ALREADY_EXISTS("专业名称 “{0}” 已经存在！"),
+    MENU_ALREADY_BIND_ROLE("菜单已绑定角色，不能删除！"),
+    MENU_NAME_ALREADY_EXISTS("菜单名称 “{0}” 已经存在，请换用其他名称！"),
+    SUBMENU_ALREADY_EXISTS("存在子菜单，请先删除子菜单！");
 
     private static final Map<Locale, ResourceBundle> CACHED_RESOURCE_BUNDLES =
             new ConcurrentHashMap<>();

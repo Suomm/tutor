@@ -77,6 +77,11 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
+    public boolean containsKey(String configKey) {
+        return SqlUtils.toBool(configMapper.countByConfigKey(configKey));
+    }
+
+    @Override
     public void loadConfigCache() {
         configMapper.selectList(Wrappers.emptyWrapper()).forEach(e ->
                 RedisUtils.setCacheMap(CONFIG_MAP_NAME, e.getConfigKey(), e.getConfigValue()));

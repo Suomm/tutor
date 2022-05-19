@@ -11,19 +11,21 @@
         <result property="majorAbbr" column="major_abbr"/>
     </resultMap>
 
+    <resultMap id="MajorVoResult" type="cn.edu.tjnu.tutor.system.domain.view.MajorVO">
+        <id property="majorId" column="major_id"/>
+        <result property="collegeName" column="college_name"/>
+        <result property="majorName" column="major_name"/>
+        <result property="majorAbbr" column="major_abbr"/>
+    </resultMap>
+
     <sql id="selectBasic">
-        select m.major_name,
+        select m.major_id,
+               m.major_name,
                m.major_abbr,
                c.college_name
         from sys_major m
                  left join sys_college c on c.college_id = m.college_id
     </sql>
-
-    <resultMap id="MajorVoResult" type="cn.edu.tjnu.tutor.system.domain.view.MajorVO">
-        <result property="collegeName" column="college_name"/>
-        <result property="majorName" column="major_name"/>
-        <result property="majorAbbr" column="major_abbr"/>
-    </resultMap>
 
     <select id="selectExcelDataList" resultMap="MajorVoResult">
         <include refid="selectBasic"/>
