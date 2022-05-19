@@ -24,12 +24,15 @@ import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
 import cn.edu.tjnu.tutor.system.domain.entity.Config;
+import cn.edu.tjnu.tutor.system.domain.meta.ConfigMeta;
 import cn.edu.tjnu.tutor.system.service.ConfigService;
+import cn.edu.tjnu.tutor.system.structure.ConfigStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static cn.edu.tjnu.tutor.common.enums.Category.CONFIG;
+import static cn.edu.tjnu.tutor.common.enums.ExceptionType.CONFIG_NAME_ALREADY_EXISTS;
 import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 
 /**
@@ -43,6 +46,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
 @RequestMapping("/config")
 public class ConfigController extends BaseController {
 
+    private final ConfigStruct configStruct;
     private final ConfigService configService;
 
     /**
@@ -59,25 +63,28 @@ public class ConfigController extends BaseController {
     /**
      * 添加参数配置信息。
      *
-     * @param config 参数配置信息
+     * @param configMeta 参数配置信息
      * @return {@code code = 200} 添加成功，{@code code = 500} 添加失败
      */
     @PostMapping("save")
     @Log(category = CONFIG, operType = INSERT)
-    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Config config) {
-        return toResult(configService.save(config));
+    public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) ConfigMeta configMeta) {
+        if (configService.containsKey(configMeta.getConfigKey())) {
+            return error(CONFIG_NAME_ALREADY_EXISTS, configMeta.getConfigKey());
+        }
+        return toResult(configService.save(configStruct.toEntity(configMeta)));
     }
 
     /**
      * 更新参数配置信息。
      *
-     * @param config 参数配置信息
+     * @param configMeta 参数配置信息
      * @return {@code code = 200} 更新成功，{@code code = 500} 更新失败
      */
     @PutMapping("update")
     @Log(category = CONFIG, operType = UPDATE)
-    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) Config config) {
-        return toResult(configService.updateById(config));
+    public AjaxResult<Void> update(@RequestBody @Validated(Update.class) ConfigMeta configMeta) {
+        return toResult(configService.updateById(configStruct.toEntity(configMeta)));
     }
 
     /**

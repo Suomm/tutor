@@ -14,28 +14,27 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.system.structure;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
 import cn.edu.tjnu.tutor.system.domain.entity.Config;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import cn.edu.tjnu.tutor.system.domain.meta.ConfigMeta;
+import org.mapstruct.Mapper;
 
 /**
- * 参数配置数据层。
+ * 参数配置实体类结构映射接口。
  *
  * @author 王帅
  * @since 2.0
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface ConfigMapper extends BaseMapper<Config> {
+@Mapper(componentModel = "spring")
+public interface ConfigStruct {
 
     /**
-     * 查询与所给参数配置键值相同的数据数量。
+     * 转换到实体类对象。
      *
-     * @param configKey 参数配置键值
-     * @return 数据数量信息
+     * @param meta 元数据对象
+     * @return 实体类对象
      */
-    Long countByConfigKey(String configKey);
+    Config toEntity(ConfigMeta meta);
 
 }

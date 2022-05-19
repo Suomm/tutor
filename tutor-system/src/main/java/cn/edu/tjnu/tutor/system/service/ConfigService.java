@@ -28,50 +28,67 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 public interface ConfigService {
 
     /**
-     * 分页查询
+     * 分页查询参数配置信息。
      *
      * @param page 分页对象
+     * @param <P>  分页对象类型
      * @return 分页数据
-     * @param <P> 分页对象类型
      */
     <P extends IPage<Config>> P page(P page);
 
     /**
-     * 保存
+     * 保存参数配置信息。
      *
-     * @param config 参数配置
+     * @param config 参数配置信息
      * @return {@code true} 添加成功，{@code false} 添加失败
+     * @apiNote 保存操作成功后，同时会向缓存中保存参数配置信息。
      */
     boolean save(Config config);
 
     /**
-     * 更新
+     * 根据主键更新参数配置信息。
      *
-     * @param config 参数配置
+     * @param config 参数配置信息
      * @return {@code true} 添加成功，{@code false} 添加失败
+     * @apiNote 更新操作成功后，同时会更新缓存中的参数配置信息。
      */
     boolean updateById(Config config);
 
     /**
-     * 删除
+     * 根据主键删除参数配置信息。
      *
      * @param configId 参数配置主键
      * @return {@code true} 添加成功，{@code false} 添加失败
+     * @apiNote 删除操作成功后，同时会删除缓存中参数配置信息。
      */
     boolean removeById(Integer configId);
 
     /**
-     * 加载缓存。
+     * 判断是否包含给定的参数配置键值。
+     *
+     * @param configKey 参数配置键值
+     * @return {@code true} 包含所给键值，{@code false} 不包含所给键值
+     */
+    boolean containsKey(String configKey);
+
+    /**
+     * 加载所有参数配置信息缓存。
      */
     void loadConfigCache();
 
     /**
-     * 删除缓存
+     * 删除所有参数配置信息缓存。
      */
     void deleteConfigCache();
 
     /**
-     * 重置缓存
+     * 重置所有参数配置信息缓存。
+     *
+     * @implSpec 对于参数配置信息服务，该默认实现为：
+     * <pre>{@code
+     * deleteConfigCache();
+     * loadConfigCache();
+     * }</pre>
      */
     default void resetConfigCache() {
         deleteConfigCache();

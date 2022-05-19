@@ -11,4 +11,10 @@
         <result property="configValue" column="config_value"/>
     </resultMap>
 
+    <select id="countByConfigKey" resultType="java.lang.Long">
+        select count(*)
+        from sys_config
+        where config_key = #{configKey}
+    </select>
+
 </mapper>
