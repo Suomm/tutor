@@ -35,6 +35,10 @@ public interface Localizable extends Serializable {
      *
      * @param args 格式化参数
      * @return 默认消息
+     * @implSpec 对于国际化接口，该默认实现为：
+     * <pre>{@code
+     * return getLocalizedMessage(LocaleContextHolder.getLocale(), args);
+     * }</pre>
      */
     default String getMessage(Object... args) {
         return getLocalizedMessage(LocaleContextHolder.getLocale(), args);
@@ -44,7 +48,7 @@ public interface Localizable extends Serializable {
      * 通过指定的区域信息解析返回消息。
      *
      * @param locale 区域信息
-     * @param args 格式化参数
+     * @param args   格式化参数
      * @return 默认消息
      */
     String getLocalizedMessage(Locale locale, Object... args);

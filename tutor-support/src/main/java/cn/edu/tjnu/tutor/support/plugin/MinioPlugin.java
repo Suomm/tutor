@@ -63,7 +63,7 @@ public class MinioPlugin implements InitializingBean {
      * 保存文件到 Minio 中。
      *
      * @param filename 文件名称
-     * @param file 文件内容
+     * @param file     文件内容
      * @return 可以访问的地址
      */
     @SuppressWarnings("unused")

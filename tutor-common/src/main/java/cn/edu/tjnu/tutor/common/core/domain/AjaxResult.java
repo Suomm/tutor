@@ -32,10 +32,10 @@ public final class AjaxResult<T> implements Serializable {
 
     private static final long serialVersionUID = -589774230401895753L;
 
-    private static final int DEFAULT_ERROR_CODE   = 500;
+    private static final int DEFAULT_ERROR_CODE = 500;
     private static final int DEFAULT_SUCCESS_CODE = 200;
 
-    private static final String DEFAULT_ERROR_MESSAGE   = "操作失败";
+    private static final String DEFAULT_ERROR_MESSAGE = "操作失败";
     private static final String DEFAULT_SUCCESS_MESSAGE = "操作成功";
 
     /**

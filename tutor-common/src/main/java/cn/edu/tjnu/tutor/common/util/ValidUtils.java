@@ -39,7 +39,7 @@ public final class ValidUtils {
      * 使用 {@link Validator} 对数据进行校验。
      *
      * @param object 需要校验的对象
-     * @param <T> 数据类型
+     * @param <T>    数据类型
      * @throws ConstraintViolationException 如果校验失败，则抛出该异常
      */
     public static <T> void validate(T object) throws ConstraintViolationException {

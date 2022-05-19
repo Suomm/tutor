@@ -25,14 +25,14 @@ import java.util.List;
 /**
  * 树节点实体类。
  *
+ * @param <T> 数据类型
  * @author 王帅
  * @since 2.0
- * @param <T> 数据类型
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public abstract class TreeNode<T extends TreeNode<T>> {
+public class TreeNode<T extends TreeNode<T>> {
 
     /**
      * 树主键。

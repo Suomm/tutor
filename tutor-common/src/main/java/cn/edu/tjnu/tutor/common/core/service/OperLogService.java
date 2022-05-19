@@ -32,13 +32,13 @@ public interface OperLogService {
     /**
      * 记录操作日志信息。
      *
-     * @param request 当前请求
+     * @param request     当前请求
      * @param userDetails 用户信息
-     * @param log {@link Log} 注解
-     * @param method 方法名称
+     * @param log         {@link Log} 注解
+     * @param method      方法名称
      * @param paramsArray 方法参数
-     * @param e 异常信息
-     * @param jsonResult 返回结果
+     * @param e           异常信息
+     * @param jsonResult  返回结果
      */
     void recordOperLog(HttpServletRequest request, UserDetails userDetails,
                        Log log, String method, Object[] paramsArray,

@@ -32,7 +32,7 @@ public class ServiceException extends RuntimeException {
      * 用指定的异常类型构造一个新的运行时异常。
      *
      * @param exceptionType 异常的类型
-     * @param args 格式化参数
+     * @param args          格式化参数
      */
     public ServiceException(ExceptionType exceptionType, Object... args) {
         super(exceptionType.getMessage(args));
@@ -41,9 +41,9 @@ public class ServiceException extends RuntimeException {
     /**
      * 用指定的引发原因和异常类型构造一个新的运行时异常。
      *
-     * @param cause 引发原因
+     * @param cause         引发原因
      * @param exceptionType 异常类型
-     * @param args 格式化参数
+     * @param args          格式化参数
      */
     public ServiceException(Throwable cause, ExceptionType exceptionType, Object... args) {
         super(exceptionType.getMessage(args), cause);

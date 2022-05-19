@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LogAspect {
 
-    private static final String HASH    = "#";
+    private static final String HASH = "#";
     private static final String BRACKET = "()";
 
     private final OperLogService operLogService;
@@ -49,9 +49,9 @@ public class LogAspect {
      * 处理日志记录。
      */
     private void handleLog(JoinPoint joinPoint, Log controllerLog, Exception e, Object jsonResult) {
-        String className  = joinPoint.getTarget().getClass().getName();
+        String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
-        String method     = className + HASH + methodName + BRACKET;
+        String method = className + HASH + methodName + BRACKET;
         operLogService.recordOperLog(ServletUtils.getRequest(), SecurityUtils.getLoginUser(),
                 controllerLog, method, joinPoint.getArgs(), e, jsonResult);
     }

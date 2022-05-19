@@ -73,7 +73,7 @@ public final class ExcelUtils {
      * @param data     数据
      * @param <T>      数据类型
      */
-    private static <T> void writeExcel(HttpServletResponse response, String fileName, Class<T> head, Collection<T> data) {
+    public static <T> void writeExcel(HttpServletResponse response, String fileName, Class<T> head, Collection<T> data) {
         try {
             String name = URLEncoder.encode(fileName, GlobalConst.UTF_8);
             response.addHeader("Content-Disposition", "attachment;filename=" + name + ".xlsx");

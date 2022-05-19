@@ -47,7 +47,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
 @RequestMapping("/activity")
 public class ActivityController extends BaseController {
 
-    private final RecordRepository   recordRepository;
+    private final RecordRepository recordRepository;
     private final ActivityRepository activityRepository;
 
     /**

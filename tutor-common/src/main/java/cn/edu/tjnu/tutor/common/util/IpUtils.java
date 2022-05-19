@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IpUtils {
 
-    private static final String URL     = "http://whois.pconline.com.cn/ipJson.jsp?ip=";
-    private static final String ADDR    = "addr";
-    private static final String QUERY   = "&json=true";
+    private static final String URL = "http://whois.pconline.com.cn/ipJson.jsp?ip=";
+    private static final String ADDR = "addr";
+    private static final String QUERY = "&json=true";
     private static final String UNKNOWN = "UNKNOWN";
 
     /**

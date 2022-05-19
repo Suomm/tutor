@@ -32,9 +32,9 @@ public interface LoginInfoService {
     /**
      * 记录用户（登录/注销）状态。
      *
-     * @param request 请求对象
+     * @param request     请求对象
      * @param userDetails 用户信息
-     * @param status 用户状态
+     * @param status      用户状态
      */
     void recordLoginInfo(HttpServletRequest request, UserDetails userDetails, UserStatus status);
 

@@ -35,7 +35,7 @@ public final class PageUtils {
      * 将 Elasticsearch 分页对象转换为 {@link PageVO} 对象。
      *
      * @param page 分页对象
-     * @param <T> 数据类型
+     * @param <T>  数据类型
      * @return 分页数据
      */
     public static <T> PageVO<T> convert(Page<T> page) {
@@ -46,7 +46,7 @@ public final class PageUtils {
      * 将 MyBatis Plus 分页对象转换为 {@link PageVO} 对象。
      *
      * @param page 分页对象
-     * @param <T> 数据类型
+     * @param <T>  数据类型
      * @return 分页数据
      */
     public static <T> PageVO<T> convert(IPage<T> page) {

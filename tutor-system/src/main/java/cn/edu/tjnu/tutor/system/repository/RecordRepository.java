@@ -32,7 +32,7 @@ public interface RecordRepository extends ElasticsearchRepository<Record, Intege
     /**
      * 根据用户主键查询参加的的活动。
      *
-     * @param userId 用户主键
+     * @param userId   用户主键
      * @param pageable 分页对象
      * @return 所有关联活动
      */

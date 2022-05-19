@@ -51,10 +51,10 @@ public final class RedisUtils {
     /**
      * 缓存基本的对象，并设置过期时间
      *
-     * @param key 缓存的键值
-     * @param value 缓存的值
+     * @param key        缓存的键值
+     * @param value      缓存的值
      * @param timeToLive 存活时间
-     * @param timeUnit 时间单位
+     * @param timeUnit   时间单位
      */
     public static void setCacheObject(String key, Object value, int timeToLive, TimeUnit timeUnit) {
         DB.getBucket(key).set(value, timeToLive, timeUnit);
@@ -94,8 +94,8 @@ public final class RedisUtils {
     /**
      * 向 Map 中存入数据。
      *
-     * @param name 名称
-     * @param key 缓存的键值
+     * @param name  名称
+     * @param key   缓存的键值
      * @param value 缓存的值
      */
     public static void setCacheMap(String name, String key, Object value) {
@@ -106,7 +106,7 @@ public final class RedisUtils {
      * 从 Map 中删除数据。
      *
      * @param name 名称
-     * @param key 缓存的键值
+     * @param key  缓存的键值
      */
     public static void delCacheMap(String name, String key) {
         DB.getMap(name).remove(key);

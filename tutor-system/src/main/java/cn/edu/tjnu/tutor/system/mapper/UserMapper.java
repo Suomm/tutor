@@ -37,7 +37,7 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * 为用户绑定角色。
      *
-     * @param userId 用户主键
+     * @param userId  用户主键
      * @param roleKey 角色键值
      * @return {@code 1} 绑定成功，否则失败
      */

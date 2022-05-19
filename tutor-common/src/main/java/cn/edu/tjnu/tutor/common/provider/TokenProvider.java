@@ -116,7 +116,7 @@ public class TokenProvider {
      * @param loginUser 当前登录用户
      */
     public void verifyToken(LoginUser loginUser) {
-        long expireTime  = loginUser.getExpireTime();
+        long expireTime = loginUser.getExpireTime();
         long currentTime = System.currentTimeMillis();
         if (expireTime - currentTime <= TWENTY_MINUTES) {
             refreshToken(loginUser);

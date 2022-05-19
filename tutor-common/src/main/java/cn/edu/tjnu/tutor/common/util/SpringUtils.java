@@ -43,10 +43,10 @@ public final class SpringUtils implements ApplicationContextAware {
      * 根据名称获取 Spring Ioc 容器中的 Bean 对象。
      *
      * @param requiredType 类型
-     * @param <T> 类型
+     * @param <T>          类型
      * @return 容器中的对象
      */
-    public static <T> T getBean(Class<T> requiredType){
+    public static <T> T getBean(Class<T> requiredType) {
         return applicationContext.getBean(requiredType);
     }
 
@@ -54,11 +54,11 @@ public final class SpringUtils implements ApplicationContextAware {
      * 根据名称获取 Spring Ioc 容器中的 Bean 对象。
      *
      * @param name 类型
-     * @param <T> 类型
+     * @param <T>  类型
      * @return 容器中的对象
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getBean(String name){
+    public static <T> T getBean(String name) {
         return (T) applicationContext.getBean(name);
     }
 

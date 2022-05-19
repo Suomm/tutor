@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CustomizationBean implements WebServerFactoryCustomizer<UndertowServletWebServerFactory> {
- 
+
     @Override
     public void customize(UndertowServletWebServerFactory factory) {
         factory.addDeploymentInfoCustomizers(deploymentInfo -> {

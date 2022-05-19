@@ -44,68 +44,68 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Slf4j
 public class MybatisRedisCache implements Cache {
 
-	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
+    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
 
-	private final String id;
+    private final String id;
 
-	public MybatisRedisCache(final String id) {
-		if (id == null) {
-			throw new IllegalArgumentException("Cache instances require an ID");
-		}
-		this.id = id;
-	}
+    public MybatisRedisCache(final String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Cache instances require an ID");
+        }
+        this.id = id;
+    }
 
-	@Override
-	public String getId() {
-		return this.id;
-	}
+    @Override
+    public String getId() {
+        return this.id;
+    }
 
-	@Override
-	public void putObject(Object key, Object value) {
-		if (value != null) {
-			RedisUtils.setCacheObject(key.toString(), value);
-		}
-	}
+    @Override
+    public void putObject(Object key, Object value) {
+        if (value != null) {
+            RedisUtils.setCacheObject(key.toString(), value);
+        }
+    }
 
-	@Override
-	public Object getObject(Object key) {
-		try {
-			if (key != null) {
-				return RedisUtils.getCacheObject(key.toString());
-			}
-		} catch (Exception e) {
-			log.error("获取缓存 {} 失败", key);
-		}
-		return null;
-	}
+    @Override
+    public Object getObject(Object key) {
+        try {
+            if (key != null) {
+                return RedisUtils.getCacheObject(key.toString());
+            }
+        } catch (Exception e) {
+            log.error("获取缓存 {} 失败", key);
+        }
+        return null;
+    }
 
-	@Override
-	public Object removeObject(Object key) {
-		if (key != null) {
-			RedisUtils.deleteObject(key.toString());
-		}
-		return null;
-	}
+    @Override
+    public Object removeObject(Object key) {
+        if (key != null) {
+            RedisUtils.deleteObject(key.toString());
+        }
+        return null;
+    }
 
-	@Override
-	public void clear() {
-		Collection<String> keys = RedisUtils.keys("*:" + this.id + "*");
-		if (!CollUtil.isEmpty(keys)) {
-			RedisUtils.deleteObject(keys);
-			log.debug("成功清空所有缓存");
-		}
-	}
+    @Override
+    public void clear() {
+        Collection<String> keys = RedisUtils.keys("*:" + this.id + "*");
+        if (!CollUtil.isEmpty(keys)) {
+            RedisUtils.deleteObject(keys);
+            log.debug("成功清空所有缓存");
+        }
+    }
 
-	@Override
-	public int getSize() {
-		RedisTemplate<String, Object> redisTemplate = SpringUtils.getBean("redisTemplate");
-		Long size = redisTemplate.execute(RedisServerCommands::dbSize);
-		return Objects.requireNonNull(size).intValue();
-	}
+    @Override
+    public int getSize() {
+        RedisTemplate<String, Object> redisTemplate = SpringUtils.getBean("redisTemplate");
+        Long size = redisTemplate.execute(RedisServerCommands::dbSize);
+        return Objects.requireNonNull(size).intValue();
+    }
 
-	@Override
-	public ReadWriteLock getReadWriteLock() {
-		return this.readWriteLock;
-	}
+    @Override
+    public ReadWriteLock getReadWriteLock() {
+        return this.readWriteLock;
+    }
 
 }

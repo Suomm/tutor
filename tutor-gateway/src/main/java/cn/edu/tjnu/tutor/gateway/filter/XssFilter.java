@@ -45,7 +45,7 @@ import reactor.core.publisher.Mono;
 @ConditionalOnProperty(prefix = "security.xss", value = "enabled", havingValue = "true")
 public class XssFilter implements GlobalFilter, Ordered {
 
-    private final XssProperties  properties;
+    private final XssProperties properties;
     private final AntPathMatcher antMatcher = new AntPathMatcher();
 
     @Override

@@ -58,8 +58,8 @@ public class WebSocketServer {
     @OnOpen
     public void onOpen(Session session, @PathParam("sid") String sid) {
         this.session = session;
-        //如果存在就先删除一个，防止重复推送消息
-		SOCKET.removeIf(webSocket -> webSocket.sid.equals(sid));
+        // 如果存在就先删除一个，防止重复推送消息
+        SOCKET.removeIf(webSocket -> webSocket.sid.equals(sid));
         SOCKET.add(this);
         this.sid = sid;
     }
@@ -78,9 +78,9 @@ public class WebSocketServer {
      * @param message 客户端发送过来的消息
      */
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message) {
         log.info("收到来" + sid + "的信息:" + message);
-        //群发消息
+        // 群发消息
         for (WebSocketServer item : SOCKET) {
             try {
                 item.sendMessage(message);

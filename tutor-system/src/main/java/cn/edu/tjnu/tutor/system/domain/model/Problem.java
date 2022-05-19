@@ -92,5 +92,5 @@ public class Problem implements Serializable {
      * 当前状态（0 未解决，1 线上解决，2 线下解决）。
      */
     private Integer status;
-    
+
 }
