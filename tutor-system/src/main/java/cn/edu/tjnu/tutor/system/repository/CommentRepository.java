@@ -27,7 +27,7 @@ import java.util.List;
  * @author 王帅
  * @since 2.0
  */
-public interface CommentRepository extends ElasticsearchRepository<Comment, Integer> {
+public interface CommentRepository extends ElasticsearchRepository<Comment, String> {
 
     /**
      * 根据文章主键查询对应的评论信息。

@@ -37,17 +37,23 @@ public class ClassQuery extends PageDTO {
 
     /**
      * 学院主键。
+     *
+     * @mock 1
      */
     @Null(groups = Select.class)
     private Integer collegeId;
 
     /**
      * 专业主键。
+     *
+     * @mock 1
      */
     private Integer majorId;
 
     /**
      * 所属年级。
+     *
+     * @mock 20
      */
     private String grade;
 

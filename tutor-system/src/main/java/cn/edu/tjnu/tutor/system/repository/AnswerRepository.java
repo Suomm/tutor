@@ -27,7 +27,7 @@ import java.util.List;
  * @author 王帅
  * @since 2.0
  */
-public interface AnswerRepository extends ElasticsearchRepository<Answer, Integer> {
+public interface AnswerRepository extends ElasticsearchRepository<Answer, String> {
 
     /**
      * 根据问题主键查询对应的答复信息。

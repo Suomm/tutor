@@ -27,7 +27,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author 王帅
  * @since 2.0
  */
-public interface RecordRepository extends ElasticsearchRepository<Record, Integer> {
+public interface RecordRepository extends ElasticsearchRepository<Record, String> {
 
     /**
      * 根据用户主键查询参加的的活动。

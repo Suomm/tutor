@@ -51,7 +51,7 @@ public class ActivityController extends BaseController {
     private final ActivityRepository activityRepository;
 
     /**
-     * 根据用户主键查询参加的的活动。
+     * 查询用户参加的活动。
      *
      * @param pageDTO 分页参数
      * @return 所有关联活动
@@ -62,13 +62,13 @@ public class ActivityController extends BaseController {
     }
 
     /**
-     * 根据活动主键获取详细信息。
+     * 查询活动详细信息。
      *
-     * @param activityId 活动主键
+     * @param activityId 活动主键|1
      * @return 活动信息详情
      */
     @GetMapping("getInfo/{activityId}")
-    public AjaxResult<Activity> getInfo(@PathVariable Integer activityId) {
+    public AjaxResult<Activity> getInfo(@PathVariable String activityId) {
         return success(activityRepository.findById(activityId).orElse(null));
     }
 
@@ -86,15 +86,15 @@ public class ActivityController extends BaseController {
     }
 
     /**
-     * 根据活动主键删除活动信息。
+     * 删除活动信息。
      *
-     * @param activityId 活动主键
+     * @param activityId 活动主键|1
      * @return 总是返回 {@code code = 200} 删除成功
      */
     @Secured(ROLE_TUTOR)
     @DeleteMapping("remove/{activityId}")
     @Log(category = ACTIVITY, operType = DELETE)
-    public AjaxResult<Void> remove(@PathVariable Integer activityId) {
+    public AjaxResult<Void> remove(@PathVariable String activityId) {
         activityRepository.deleteById(activityId);
         return AjaxResult.SUCCESS;
     }

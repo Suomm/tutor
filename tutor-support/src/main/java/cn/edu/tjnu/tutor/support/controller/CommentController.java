@@ -51,9 +51,9 @@ public class CommentController extends BaseController {
     private final CommentRepository commentRepository;
 
     /**
-     * 根据文章主键查询对应的评论信息。
+     * 查询文章对应的评论信息。
      *
-     * @param articleId 文章主键
+     * @param articleId 文章主键|1
      * @return 文章的所有评论信息
      */
     @GetMapping("list/{articleId}")
@@ -77,14 +77,14 @@ public class CommentController extends BaseController {
     }
 
     /**
-     * 根据评论主键删除评论信息。
+     * 删除评论信息。
      *
-     * @param commentId 评论主键
+     * @param commentId 评论主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{commentId}")
     @Log(category = COMMENT, operType = DELETE)
-    public AjaxResult<Void> remove(@PathVariable Integer commentId) {
+    public AjaxResult<Void> remove(@PathVariable String commentId) {
         commentRepository.deleteById(commentId);
         return AjaxResult.SUCCESS;
     }

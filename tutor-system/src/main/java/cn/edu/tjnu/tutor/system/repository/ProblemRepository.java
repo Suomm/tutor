@@ -25,5 +25,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author 王帅
  * @since 2.0
  */
-public interface ProblemRepository extends ElasticsearchRepository<Problem, Integer> {
+public interface ProblemRepository extends ElasticsearchRepository<Problem, String> {
 }

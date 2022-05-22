@@ -25,5 +25,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author 王帅
  * @since 2.0
  */
-public interface OperLogRepository extends ElasticsearchRepository<OperLog, Long> {
+public interface OperLogRepository extends ElasticsearchRepository<OperLog, String> {
 }

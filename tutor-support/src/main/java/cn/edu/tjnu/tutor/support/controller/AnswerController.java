@@ -51,9 +51,9 @@ public class AnswerController extends BaseController {
     private final AnswerRepository answerRepository;
 
     /**
-     * 根据问题主键查询对应的答复信息。
+     * 查询问题对应的答复信息。
      *
-     * @param problemId 问题主键
+     * @param problemId 问题主键|1
      * @return 问题的所有答复信息
      */
     @GetMapping("list/{problemId}")
@@ -77,14 +77,14 @@ public class AnswerController extends BaseController {
     }
 
     /**
-     * 根据答复主键删除答复信息。
+     * 删除答复信息。
      *
-     * @param commentId 答复主键
+     * @param commentId 答复主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{commentId}")
     @Log(category = ANSWER, operType = DELETE)
-    public AjaxResult<Void> remove(@PathVariable Integer commentId) {
+    public AjaxResult<Void> remove(@PathVariable String commentId) {
         answerRepository.deleteById(commentId);
         return AjaxResult.SUCCESS;
     }

@@ -46,7 +46,7 @@ public class ArticleController extends BaseController {
     private final ArticleRepository articleRepository;
 
     /**
-     * 分页查询文章信息。
+     * 查询文章信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -57,13 +57,13 @@ public class ArticleController extends BaseController {
     }
 
     /**
-     * 根据文章主键获取详细信息。
+     * 查询文章详细信息。
      *
-     * @param articleId 文章主键
+     * @param articleId 文章主键|1
      * @return 文章信息详情
      */
     @GetMapping("getInfo/{articleId}")
-    public AjaxResult<Article> getInfo(@PathVariable Integer articleId) {
+    public AjaxResult<Article> getInfo(@PathVariable String articleId) {
         return success(articleRepository.findById(articleId).orElse(null));
     }
 
@@ -80,14 +80,14 @@ public class ArticleController extends BaseController {
     }
 
     /**
-     * 根据文章主键删除文章信息。
+     * 删除文章信息。
      *
-     * @param articleId 文章主键
+     * @param articleId 文章主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{articleId}")
     @Log(category = ARTICLE, operType = DELETE)
-    public AjaxResult<Void> remove(@PathVariable Integer articleId) {
+    public AjaxResult<Void> remove(@PathVariable String articleId) {
         articleRepository.deleteById(articleId);
         return AjaxResult.SUCCESS;
     }

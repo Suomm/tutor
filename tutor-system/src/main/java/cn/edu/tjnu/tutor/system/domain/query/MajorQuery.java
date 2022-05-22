@@ -34,6 +34,8 @@ public class MajorQuery extends PageDTO {
 
     /**
      * 学院主键。
+     *
+     * @mock 1
      */
     private Integer collegeId;
 

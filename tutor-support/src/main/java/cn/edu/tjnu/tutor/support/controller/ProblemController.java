@@ -46,7 +46,7 @@ public class ProblemController extends BaseController {
     private final ProblemRepository problemRepository;
 
     /**
-     * 分页查询问题信息。
+     * 查询问题信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -57,13 +57,13 @@ public class ProblemController extends BaseController {
     }
 
     /**
-     * 根据问题主键获取详细信息。
+     * 查询问题详细信息。
      *
-     * @param problemId 问题主键
+     * @param problemId 问题主键|1
      * @return 问题信息详情
      */
     @GetMapping("getInfo/{problemId}")
-    public AjaxResult<Problem> getInfo(@PathVariable Integer problemId) {
+    public AjaxResult<Problem> getInfo(@PathVariable String problemId) {
         return success(problemRepository.findById(problemId).orElse(null));
     }
 
@@ -80,14 +80,14 @@ public class ProblemController extends BaseController {
     }
 
     /**
-     * 根据问题主键删除问题信息。
+     * 删除问题信息。
      *
-     * @param problemId 问题主键
+     * @param problemId 问题主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{problemId}")
     @Log(category = PROBLEM, operType = DELETE)
-    public AjaxResult<Void> remove(@PathVariable Integer problemId) {
+    public AjaxResult<Void> remove(@PathVariable String problemId) {
         problemRepository.deleteById(problemId);
         return AjaxResult.SUCCESS;
     }
