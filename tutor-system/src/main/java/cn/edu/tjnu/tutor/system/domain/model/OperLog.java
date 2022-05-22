@@ -44,7 +44,7 @@ public class OperLog implements Serializable {
      * 操作日志主键。
      */
     @Id
-    private Long operId;
+    private String operId;
 
     /**
      * 用户编号。

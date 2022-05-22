@@ -56,6 +56,8 @@ public class MajorDTO implements Serializable {
 
     /**
      * 专业主键。
+     *
+     * @mock 1
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
@@ -63,6 +65,8 @@ public class MajorDTO implements Serializable {
 
     /**
      * 所属学院的主键。
+     *
+     * @mock 1
      */
     @Null(groups = Update.class)
     @NotNull(groups = Insert.class)
@@ -70,6 +74,8 @@ public class MajorDTO implements Serializable {
 
     /**
      * 专业名称。
+     *
+     * @mock 化学（师范）
      */
     @Length(max = 50)
     @NotNull(groups = Insert.class)
@@ -77,6 +83,8 @@ public class MajorDTO implements Serializable {
 
     /**
      * 专业简称。
+     *
+     * @mock 化学
      */
     @Length(max = 10)
     @NotNull(groups = Insert.class)

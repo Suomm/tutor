@@ -43,7 +43,7 @@ public class Answer implements Serializable {
      * 答复主键。
      */
     @Id
-    private Integer answerId;
+    private String answerId;
 
     /**
      * 答复问题的主键。

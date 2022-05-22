@@ -42,7 +42,7 @@ public class Record implements Serializable {
      * 活动记录主键。
      */
     @Id
-    private Integer recordId;
+    private String recordId;
 
     /**
      * 完成用户的主键。

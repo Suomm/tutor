@@ -41,13 +41,15 @@ public class RoleController extends BaseController {
     private final RoleService roleService;
 
     /**
-     * 查询所有角色信息。
+     * 角色信息的下拉列表。
      *
      * @return 角色信息
      */
-    @GetMapping("list")
-    public AjaxResult<List<Role>> list() {
-        return success(roleService.list());
+    @GetMapping("selectList")
+    public AjaxResult<List<Role>> selectList() {
+        return success(roleService.lambdaQuery()
+                .select(Role::getRoleId, Role::getRoleName)
+                .list());
     }
 
 }

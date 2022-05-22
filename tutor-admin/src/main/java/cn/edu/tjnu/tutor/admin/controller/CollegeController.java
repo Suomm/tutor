@@ -49,7 +49,7 @@ public class CollegeController extends BaseController {
     private final CollegeService collegeService;
 
     /**
-     * 分页查询学院信息。
+     * 查询学院信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -84,10 +84,12 @@ public class CollegeController extends BaseController {
     }
 
     /**
-     * 根据学院主键删除学院信息（可能不成功）。
+     * 删除学院信息。
      *
-     * @param collegeId 学院主键
+     * @param collegeId 学院主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
+     * @apiNote 如果所要删除的学院下包含专业信息，或者已经有学生注册到学院中等情况时，
+     * 该学院将无法被删除，直接返回没有详细错误描述的错误状态码。
      */
     @DeleteMapping("remove/{collegeId}")
     @Log(category = COLLEGE, operType = DELETE)

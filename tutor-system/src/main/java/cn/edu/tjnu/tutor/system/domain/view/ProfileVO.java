@@ -33,46 +33,64 @@ public class ProfileVO implements Serializable {
 
     /**
      * 用户编号（学号或工号）。
+     *
+     * @mock 2040050143
      */
     private String userCode;
 
     /**
      * 用户名称。
+     *
+     * @mock 王帅
      */
     private String userName;
 
     /**
      * 用户邮箱。
+     *
+     * @mock chemistry@email.com
      */
     private String email;
 
     /**
      * 手机号码。
+     *
+     * @mock 13000000001
      */
     private String phone;
 
     /**
      * 用户性别（0女，1男，2保密）。
+     *
+     * @mock 1
      */
     private Integer gender;
 
     /**
      * 头像地址。
+     *
+     * @mock ""
      */
     private String avatar;
 
     /**
      * 自我介绍。
+     *
+     * @mock 天津师范大学化学学院学生
      */
     private String introduce;
 
     /**
-     * （学生）所属专业详细信息。
+     * （学生）所属专业名称。
+     *
+     * @mock 化学（师范）
      */
     private String majorName;
 
     /**
-     * （学生）所属班级详细信息。
+     * （学生）所属班级名称。
+     *
+     * @mock 化学2001
      */
     private String className;
 

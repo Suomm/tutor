@@ -33,16 +33,22 @@ public class MetaVO implements Serializable {
 
     /**
      * 菜单图标。
+     *
+     * @mock system
      */
     private String icon;
 
     /**
      * 菜单标题。
+     *
+     * @mock 系统管理
      */
     private String title;
 
     /**
      * 菜单排序，只对第一级有效。
+     *
+     * @mock 1
      */
     private Integer orderNo;
 

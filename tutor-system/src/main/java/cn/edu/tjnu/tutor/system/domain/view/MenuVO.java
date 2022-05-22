@@ -38,26 +38,36 @@ public class MenuVO extends TreeNode<MenuVO> implements Comparable<MenuVO>, Seri
 
     /**
      * 菜单名称。
+     *
+     * @mock 系统管理
      */
     private String menuName;
 
     /**
-     * 菜单排序。
+     * 菜单权重。
+     *
+     * @mock 1
      */
     private Integer weight;
 
     /**
      * 路由地址。
+     *
+     * @mock system
      */
     private String path;
 
     /**
      * 组件路径。
+     *
+     * @mock null
      */
     private String component;
 
     /**
      * 菜单图标。
+     *
+     * @mock system
      */
     private String icon;
 

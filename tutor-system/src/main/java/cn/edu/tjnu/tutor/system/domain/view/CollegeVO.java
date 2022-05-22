@@ -41,6 +41,8 @@ public class CollegeVO implements Serializable {
 
     /**
      * 学院主键。
+     *
+     * @mock 1
      */
     @ExcelIgnore
     @JsonInclude(NON_NULL)
@@ -48,6 +50,8 @@ public class CollegeVO implements Serializable {
 
     /**
      * 学院编码。
+     *
+     * @mock 413
      */
     @NotNull
     @JsonInclude(NON_NULL)
@@ -56,6 +60,8 @@ public class CollegeVO implements Serializable {
 
     /**
      * 学院名称。
+     *
+     * @mock 化学学院
      */
     @NotNull
     @Length(max = 50)
@@ -64,6 +70,8 @@ public class CollegeVO implements Serializable {
 
     /**
      * 学院负责人。
+     *
+     * @mock 负责人
      */
     @NotNull
     @Length(max = 50)
@@ -72,6 +80,8 @@ public class CollegeVO implements Serializable {
 
     /**
      * 学院电话。
+     *
+     * @mock 13000000001
      */
     @NotNull
     @Length(max = 11)
@@ -80,6 +90,8 @@ public class CollegeVO implements Serializable {
 
     /**
      * 学院邮箱。
+     *
+     * @mock chemistry@email.com
      */
     @Email
     @NotNull

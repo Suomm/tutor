@@ -43,7 +43,7 @@ public class Article implements Serializable {
      * 文章主键。
      */
     @Id
-    private Integer articleId;
+    private String articleId;
 
     /**
      * 发布文章的用户主键。

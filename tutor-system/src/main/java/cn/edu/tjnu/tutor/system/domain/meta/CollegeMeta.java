@@ -32,7 +32,7 @@ import java.io.Serializable;
  * <p>插入学院信息时：
  * <blockquote><pre>
  *     {
- *         "collegeCode": "413",
+ *         "collegeCode": 413,
  *         "collegeName": "化学学院",
  *         "visible": 0
  *     }
@@ -56,6 +56,8 @@ public class CollegeMeta implements Serializable {
 
     /**
      * 学院主键。
+     *
+     * @mock 1
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
@@ -63,12 +65,16 @@ public class CollegeMeta implements Serializable {
 
     /**
      * 学院编码。
+     *
+     * @mock 413
      */
     @NotNull(groups = Insert.class)
     private Integer collegeCode;
 
     /**
      * 学院名称。
+     *
+     * @mock 化学学院
      */
     @Length(max = 50)
     @NotNull(groups = Insert.class)
@@ -76,6 +82,8 @@ public class CollegeMeta implements Serializable {
 
     /**
      * 可见性（0可见，1不可见）。
+     *
+     * @mock 0
      */
     @Range(max = 1)
     private Integer visible;

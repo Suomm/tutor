@@ -43,7 +43,7 @@ public class Comment implements Serializable {
      * 评论主键。
      */
     @Id
-    private Integer commentId;
+    private String commentId;
 
     /**
      * 评论文章的主键。

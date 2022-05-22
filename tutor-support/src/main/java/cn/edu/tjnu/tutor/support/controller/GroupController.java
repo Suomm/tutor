@@ -46,7 +46,7 @@ public class GroupController extends BaseController {
     private final GroupService groupService;
 
     /**
-     * 分页查询导师小组信息。
+     * 查询导师小组信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -57,9 +57,9 @@ public class GroupController extends BaseController {
     }
 
     /**
-     * 根据小组主键获取详细信息。
+     * 查询小组详细信息。
      *
-     * @param groupId 小组主键
+     * @param groupId 小组主键|1
      * @return 导师小组信息详情
      */
     @GetMapping("getInfo/{groupId}")
@@ -92,9 +92,9 @@ public class GroupController extends BaseController {
     }
 
     /**
-     * 根据小组主键删除导师小组信息。
+     * 删除导师小组信息。
      *
-     * @param groupId 小组主键
+     * @param groupId 小组主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{groupId}")

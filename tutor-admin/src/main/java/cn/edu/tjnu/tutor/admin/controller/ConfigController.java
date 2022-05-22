@@ -50,7 +50,7 @@ public class ConfigController extends BaseController {
     private final ConfigService configService;
 
     /**
-     * 分页查询参数配置信息。
+     * 查询参数配置信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -88,9 +88,9 @@ public class ConfigController extends BaseController {
     }
 
     /**
-     * 根据参数配置主键删除参数配置信息。
+     * 删除参数配置信息。
      *
-     * @param configId 参数配置主键
+     * @param configId 参数配置主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{configId}")

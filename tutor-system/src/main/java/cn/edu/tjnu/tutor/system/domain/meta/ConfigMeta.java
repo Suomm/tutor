@@ -56,6 +56,8 @@ public class ConfigMeta implements Serializable {
 
     /**
      * 参数主键。
+     *
+     * @mock 1
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
@@ -63,6 +65,8 @@ public class ConfigMeta implements Serializable {
 
     /**
      * 参数名称。
+     *
+     * @mock 测试参数
      */
     @Length(max = 100)
     @NotNull(groups = Insert.class)
@@ -70,6 +74,8 @@ public class ConfigMeta implements Serializable {
 
     /**
      * 参数键名。
+     *
+     * @mock test
      */
     @Length(max = 100)
     @Null(groups = Update.class)
@@ -78,6 +84,8 @@ public class ConfigMeta implements Serializable {
 
     /**
      * 参数键值。
+     *
+     * @mock 123456
      */
     @Length(max = 500)
     @NotNull(groups = Insert.class)

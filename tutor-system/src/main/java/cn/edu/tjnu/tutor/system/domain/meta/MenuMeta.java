@@ -38,7 +38,7 @@ import java.io.Serializable;
  *         "path": "system",
  *         "component": null
  *         "icon": "system",
- *         "roleIds": []
+ *         "roleIds": [1]
  *     }
  * </pre></blockquote>
  *
@@ -52,7 +52,7 @@ import java.io.Serializable;
  *         "path": "system",
  *         "component": null
  *         "icon": "system",
- *         "roleIds": []
+ *         "roleIds": [1]
  *     }
  * </pre></blockquote>
  *
@@ -66,6 +66,8 @@ public class MenuMeta implements Serializable {
 
     /**
      * 菜单主键。
+     *
+     * @mock 1
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
@@ -73,6 +75,8 @@ public class MenuMeta implements Serializable {
 
     /**
      * 菜单名称。
+     *
+     * @mock 系统管理
      */
     @NotNull
     @Length(max = 50)
@@ -80,18 +84,24 @@ public class MenuMeta implements Serializable {
 
     /**
      * 父菜单主键。
+     *
+     * @mock 0
      */
     @Min(0)
     private Integer parentId;
 
     /**
      * 菜单权重。
+     *
+     * @mock 1
      */
     @Min(1)
     private Integer weight;
 
     /**
      * 路由地址。
+     *
+     * @mock system
      */
     @Length(max = 200)
     @NotNull(groups = Insert.class)
@@ -99,18 +109,24 @@ public class MenuMeta implements Serializable {
 
     /**
      * 组件路径。
+     *
+     * @mock null
      */
     @Length(max = 255)
     private String component;
 
     /**
      * 菜单图标。
+     *
+     * @mock system
      */
     @Length(max = 100)
     private String icon;
 
     /**
      * 角色绑定。
+     *
+     * @mock [1]
      */
     @NotNull(groups = Insert.class)
     private Integer[] roleIds;

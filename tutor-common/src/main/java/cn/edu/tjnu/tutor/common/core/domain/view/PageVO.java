@@ -39,12 +39,14 @@ public class PageVO<T> implements Serializable {
 
     /**
      * 数据总记录数。
+     *
+     * @mock 1
      */
     private Long total;
 
     /**
      * 每页的数据内容。
      */
-    private transient List<T> content;
+    private List<T> content;
 
 }

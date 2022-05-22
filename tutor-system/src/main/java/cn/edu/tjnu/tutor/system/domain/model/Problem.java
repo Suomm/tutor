@@ -43,7 +43,7 @@ public class Problem implements Serializable {
      * 问题主键。
      */
     @Id
-    private Integer problemId;
+    private String problemId;
 
     /**
      * 发布问题的用户主键。

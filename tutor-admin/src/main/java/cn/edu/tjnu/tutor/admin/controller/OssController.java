@@ -46,7 +46,7 @@ public class OssController extends BaseController {
     private final OssService ossService;
 
     /**
-     * 分页查询对象存储信息。
+     * 查询对象存储信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -81,9 +81,9 @@ public class OssController extends BaseController {
     }
 
     /**
-     * 根据对象存储主键删除对象存储信息。
+     * 删除对象存储信息。
      *
-     * @param ossId 对象存储主键
+     * @param ossId 对象存储主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{ossId}")

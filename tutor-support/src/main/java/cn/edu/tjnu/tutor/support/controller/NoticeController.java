@@ -46,7 +46,7 @@ public class NoticeController extends BaseController {
     private final NoticeService noticeService;
 
     /**
-     * 分页查询公告信息。
+     * 查询公告信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -57,9 +57,9 @@ public class NoticeController extends BaseController {
     }
 
     /**
-     * 根据公告主键获取详细信息。
+     * 查询公告详细信息。
      *
-     * @param noticeId 公告主键
+     * @param noticeId 公告主键|1
      * @return 公告信息详情
      */
     @GetMapping("getInfo/{noticeId}")
@@ -92,9 +92,9 @@ public class NoticeController extends BaseController {
     }
 
     /**
-     * 根据公告主键删除公告信息。
+     * 删除公告信息。
      *
-     * @param noticeId 公告主键
+     * @param noticeId 公告主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{noticeId}")

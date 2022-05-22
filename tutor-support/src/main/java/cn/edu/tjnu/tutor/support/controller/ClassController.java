@@ -64,7 +64,7 @@ public class ClassController extends BaseController {
     private final MajorService majorService;
 
     /**
-     * 分页查询所有班级信息。
+     * 查询班级信息。
      *
      * @param classQuery 班级信息查询参数
      * @return 分页对象
@@ -76,7 +76,7 @@ public class ClassController extends BaseController {
     }
 
     /**
-     * 分页查询本学院下的班级信息。
+     * 查询所在学院的班级信息。
      *
      * @param classQuery 班级信息查询参数
      * @return 分页对象
@@ -91,8 +91,8 @@ public class ClassController extends BaseController {
     /**
      * 班级信息的下拉列表。
      *
-     * @param majorId 所属专业主键
-     * @param grade   所属年级信息
+     * @param majorId 所属专业主键|1
+     * @param grade   所属年级信息|20
      * @return 班级主键和名称
      */
     @Secured(ROLE_STUDENT)
@@ -141,9 +141,9 @@ public class ClassController extends BaseController {
     }
 
     /**
-     * 根据班级主键删除班级信息。
+     * 删除班级信息。
      *
-     * @param classId 班级主键
+     * @param classId 班级主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @Secured({ROLE_ROOT, ROLE_ADMIN})

@@ -37,12 +37,16 @@ public class MajorVO implements Serializable {
 
     /**
      * 专业主键。
+     *
+     * @mock 1
      */
     @ExcelIgnore
     private Integer majorId;
 
     /**
      * 学院名称。
+     *
+     * @mock 化学学院
      */
     @NotNull
     @Length(max = 50)
@@ -51,6 +55,8 @@ public class MajorVO implements Serializable {
 
     /**
      * 专业名称。
+     *
+     * @mock 化学（师范）
      */
     @NotNull
     @Length(max = 50)
@@ -59,6 +65,8 @@ public class MajorVO implements Serializable {
 
     /**
      * 专业简称。
+     *
+     * @mock 化学
      */
     @NotNull
     @Length(max = 10)

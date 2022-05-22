@@ -37,16 +37,22 @@ public class RouterVO extends TreeNode<RouterVO> implements Serializable {
 
     /**
      * 路由地址。
+     *
+     * @mock /system
      */
     private String path;
 
     /**
      * 路由名称（不能重复）。
+     *
+     * @mock System
      */
     private String name;
 
     /**
      * 路由组件。
+     *
+     * @mock LAYOUT
      */
     private String component;
 

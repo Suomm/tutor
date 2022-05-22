@@ -1,7 +1,8 @@
 {
+  "serverUrl": "http://localhost:9377",
+  "packageFilters": "cn.edu.tjnu.tutor.admin.controller",
   "isStrict": true,
   "allInOne": false,
-  "outPath": "../bin/apidoc/admin",
-  "coverOld": true,
-  "projectName": "Tutor Admin"
+  "outPath": "../docs/apidoc/admin",
+  "coverOld": true
 }

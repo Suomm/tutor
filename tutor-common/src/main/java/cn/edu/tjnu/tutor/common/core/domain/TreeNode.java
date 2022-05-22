@@ -36,16 +36,22 @@ public class TreeNode<T extends TreeNode<T>> {
 
     /**
      * 树主键。
+     *
+     * @mock 1
      */
     protected Integer id;
 
     /**
      * 父主键。
+     *
+     * @mock 0
      */
     protected Integer parentId;
 
     /**
      * 子节点。
+     *
+     * @mock []
      */
     protected List<T> children;
 

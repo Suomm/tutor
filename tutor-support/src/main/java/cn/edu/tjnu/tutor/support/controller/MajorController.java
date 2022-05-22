@@ -40,8 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ADMIN;
-import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.*;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
 import static cn.edu.tjnu.tutor.common.enums.Category.MAJOR;
 import static cn.edu.tjnu.tutor.common.enums.ExceptionType.COLLEGE_NOT_EXISTS;
@@ -64,7 +63,7 @@ public class MajorController extends BaseController {
     private final CollegeService collegeService;
 
     /**
-     * 分页查询所有的专业信息。
+     * 查询的专业信息。
      *
      * @param majorQuery 专业信息查询参数
      * @return 分页对象
@@ -76,7 +75,7 @@ public class MajorController extends BaseController {
     }
 
     /**
-     * 分页查询所在学院内的所有专业信息。
+     * 查询所在学院的专业信息。
      *
      * @return 专业信息
      */
@@ -93,8 +92,8 @@ public class MajorController extends BaseController {
      *
      * @return 专业主键和名称
      */
-    @Secured(ROLE_ADMIN)
     @GetMapping("selectList")
+    @Secured({ROLE_ADMIN, ROLE_STUDENT})
     public AjaxResult<List<Major>> selectList() {
         return selectList(getCollegeId());
     }
@@ -102,7 +101,7 @@ public class MajorController extends BaseController {
     /**
      * 指定学院下专业信息的下拉列表。
      *
-     * @param collegeId 学院主键
+     * @param collegeId 学院主键|1
      * @return 专业主键和名称
      */
     @Secured(ROLE_ROOT)
@@ -149,9 +148,9 @@ public class MajorController extends BaseController {
     }
 
     /**
-     * 根据专业主键删除专业信息。
+     * 删除专业信息。
      *
-     * @param majorId 专业主键
+     * @param majorId 专业主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @Secured({ROLE_ROOT, ROLE_ADMIN})

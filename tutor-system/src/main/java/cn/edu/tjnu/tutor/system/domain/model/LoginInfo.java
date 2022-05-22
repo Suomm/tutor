@@ -44,7 +44,7 @@ public class LoginInfo implements Serializable {
      * 登陆信息主键。
      */
     @Id
-    private Long id;
+    private String id;
 
     /**
      * 用户编号。

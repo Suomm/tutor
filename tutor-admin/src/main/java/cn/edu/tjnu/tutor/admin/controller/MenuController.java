@@ -69,7 +69,7 @@ public class MenuController extends BaseController {
     /**
      * 查询菜单绑定的角色主键。
      *
-     * @param menuId 菜单主键
+     * @param menuId 菜单主键|1
      * @return 角色主键
      */
     @GetMapping("roleIdList/{menuId}")
@@ -110,9 +110,9 @@ public class MenuController extends BaseController {
     }
 
     /**
-     * 根据菜单主键删除菜单信息。
+     * 删除菜单信息。
      *
-     * @param menuId 菜单主键
+     * @param menuId 菜单主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{menuId}")

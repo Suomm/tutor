@@ -49,7 +49,7 @@ public class UserController extends BaseController {
     private final UserService userService;
 
     /**
-     * 分页查询用户信息。
+     * 查询用户信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -60,9 +60,9 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 根据用户主键获取详细信息。
+     * 查询用户详细信息。
      *
-     * @param userId 用户主键
+     * @param userId 用户主键|1
      * @return 用户信息详情
      */
     @GetMapping("getInfo/{userId}")
@@ -96,9 +96,9 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 根据用户主键删除用户信息。
+     * 删除用户信息。
      *
-     * @param userId 用户主键
+     * @param userId 用户主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{userId}")

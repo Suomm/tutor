@@ -39,8 +39,11 @@ public class Activity implements Serializable {
 
     private static final long serialVersionUID = 7232391888281110320L;
 
+    /**
+     * 活动主键。
+     */
     @Id
-    private Integer activityId;
+    private String activityId;
 
     /**
      * 发布活动用户的主键。

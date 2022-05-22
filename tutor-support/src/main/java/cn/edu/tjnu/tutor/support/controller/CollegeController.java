@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_ROOT;
+import static cn.edu.tjnu.tutor.common.constant.RoleConst.ROLE_STUDENT;
 import static cn.edu.tjnu.tutor.common.enums.Category.COLLEGE;
 import static cn.edu.tjnu.tutor.common.enums.ExceptionType.COLLEGE_CODE_ALREADY_EXISTS;
 import static cn.edu.tjnu.tutor.common.enums.ExceptionType.COLLEGE_NAME_ALREADY_EXISTS;
@@ -51,7 +52,6 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.*;
  * @since 1.0
  */
 @RestController
-@Secured(ROLE_ROOT)
 @RequiredArgsConstructor
 @RequestMapping("/college")
 public class CollegeController extends BaseController {
@@ -60,12 +60,13 @@ public class CollegeController extends BaseController {
     private final CollegeService collegeService;
 
     /**
-     * 分页查询学院信息。
+     * 查询所有学院信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
      */
-    @GetMapping("page")
+    @Secured(ROLE_ROOT)
+    @GetMapping("list")
     public AjaxResult<PageVO<CollegeVO>> page(@Validated PageDTO pageDTO) {
         return pageSuccess(collegeService.pageVO(pageDTO.page()));
     }
@@ -76,6 +77,7 @@ public class CollegeController extends BaseController {
      * @return 所有学院主键和名称
      */
     @GetMapping("selectList")
+    @Secured({ROLE_ROOT, ROLE_STUDENT})
     public AjaxResult<List<College>> selectList() {
         return success(collegeService.lambdaQuery()
                 .select(College::getCollegeId, College::getCollegeName)

@@ -33,7 +33,7 @@ import java.io.Serializable;
  * <p>插入学院信息时：
  * <blockquote><pre>
  *     {
- *         "collegeCode": "413",
+ *         "collegeCode": 413,
  *         "collegeName": "化学学院",
  *         "leader": "负责人",
  *         "phone": "13000000001",
@@ -61,6 +61,8 @@ public class CollegeDTO implements Serializable {
 
     /**
      * 学院主键。
+     *
+     * @mock 1
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
@@ -68,6 +70,8 @@ public class CollegeDTO implements Serializable {
 
     /**
      * 学院编码。
+     *
+     * @mock 413
      */
     @Null(groups = Update.class)
     @NotNull(groups = Insert.class)
@@ -75,6 +79,8 @@ public class CollegeDTO implements Serializable {
 
     /**
      * 学院名称。
+     *
+     * @mock 化学学院
      */
     @Length(max = 50)
     @Null(groups = Update.class)
@@ -83,18 +89,24 @@ public class CollegeDTO implements Serializable {
 
     /**
      * 学院负责人。
+     *
+     * @mock 负责人
      */
     @Length(max = 50)
     private String leader;
 
     /**
      * 学院电话。
+     *
+     * @mock 13000000001
      */
     @Phone
     private String phone;
 
     /**
      * 学院邮箱。
+     *
+     * @mock chemistry@email.com
      */
     @Email
     private String email;

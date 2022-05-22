@@ -38,12 +38,16 @@ public class ClassVO implements Serializable {
 
     /**
      * 班级主键。
+     *
+     * @mock 1
      */
     @ExcelIgnore
     private Integer classId;
 
     /**
      * 学院名称。
+     *
+     * @mock 化学学院
      */
     @NotNull
     @Length(max = 50)
@@ -52,6 +56,8 @@ public class ClassVO implements Serializable {
 
     /**
      * 专业名称。
+     *
+     * @mock 化学（师范）
      */
     @NotNull
     @Length(max = 50)
@@ -60,6 +66,8 @@ public class ClassVO implements Serializable {
 
     /**
      * 班级名称。
+     *
+     * @mock 化学2001
      */
     @NotNull
     @ClassName
@@ -68,6 +76,8 @@ public class ClassVO implements Serializable {
 
     /**
      * 所属年级。
+     *
+     * @mock 20
      */
     @ExcelIgnore
     private String grade;

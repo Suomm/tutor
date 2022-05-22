@@ -46,7 +46,7 @@ public class TeamController extends BaseController {
     private final TeamService teamService;
 
     /**
-     * 分页查询导师团信息。
+     * 查询导师团信息。
      *
      * @param pageDTO 分页参数
      * @return 分页对象
@@ -57,9 +57,9 @@ public class TeamController extends BaseController {
     }
 
     /**
-     * 根据导师团主键获取详细信息。
+     * 查询导师团详细信息。
      *
-     * @param teamId 导师团主键
+     * @param teamId 导师团主键|1
      * @return 导师团信息详情
      */
     @GetMapping("getInfo/{teamId}")
@@ -92,9 +92,9 @@ public class TeamController extends BaseController {
     }
 
     /**
-     * 根据导师团主键删除导师团信息。
+     * 删除导师团信息。
      *
-     * @param teamId 导师团主键
+     * @param teamId 导师团主键|1
      * @return {@code code = 200} 删除成功，{@code code = 500} 删除失败
      */
     @DeleteMapping("remove/{teamId}")

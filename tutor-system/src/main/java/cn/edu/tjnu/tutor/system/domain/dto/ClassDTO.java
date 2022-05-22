@@ -54,6 +54,8 @@ public class ClassDTO implements Serializable {
 
     /**
      * 班级主键。
+     *
+     * @mock 1
      */
     @Null(groups = Insert.class)
     @NotNull(groups = Update.class)
@@ -61,6 +63,8 @@ public class ClassDTO implements Serializable {
 
     /**
      * 所属专业的主键。
+     *
+     * @mock 1
      */
     @Null(groups = Update.class)
     @NotNull(groups = Insert.class)
@@ -68,6 +72,8 @@ public class ClassDTO implements Serializable {
 
     /**
      * 班级名称。
+     *
+     * @mock 化学2001
      */
     @ClassName
     @NotNull(groups = Insert.class)

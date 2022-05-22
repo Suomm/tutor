@@ -37,12 +37,16 @@ public class PageDTO implements Serializable {
 
     /**
      * 当前页码。
+     *
+     * @mock 1
      */
     @NotNull
     private Integer pageNum;
 
     /**
      * 每页显示数量。
+     *
+     * @mock 10
      */
     @NotNull
     private Integer pageSize;
