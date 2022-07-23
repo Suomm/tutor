@@ -16,18 +16,19 @@
 
 package cn.edu.tjnu.tutor.system.mapper;
 
-import cn.edu.tjnu.tutor.system.domain.extra.RoleMenu;
+import cn.edu.tjnu.tutor.system.domain.extra.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
- * 角色和菜单关联数据层。
+ * 用户和角色关联数据层。
  *
  * @author 王帅
  * @since 2.0
  */
-public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 
     /**
      * 批量插入数据。
@@ -35,6 +36,15 @@ public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
      * @param entities 实体类集合
      * @return 受影响行数
      */
-    int insertBatch(List<RoleMenu> entities);
+    int insertBatch(List<UserRole> entities);
+
+    /**
+     * 插入用户角色绑定数据。
+     *
+     * @param userId  用户主键
+     * @param roleKey 角色键值
+     * @return {@code 1} 绑定成功，否则失败
+     */
+    int insertWithRoleKey(@Param("userId") Integer userId, @Param("roleKey") String roleKey);
 
 }

@@ -19,9 +19,13 @@ package cn.edu.tjnu.tutor.system.mapper;
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
+import cn.edu.tjnu.tutor.system.domain.query.UserQuery;
 import cn.edu.tjnu.tutor.system.domain.view.ProfileVO;
+import cn.edu.tjnu.tutor.system.domain.view.UserVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,23 +37,6 @@ import java.util.List;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface UserMapper extends BaseMapper<User> {
-
-    /**
-     * 为用户绑定角色。
-     *
-     * @param userId  用户主键
-     * @param roleKey 角色键值
-     * @return {@code 1} 绑定成功，否则失败
-     */
-    int bindRoleForUser(Integer userId, String roleKey);
-
-    /**
-     * 根据用户主键查询角色信息。
-     *
-     * @param userId 用户主键
-     * @return 角色信息
-     */
-    List<String> selectRoleKeysById(Integer userId);
 
     /**
      * 根据用户主键查询用户信息。
@@ -66,5 +53,23 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 登录用户信息
      */
     LoginUser selectByUserCode(String userCode);
+
+    /**
+     * 根据用户主键查询角色信息。
+     *
+     * @param userId 用户主键
+     * @return 角色信息
+     */
+    List<String> selectRoleKeysByUserId(Integer userId);
+
+    /**
+     * 分页查询用户信息。
+     *
+     * @param page  分页参数
+     * @param query 查询信息
+     * @param <P>   分页对象类型
+     * @return 分页对象
+     */
+    <P extends IPage<UserVO>> P selectPageVO(P page, @Param("query") UserQuery query);
 
 }

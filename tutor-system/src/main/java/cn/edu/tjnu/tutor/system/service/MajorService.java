@@ -29,7 +29,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 王帅
  * @since 2.0
  */
-public interface MajorService extends IService<Major>, ExcelDataService<MajorVO> {
+public interface MajorService extends IService<Major>, ExcelDataService<MajorVO, MajorQuery> {
 
     /**
      * 分页查询专业信息。
@@ -55,6 +55,30 @@ public interface MajorService extends IService<Major>, ExcelDataService<MajorVO>
         return lambdaQuery()
                 .eq(Major::getMajorName, majorName)
                 .exists();
+    }
+
+    /**
+     * 根据专业名称查询获取专业主键。
+     *
+     * @param majorName 学院名称
+     * @return 专业主键，如果返回 {@code null} 则代表没有该专业信息
+     * @implSpec 对于专业信息服务，该默认实现为：
+     * <pre>{@code
+     * return lambdaQuery()
+     *         .select(Major::getMajorId)
+     *         .eq(Major::getMajorName, majorName)
+     *         .oneOpt()
+     *         .map(Major::getMajorId)
+     *         .orElse(null);
+     * }</pre>
+     */
+    default Integer getMajorId(Object majorName) {
+        return lambdaQuery()
+                .select(Major::getMajorId)
+                .eq(Major::getMajorName, majorName)
+                .oneOpt()
+                .map(Major::getMajorId)
+                .orElse(null);
     }
 
 }

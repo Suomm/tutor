@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.UserRoleMapper">
+
+    <resultMap id="UserRoleResult" type="cn.edu.tjnu.tutor.system.domain.extra.UserRole">
+        <id property="userId" column="user_id"/>
+        <result property="roleId" column="role_id"/>
+    </resultMap>
+
+    <insert id="insertBatch">
+        insert into ref_user_role (user_id, role_id)
+        values
+        <foreach item="entity" separator="," collection="list">
+            (#{entity.userId}, #{entity.roleId})
+        </foreach>
+    </insert>
+
+    <insert id="insertWithRoleKey">
+        insert into ref_user_role (user_id, role_id)
+        values (#{userId}, (select role_id from sys_role where role_key = #{roleKey}))
+    </insert>
+
+</mapper>

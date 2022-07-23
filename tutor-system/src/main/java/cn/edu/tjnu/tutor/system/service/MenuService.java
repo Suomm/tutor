@@ -34,20 +34,18 @@ public interface MenuService extends IService<Menu> {
     /**
      * 保存菜单信息，并绑定菜单对应的角色。
      *
-     * @param menu    菜单信息
-     * @param roleIds 角色信息
+     * @param menu 菜单信息
      * @return {@code true} 保存成功，{@code false} 保存失败
      */
-    boolean save(Menu menu, Integer[] roleIds);
+    boolean saveAndBind(Menu menu);
 
     /**
      * 更新菜单信息，并更新菜单对应的角色（如果需要的话）。
      *
-     * @param menu    菜单信息
-     * @param roleIds 角色信息（可以为 {@code null}）
+     * @param menu 菜单信息
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
-    boolean update(Menu menu, Integer[] roleIds);
+    boolean updateAndBind(Menu menu);
 
     /**
      * 根据用户主键查询路由权限信息。
@@ -66,28 +64,12 @@ public interface MenuService extends IService<Menu> {
     List<Integer> roleIdList(Integer menuId);
 
     /**
-     * 判断是否包含给定的菜单信息。
+     * 判断菜单是否绑定了角色。
      *
-     * @param menu 菜单信息
-     * @return {@code true} 包含给定的菜单信息，{@code false} 不包含给定的菜单信息
-     * @implSpec 对于菜单信息服务，该默认实现为：
-     * <pre>{@code
-     * return lambdaQuery()
-     *         .eq(Menu::getMenuName, menu.getMenuName())
-     *         .eq(Objects.nonNull(menu.getParentId()), Menu::getParentId, menu.getParentId())
-     *         .ne(Objects.nonNull(menu.getMenuId()), Menu::getMenuId, menu.getMenuId())
-     *         .exists();
-     * }</pre>
-     * @apiNote 该方法会根据菜单的名称来进行判断是否包含给定的菜单信息。要求同属于一个父菜单的子菜单名称不能重复，
-     * 不指定父菜单的情况下全部菜单名称不能重复。
+     * @param menuId 菜单主键
+     * @return {@code true} 已绑定角色，{@code false} 未绑定角色
      */
-    default boolean containsMenu(Menu menu) {
-        return lambdaQuery()
-                .eq(Menu::getMenuName, menu.getMenuName())
-                .eq(Objects.nonNull(menu.getParentId()), Menu::getParentId, menu.getParentId())
-                .ne(Objects.nonNull(menu.getMenuId()), Menu::getMenuId, menu.getMenuId())
-                .exists();
-    }
+    boolean isBindingRole(Integer menuId);
 
     /**
      * 判断菜单是否含有子菜单。
@@ -108,11 +90,26 @@ public interface MenuService extends IService<Menu> {
     }
 
     /**
-     * 判断菜单是否绑定了角色。
+     * 判断是否包含给定的菜单名称。
      *
-     * @param menuId 菜单主键
-     * @return {@code true} 已绑定角色，{@code false} 未绑定角色
+     * @param menu 菜单信息
+     * @return {@code true} 包含给定的菜单名称，{@code false} 不包含给定的菜单名称
+     * @implSpec 对于菜单信息服务，该默认实现为：
+     * <pre>{@code
+     * return lambdaQuery()
+     *         .eq(Menu::getMenuName, menu.getMenuName())
+     *         .eq(Objects.nonNull(menu.getParentId()), Menu::getParentId, menu.getParentId())
+     *         .ne(Objects.nonNull(menu.getMenuId()), Menu::getMenuId, menu.getMenuId())
+     *         .exists();
+     * }</pre>
+     * @apiNote 要求同属于一个父菜单的子菜单名称不能重复，不指定父菜单的情况下全部菜单名称不能重复。
      */
-    boolean isBindingRole(Integer menuId);
+    default boolean containsName(Menu menu) {
+        return lambdaQuery()
+                .eq(Menu::getMenuName, menu.getMenuName())
+                .eq(Objects.nonNull(menu.getParentId()), Menu::getParentId, menu.getParentId())
+                .ne(Objects.nonNull(menu.getMenuId()), Menu::getMenuId, menu.getMenuId())
+                .exists();
+    }
 
 }

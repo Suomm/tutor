@@ -25,8 +25,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 /**
  * 专业信息数据层。
  *
@@ -35,13 +33,6 @@ import java.util.List;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface MajorMapper extends BaseMapper<Major> {
-
-    /**
-     * 查询所有专业数据。
-     *
-     * @return 专业信息
-     */
-    List<MajorVO> selectExcelDataList();
 
     /**
      * 分页查询专业信息。

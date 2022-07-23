@@ -5,7 +5,7 @@
 <mapper namespace="cn.edu.tjnu.tutor.system.mapper.RoleMenuMapper">
 
     <resultMap id="RoleMenuResult" type="cn.edu.tjnu.tutor.system.domain.extra.RoleMenu">
-        <result property="menuId" column="menu_id"/>
+        <id property="menuId" column="menu_id"/>
         <result property="roleId" column="role_id"/>
     </resultMap>
 

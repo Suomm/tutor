@@ -16,21 +16,20 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Major;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
 import cn.edu.tjnu.tutor.system.domain.query.ClassQuery;
 import cn.edu.tjnu.tutor.system.domain.view.ClassVO;
 import cn.edu.tjnu.tutor.system.mapper.ClassMapper;
-import cn.edu.tjnu.tutor.system.mapper.MajorMapper;
 import cn.edu.tjnu.tutor.system.service.ClassService;
+import cn.edu.tjnu.tutor.system.service.MajorService;
 import cn.edu.tjnu.tutor.system.structure.ClassStruct;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -45,7 +44,7 @@ import java.util.stream.Collectors;
 public class ClassServiceImpl extends ServiceImpl<ClassMapper, TheClass> implements ClassService {
 
     private final ClassStruct classStruct;
-    private final MajorMapper majorMapper;
+    private final MajorService majorService;
 
     @Override
     public IPage<ClassVO> pageVO(ClassQuery query) {
@@ -58,30 +57,24 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, TheClass> impleme
     }
 
     @Override
-    public List<ClassVO> getExcelData() {
-        return baseMapper.selectExcelDataList()
+    public PageVO<ClassVO> getRealData(ClassQuery query) {
+        PageVO<ClassVO> pageVO = PageUtils.convert(pageVO(query));
+        pageVO.setContent(pageVO.getContent()
                 .stream()
-                .peek(vo -> vo.setGrade("20" + vo.getGrade() + "级"))
-                .collect(Collectors.toList());
+                .peek(e -> e.setGrade("20" + e.getGrade() + "级"))
+                .collect(Collectors.toList()));
+        return pageVO;
     }
 
     @Override
     public boolean saveExcelData(ClassVO vo, Map<Object, Object> cachedMap) {
-        Integer majorId = (Integer) cachedMap.computeIfAbsent(vo.getMajorName(), key ->
-                // 查询并且缓存专业主键，没有结果则返回 -1
-                ChainWrappers.lambdaQueryChain(majorMapper)
-                        .select(Major::getMajorId)
-                        .eq(Major::getMajorName, key)
-                        .oneOpt()
-                        .map(Major::getMajorId)
-                        .orElse(-1)
-        );
-        if (majorId == -1) {
-            return false;
+        Object majorId = cachedMap.computeIfAbsent(vo.getMajorName(), majorService::getMajorId);
+        if (majorId != null) {
+            TheClass theClass = classStruct.toEntity(vo);
+            theClass.setMajorId((Integer) majorId);
+            return save(theClass);
         }
-        TheClass theClass = classStruct.toEntity(vo);
-        theClass.setMajorId(majorId);
-        return save(theClass);
+        return false;
     }
 
 }

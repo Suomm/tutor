@@ -25,8 +25,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 /**
  * 班级信息数据层。
  *
@@ -35,13 +33,6 @@ import java.util.List;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface ClassMapper extends BaseMapper<TheClass> {
-
-    /**
-     * 查询所有班级信息。
-     *
-     * @return 班级信息
-     */
-    List<ClassVO> selectExcelDataList();
 
     /**
      * 分页查询班级信息。

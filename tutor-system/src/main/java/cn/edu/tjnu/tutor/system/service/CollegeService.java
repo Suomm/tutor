@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.service;
 
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import cn.edu.tjnu.tutor.common.core.service.ExcelDataService;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
@@ -28,7 +29,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 王帅
  * @since 1.0
  */
-public interface CollegeService extends IService<College>, ExcelDataService<CollegeVO> {
+public interface CollegeService extends IService<College>, ExcelDataService<CollegeVO, PageQuery> {
 
     /**
      * 分页查询学院信息。
@@ -73,6 +74,30 @@ public interface CollegeService extends IService<College>, ExcelDataService<Coll
         return lambdaQuery()
                 .eq(College::getCollegeCode, collegeCode)
                 .exists();
+    }
+
+    /**
+     * 根据学院名称查询获取学院主键。
+     *
+     * @param collegeName 学院名称
+     * @return 学院主键，如果返回 {@code null} 则代表没有该学院信息
+     * @implSpec 对于学院信息服务，该默认实现为：
+     * <pre>{@code
+     * return lambdaQuery()
+     *         .select(College::getCollegeId)
+     *         .eq(College::getCollegeName, collegeName)
+     *         .oneOpt()
+     *         .map(College::getCollegeId)
+     *         .orElse(null);
+     * }</pre>
+     */
+    default Integer getCollegeId(Object collegeName) {
+        return lambdaQuery()
+                .select(College::getCollegeId)
+                .eq(College::getCollegeName, collegeName)
+                .oneOpt()
+                .map(College::getCollegeId)
+                .orElse(null);
     }
 
 }

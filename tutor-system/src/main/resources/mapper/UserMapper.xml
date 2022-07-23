@@ -16,18 +16,6 @@
         <result property="introduce" column="introduce"/>
     </resultMap>
 
-    <insert id="bindRoleForUser">
-        insert into ref_user_role (user_id, role_id)
-        values (#{userId}, (select role_id from sys_role where role_key = #{roleKey}))
-    </insert>
-
-    <select id="selectRoleKeysById" resultType="java.lang.String">
-        select r.role_key
-        from sys_role r
-                 left join ref_user_role ur on ur.role_id = r.role_id
-        where ur.user_id = #{userId}
-    </select>
-
     <resultMap id="ProfileVoResult" type="cn.edu.tjnu.tutor.system.domain.view.ProfileVO">
         <result property="userCode" column="user_code"/>
         <result property="userName" column="user_name"/>
@@ -72,6 +60,52 @@
         select user_id, user_code, college_id
         from sys_user
         where user_code = #{userCode}
+    </select>
+
+    <select id="selectRoleKeysByUserId" resultType="java.lang.String">
+        select r.role_key
+        from sys_role r
+                 left join ref_user_role ur on ur.role_id = r.role_id
+        where ur.user_id = #{userId}
+    </select>
+
+    <resultMap id="UserVoResult" type="cn.edu.tjnu.tutor.system.domain.view.UserVO">
+        <id property="userId" column="user_id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="userName" column="user_name"/>
+        <result property="collegeId" column="college_id"/>
+        <result property="collegeName" column="college_name"/>
+    </resultMap>
+
+    <sql id="selectBasic">
+        select u.user_id,
+               u.user_code,
+               u.user_name,
+               u.college_id,
+               c.college_name
+        from sys_user u
+                 left join sys_college c on c.college_id = u.college_id
+    </sql>
+
+    <select id="selectPageVO" resultMap="UserVoResult">
+        <include refid="selectBasic"/>
+        <where>
+            <if test="query.userCode != null">
+                and u.user_code = #{query.userCode}
+            </if>
+            <if test="query.userName != null">
+                and u.user_name = #{query.userName}
+            </if>
+            <if test="query.collegeId != null">
+                and u.college_id = #{query.collegeId}
+            </if>
+            <if test="query.userType == 0">
+                and LENGTH(u.user_code) = 6
+            </if>
+            <if test="query.userType == 1">
+                and LENGTH(u.user_code) = 10
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -29,7 +29,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 王帅
  * @since 1.0
  */
-public interface ClassService extends IService<TheClass>, ExcelDataService<ClassVO> {
+public interface ClassService extends IService<TheClass>, ExcelDataService<ClassVO, ClassQuery> {
 
     /**
      * 分页查询班级信息。

@@ -16,21 +16,20 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import cn.edu.tjnu.tutor.system.domain.entity.College;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.Major;
 import cn.edu.tjnu.tutor.system.domain.query.MajorQuery;
 import cn.edu.tjnu.tutor.system.domain.view.MajorVO;
-import cn.edu.tjnu.tutor.system.mapper.CollegeMapper;
 import cn.edu.tjnu.tutor.system.mapper.MajorMapper;
+import cn.edu.tjnu.tutor.system.service.CollegeService;
 import cn.edu.tjnu.tutor.system.service.MajorService;
 import cn.edu.tjnu.tutor.system.structure.MajorStruct;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,7 +43,7 @@ import java.util.Map;
 public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService {
 
     private final MajorStruct majorStruct;
-    private final CollegeMapper collegeMapper;
+    private final CollegeService collegeService;
 
     @Override
     public IPage<MajorVO> pageVO(MajorQuery query) {
@@ -57,27 +56,19 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
     }
 
     @Override
-    public List<MajorVO> getExcelData() {
-        return baseMapper.selectExcelDataList();
+    public PageVO<MajorVO> getRealData(MajorQuery query) {
+        return PageUtils.convert(pageVO(query));
     }
 
     @Override
     public boolean saveExcelData(MajorVO vo, Map<Object, Object> cachedMap) {
-        Integer collegeId = (Integer) cachedMap.computeIfAbsent(vo.getCollegeName(), key ->
-                // 查询并且缓存学院主键，没有结果则返回 -1
-                ChainWrappers.lambdaQueryChain(collegeMapper)
-                        .select(College::getCollegeId)
-                        .eq(College::getCollegeName, key)
-                        .oneOpt()
-                        .map(College::getCollegeId)
-                        .orElse(-1)
-        );
-        if (collegeId == -1) {
-            return false;
+        Object collegeId = cachedMap.computeIfAbsent(vo.getCollegeName(), collegeService::getCollegeId);
+        if (collegeId != null) {
+            Major major = majorStruct.toEntity(vo);
+            major.setCollegeId((Integer) collegeId);
+            return save(major);
         }
-        Major major = majorStruct.toEntity(vo);
-        major.setCollegeId(collegeId);
-        return save(major);
+        return false;
     }
 
 }

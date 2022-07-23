@@ -25,6 +25,7 @@ import cn.edu.tjnu.tutor.system.mapper.MenuMapper;
 import cn.edu.tjnu.tutor.system.mapper.RoleMenuMapper;
 import cn.edu.tjnu.tutor.system.service.MenuService;
 import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.ArrayUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
 import lombok.RequiredArgsConstructor;
@@ -49,32 +50,32 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(Menu menu, Integer[] roleIds) {
-        // 先插入菜单信息，然后绑定菜单角色信息
-        return save(menu) && saveRoleMenu(menu.getMenuId(), roleIds);
+    public boolean saveAndBind(Menu menu) {
+        return save(menu) && insertRoleMenu(menu.getMenuId(), menu.getRoleIds());
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean update(Menu menu, Integer[] roleIds) {
-        // 更新菜单信息之前，如果有角色绑定信息改变，先更新菜单的角色信息
-        if (roleIds != null) {
+    public boolean updateAndBind(Menu menu) {
+        boolean inserted = true;
+        if (ArrayUtil.isNotEmpty(menu.getRoleIds())) {
             roleMenuMapper.deleteById(menu.getMenuId());
-            saveRoleMenu(menu.getMenuId(), roleIds);
+            inserted = insertRoleMenu(menu.getMenuId(), menu.getRoleIds());
         }
-        return updateById(menu);
+        return inserted && super.updateById(menu);
     }
 
-    private boolean saveRoleMenu(Integer menuId, Integer[] roleIds) {
-        List<RoleMenu> entityList = Arrays.stream(roleIds)
+    /**
+     * 插入角色与菜单的绑定到数据库。
+     *
+     * @param menuId  菜单主键
+     * @param roleIds 角色主键
+     */
+    private boolean insertRoleMenu(Integer menuId, Integer[] roleIds) {
+        List<RoleMenu> entities = Arrays.stream(roleIds)
                 .map(roleId -> new RoleMenu(roleId, menuId))
                 .collect(Collectors.toList());
-        // 插入角色与菜单的绑定到数据库
-        int rows = 0;
-        if (!entityList.isEmpty()) {
-            rows = roleMenuMapper.insertBatch(entityList);
-        }
-        return SqlUtils.toBool(rows);
+        return SqlUtils.toBool(roleMenuMapper.insertBatch(entities));
     }
 
     @Override

@@ -27,13 +27,7 @@
                  left join sys_college c on c.college_id = m.college_id
     </sql>
 
-    <select id="selectExcelDataList" resultMap="MajorVoResult">
-        <include refid="selectBasic"/>
-    </select>
-
-    <select id="selectPageVO"
-            resultMap="MajorVoResult"
-            parameterType="cn.edu.tjnu.tutor.system.domain.query.MajorQuery">
+    <select id="selectPageVO" resultMap="MajorVoResult">
         <include refid="selectBasic"/>
         <where>
             <if test="query.collegeId != null">

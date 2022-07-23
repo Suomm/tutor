@@ -16,6 +16,9 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
+import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
+import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
 import cn.edu.tjnu.tutor.system.mapper.CollegeMapper;
@@ -26,9 +29,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 学院信息服务层实现。
@@ -48,13 +49,8 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> impl
     }
 
     @Override
-    public List<CollegeVO> getExcelData() {
-        return lambdaQuery()
-                .eq(College::getVisible, 0)
-                .list()
-                .stream()
-                .map(collegeStruct::toVO)
-                .collect(Collectors.toList());
+    public PageVO<CollegeVO> getRealData(PageQuery query) {
+        return PageUtils.convert(pageVO(query.page()));
     }
 
     @Override

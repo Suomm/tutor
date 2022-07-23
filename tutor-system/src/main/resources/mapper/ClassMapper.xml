@@ -30,13 +30,7 @@
                  left join sys_college sc on sm.college_id = sc.college_id
     </sql>
 
-    <select id="selectExcelDataList" resultMap="ClassVoResult">
-        <include refid="selectBasic"/>
-    </select>
-
-    <select id="selectPageVO"
-            resultMap="ClassVoResult"
-            parameterType="cn.edu.tjnu.tutor.system.domain.query.ClassQuery">
+    <select id="selectPageVO" resultMap="ClassVoResult">
         <include refid="selectBasic"/>
         <where>
             <if test="query.collegeId != null">
