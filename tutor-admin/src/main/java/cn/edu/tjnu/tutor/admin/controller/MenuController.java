@@ -87,10 +87,10 @@ public class MenuController extends BaseController {
     @Log(category = MENU, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) MenuMeta menuMeta) {
         Menu menu = menuStruct.toEntity(menuMeta);
-        if (menuService.containsMenu(menu)) {
+        if (menuService.containsName(menu)) {
             return error(MENU_NAME_ALREADY_EXISTS, menu.getMenuName());
         }
-        return toResult(menuService.save(menu, menuMeta.getRoleIds()));
+        return toResult(menuService.saveAndBind(menu));
     }
 
     /**
@@ -103,10 +103,10 @@ public class MenuController extends BaseController {
     @Log(category = MENU, operType = UPDATE)
     public AjaxResult<Void> update(@RequestBody @Validated(Update.class) MenuMeta menuMeta) {
         Menu menu = menuStruct.toEntity(menuMeta);
-        if (menuService.containsMenu(menu)) {
+        if (menuService.containsName(menu)) {
             return error(MENU_NAME_ALREADY_EXISTS, menu.getMenuName());
         }
-        return toResult(menuService.update(menu, menuMeta.getRoleIds()));
+        return toResult(menuService.updateAndBind(menu));
     }
 
     /**

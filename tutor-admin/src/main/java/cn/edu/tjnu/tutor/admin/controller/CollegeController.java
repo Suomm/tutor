@@ -19,7 +19,7 @@ package cn.edu.tjnu.tutor.admin.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
@@ -51,12 +51,12 @@ public class CollegeController extends BaseController {
     /**
      * 查询学院信息。
      *
-     * @param pageDTO 分页参数
+     * @param pageQuery 分页参数
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<College>> list(@Validated PageDTO pageDTO) {
-        return pageSuccess(collegeService.page(pageDTO.page()));
+    public AjaxResult<PageVO<College>> list(@Validated PageQuery pageQuery) {
+        return pageSuccess(collegeService.page(pageQuery.page()));
     }
 
     /**
