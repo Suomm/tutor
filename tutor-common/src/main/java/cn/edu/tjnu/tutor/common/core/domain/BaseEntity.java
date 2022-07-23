@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.validation;
+package cn.edu.tjnu.tutor.common.core.domain;
 
-import cn.edu.tjnu.tutor.common.constant.RegexConst;
-import cn.edu.tjnu.tutor.common.util.StringUtils;
-import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
+import lombok.Data;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import java.io.Serializable;
 
 /**
- * 用于校验用户编号是否符合要求。
+ * 实体类的共同基类。
  *
  * @author 王帅
  * @since 2.0
  */
-public class UserCodeValidator implements ConstraintValidator<UserCode, String> {
+@Data
+public abstract class BaseEntity implements Serializable {
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        return StringUtils.match(RegexConst.USER_CODE, value);
-    }
+    private static final long serialVersionUID = -640721223713022413L;
 
 }

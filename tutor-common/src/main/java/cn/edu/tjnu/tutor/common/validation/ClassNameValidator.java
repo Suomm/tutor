@@ -17,6 +17,7 @@
 package cn.edu.tjnu.tutor.common.validation;
 
 import cn.edu.tjnu.tutor.common.constant.RegexConst;
+import cn.edu.tjnu.tutor.common.util.StringUtils;
 import cn.edu.tjnu.tutor.common.validation.constraints.ClassName;
 
 import javax.validation.ConstraintValidator;
@@ -32,7 +33,7 @@ public class ClassNameValidator implements ConstraintValidator<ClassName, String
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return RegexConst.CLASS_NAME.matcher(value).matches();
+        return StringUtils.match(RegexConst.CLASS_NAME, value);
     }
 
 }

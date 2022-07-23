@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
+ * IP 工具类测试。
+ *
  * @author 王帅
  * @since 2.0
  */

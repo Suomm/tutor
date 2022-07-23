@@ -14,26 +14,25 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.validation;
+package cn.edu.tjnu.tutor.common.util;
 
-import cn.edu.tjnu.tutor.common.constant.RegexConst;
-import cn.edu.tjnu.tutor.common.util.StringUtils;
-import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
+import org.junit.jupiter.api.Test;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import java.util.regex.Pattern;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * 用于校验用户编号是否符合要求。
+ * 字符串工具类测试。
  *
  * @author 王帅
  * @since 2.0
  */
-public class UserCodeValidator implements ConstraintValidator<UserCode, String> {
+class StringUtilsTest {
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        return StringUtils.match(RegexConst.USER_CODE, value);
+    @Test
+    void match() {
+        assertTrue(StringUtils.match(Pattern.compile(".+"), null));
     }
 
 }

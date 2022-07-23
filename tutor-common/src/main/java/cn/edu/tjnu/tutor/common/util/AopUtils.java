@@ -14,26 +14,30 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.validation;
+package cn.edu.tjnu.tutor.common.util;
 
-import cn.edu.tjnu.tutor.common.constant.RegexConst;
-import cn.edu.tjnu.tutor.common.util.StringUtils;
-import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.springframework.aop.framework.AopContext;
 
 /**
- * 用于校验用户编号是否符合要求。
+ * Aop 代理工具类。
  *
  * @author 王帅
  * @since 2.0
  */
-public class UserCodeValidator implements ConstraintValidator<UserCode, String> {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class AopUtils {
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        return StringUtils.match(RegexConst.USER_CODE, value);
+    /**
+     * 获取 Aop 代理对象。
+     *
+     * @param invoker 代理调用者
+     * @param <T>     代理对象类型
+     * @return {@code AopContext.currentProxy();}
+     */
+    public static <T> T getProxy(Class<T> invoker) {
+        return invoker.cast(AopContext.currentProxy());
     }
 
 }

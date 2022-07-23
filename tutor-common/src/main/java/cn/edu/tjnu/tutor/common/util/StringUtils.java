@@ -19,6 +19,8 @@ package cn.edu.tjnu.tutor.common.util;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.regex.Pattern;
+
 /**
  * 字符串工具类。
  *
@@ -37,6 +39,19 @@ public final class StringUtils {
     public static String trimGrade(String className) {
         int length = className.length();
         return className.substring(length - 4, length - 2);
+    }
+
+    /**
+     * <p>判断所给定的字符串是否满足正则表达式，如果所给需要匹配的内容为
+     * {@code null} 的话，匹配结果返回 {@code true} 最为结果，用于
+     * JSR-303 规范（Bean Validation 规范）的空值跳过。
+     *
+     * @param pattern 正则表达式
+     * @param text    需要匹配的内容
+     * @return {@code true} 匹配正则，{@code false} 不匹配正则
+     */
+    public static boolean match(Pattern pattern, CharSequence text) {
+        return text == null || pattern.matcher(text).matches();
     }
 
 }

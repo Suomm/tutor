@@ -16,11 +16,11 @@
 
 package cn.edu.tjnu.tutor.common.core.domain.view;
 
-import lombok.AllArgsConstructor;
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -32,13 +32,13 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class PageVO<T> implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class PageVO<T> extends PageQuery {
 
     private static final long serialVersionUID = -553124397223609762L;
 
     /**
-     * 数据总记录数。
+     * 当前页的数据量。
      *
      * @mock 1
      */
@@ -48,5 +48,23 @@ public class PageVO<T> implements Serializable {
      * 每页的数据内容。
      */
     private List<T> content;
+
+    /**
+     * 获取分页数据的总页数。
+     *
+     * @return 总页数
+     */
+    public int totalPages() {
+        return pageSize == 0 ? 1 : (int) Math.ceil((double) total / (double) pageSize);
+    }
+
+    /**
+     * 判断是下一页是否还有数据。
+     *
+     * @return {@code true} 下一页有数据，{@code false} 下一页没有数据
+     */
+    public boolean hasNext() {
+        return pageNum + 1 < totalPages();
+    }
 
 }

@@ -29,6 +29,7 @@ import java.util.Map;
 /**
  * 默认的 Excel 数据读取监听器。
  *
+ * @param <T> 数据类型
  * @author 王帅
  * @since 2.0
  */
@@ -43,7 +44,7 @@ public class ExcelReadListener<T> implements ReadListener<T> {
     /**
      * Excel 解析服务引用，用于保存解析成功的数据。
      */
-    private final ExcelDataService<T> service;
+    private final ExcelDataService<T, ?> service;
 
     /**
      * 查询缓存数据存。
@@ -55,7 +56,7 @@ public class ExcelReadListener<T> implements ReadListener<T> {
      *
      * @param service 服务层对象
      */
-    public ExcelReadListener(ExcelDataService<T> service) {
+    public ExcelReadListener(ExcelDataService<T, ?> service) {
         this.service = service;
         this.result = new ExcelResult();
         this.cachedMap = new HashMap<>();

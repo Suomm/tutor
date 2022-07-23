@@ -22,6 +22,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
+import java.util.Collections;
+
 /**
  * 分页工具类。
  *
@@ -32,6 +34,21 @@ import org.springframework.data.domain.Page;
 public final class PageUtils {
 
     /**
+     * 获取一个空的分页对象。
+     *
+     * @param <T> 数据类型
+     * @return 空分页对象
+     */
+    public static <T> PageVO<T> empty() {
+        PageVO<T> pageVO = new PageVO<>();
+        pageVO.setPageNum(1);
+        pageVO.setPageSize(0);
+        pageVO.setTotal(0L);
+        pageVO.setContent(Collections.emptyList());
+        return pageVO;
+    }
+
+    /**
      * 将 Elasticsearch 分页对象转换为 {@link PageVO} 对象。
      *
      * @param page 分页对象
@@ -39,7 +56,12 @@ public final class PageUtils {
      * @return 分页数据
      */
     public static <T> PageVO<T> convert(Page<T> page) {
-        return new PageVO<>(page.getTotalElements(), page.getContent());
+        PageVO<T> pageVO = new PageVO<>();
+        pageVO.setPageNum(page.getNumber());
+        pageVO.setPageSize(page.getSize());
+        pageVO.setTotal(page.getTotalElements());
+        pageVO.setContent(page.getContent());
+        return pageVO;
     }
 
     /**
@@ -50,7 +72,12 @@ public final class PageUtils {
      * @return 分页数据
      */
     public static <T> PageVO<T> convert(IPage<T> page) {
-        return new PageVO<>(page.getTotal(), page.getRecords());
+        PageVO<T> pageVO = new PageVO<>();
+        pageVO.setPageNum((int) page.getCurrent());
+        pageVO.setPageSize((int) page.getSize());
+        pageVO.setTotal(page.getTotal());
+        pageVO.setContent(page.getRecords());
+        return pageVO;
     }
 
 }

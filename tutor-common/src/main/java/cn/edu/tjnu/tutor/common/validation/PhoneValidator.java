@@ -17,6 +17,7 @@
 package cn.edu.tjnu.tutor.common.validation;
 
 import cn.edu.tjnu.tutor.common.constant.RegexConst;
+import cn.edu.tjnu.tutor.common.util.StringUtils;
 import cn.edu.tjnu.tutor.common.validation.constraints.Phone;
 
 import javax.validation.ConstraintValidator;
@@ -32,7 +33,7 @@ public class PhoneValidator implements ConstraintValidator<Phone, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return RegexConst.PHONE.matcher(value).matches();
+        return StringUtils.match(RegexConst.PHONE, value);
     }
 
 }

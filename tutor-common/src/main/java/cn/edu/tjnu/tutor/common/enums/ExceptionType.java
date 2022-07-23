@@ -48,7 +48,8 @@ public enum ExceptionType implements Localizable {
     MAJOR_NAME_ALREADY_EXISTS("专业名称 “{0}” 已经存在！"),
     MENU_ALREADY_BIND_ROLE("菜单已绑定角色，不能删除！"),
     MENU_NAME_ALREADY_EXISTS("菜单名称 “{0}” 已经存在，请换用其他名称！"),
-    SUBMENU_ALREADY_EXISTS("存在子菜单，请先删除子菜单！");
+    SUBMENU_ALREADY_EXISTS("存在子菜单，请先删除子菜单！"),
+    USER_NAME_ALREADY_EXISTS("用户名称 “{0}” 已经存在！");
 
     private static final Map<Locale, ResourceBundle> CACHED_RESOURCE_BUNDLES =
             new ConcurrentHashMap<>();

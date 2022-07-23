@@ -16,11 +16,9 @@
 
 package cn.edu.tjnu.tutor.common.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 操作消息结果提示。
@@ -70,17 +68,10 @@ public final class AjaxResult<T> implements Serializable {
      */
     private T data;
 
-    /**
-     * 时间戳。
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime timestamp;
-
     private AjaxResult(Integer code, String message, T data) {
         this.code = code;
         this.data = data;
         this.message = message;
-        this.timestamp = LocalDateTime.now();
     }
 
     /**
