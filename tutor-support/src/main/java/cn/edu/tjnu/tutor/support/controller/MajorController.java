@@ -65,7 +65,7 @@ public class MajorController extends BaseController {
     /**
      * 查询的专业信息。
      *
-     * @param majorQuery 专业信息查询参数
+     * @param majorQuery 查询参数
      * @return 分页对象
      */
     @Secured(ROLE_ROOT)
@@ -180,8 +180,8 @@ public class MajorController extends BaseController {
      */
     @Secured(ROLE_ROOT)
     @GetMapping("exportData")
-    public void exportData(HttpServletResponse response) {
-        ExcelUtils.writeExcel(response, "专业信息汇总", majorService);
+    public void exportData(MajorQuery majorQuery, HttpServletResponse response) {
+        ExcelUtils.writeExcel(response, "专业信息汇总", majorService, majorQuery);
     }
 
     /**

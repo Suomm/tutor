@@ -63,7 +63,7 @@ public class IndexController extends BaseController {
      */
     @GetMapping("/getInfo")
     public AjaxResult<ProfileVO> getInfo() {
-        return success(userService.getInfo(getUserId()));
+        return success(userService.getProfile(getUserId()));
     }
 
     /**

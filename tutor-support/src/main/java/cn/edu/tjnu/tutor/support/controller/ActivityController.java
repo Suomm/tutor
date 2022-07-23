@@ -19,7 +19,7 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Activity;
@@ -53,12 +53,12 @@ public class ActivityController extends BaseController {
     /**
      * 查询用户参加的活动。
      *
-     * @param pageDTO 分页参数
+     * @param pageQuery 分页参数
      * @return 所有关联活动
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Record>> list(@Validated PageDTO pageDTO) {
-        return pageSuccess(recordRepository.findAllByUserId(getUserId(), pageDTO.pageable()));
+    public AjaxResult<PageVO<Record>> list(@Validated PageQuery pageQuery) {
+        return pageSuccess(recordRepository.findAllByUserId(getUserId(), pageQuery.pageable()));
     }
 
     /**

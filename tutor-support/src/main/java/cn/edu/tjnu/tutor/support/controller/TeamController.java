@@ -19,7 +19,7 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.common.validation.groups.Update;
@@ -48,12 +48,12 @@ public class TeamController extends BaseController {
     /**
      * 查询导师团信息。
      *
-     * @param pageDTO 分页参数
+     * @param pageQuery 分页参数
      * @return 分页对象
      */
     @GetMapping("list")
-    public AjaxResult<PageVO<Team>> list(@Validated PageDTO pageDTO) {
-        return pageSuccess(teamService.page(pageDTO.page()));
+    public AjaxResult<PageVO<Team>> list(@Validated PageQuery pageQuery) {
+        return pageSuccess(teamService.page(pageQuery.page()));
     }
 
     /**

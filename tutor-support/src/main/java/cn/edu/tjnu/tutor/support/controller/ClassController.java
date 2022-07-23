@@ -66,7 +66,7 @@ public class ClassController extends BaseController {
     /**
      * 查询班级信息。
      *
-     * @param classQuery 班级信息查询参数
+     * @param classQuery 查询参数
      * @return 分页对象
      */
     @Secured(ROLE_ROOT)
@@ -78,7 +78,7 @@ public class ClassController extends BaseController {
     /**
      * 查询所在学院的班级信息。
      *
-     * @param classQuery 班级信息查询参数
+     * @param classQuery 查询参数
      * @return 分页对象
      */
     @Secured(ROLE_ADMIN)
@@ -173,8 +173,8 @@ public class ClassController extends BaseController {
      */
     @Secured(ROLE_ROOT)
     @GetMapping("exportData")
-    public void exportData(HttpServletResponse response) {
-        ExcelUtils.writeExcel(response, "班级信息汇总", classService);
+    public void exportData(ClassQuery classQuery, HttpServletResponse response) {
+        ExcelUtils.writeExcel(response, "班级信息汇总", classService, classQuery);
     }
 
     /**

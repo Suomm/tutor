@@ -19,7 +19,7 @@ package cn.edu.tjnu.tutor.support.controller;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
-import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.util.ExcelUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
@@ -62,13 +62,13 @@ public class CollegeController extends BaseController {
     /**
      * 查询所有学院信息。
      *
-     * @param pageDTO 分页参数
+     * @param pageQuery 分页参数
      * @return 分页对象
      */
     @Secured(ROLE_ROOT)
     @GetMapping("list")
-    public AjaxResult<PageVO<CollegeVO>> page(@Validated PageDTO pageDTO) {
-        return pageSuccess(collegeService.pageVO(pageDTO.page()));
+    public AjaxResult<PageVO<CollegeVO>> page(@Validated PageQuery pageQuery) {
+        return pageSuccess(collegeService.pageVO(pageQuery.page()));
     }
 
     /**
@@ -134,7 +134,7 @@ public class CollegeController extends BaseController {
      */
     @GetMapping("exportData")
     public void exportData(HttpServletResponse response) {
-        ExcelUtils.writeExcel(response, "学院信息汇总", collegeService);
+        ExcelUtils.writeExcel(response, "学院信息汇总", collegeService, new PageQuery());
     }
 
     /**
