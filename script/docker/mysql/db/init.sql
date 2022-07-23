@@ -15,4 +15,5 @@
  */
 
 create database tutor;
+create database xxl_job;
 create database nacos_config;

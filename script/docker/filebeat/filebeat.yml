@@ -3,5 +3,7 @@ filebeat.inputs:
     paths:
       - /var/log/tutor/*.log
 output.elasticsearch:
-  hosts: ["http://elasticsearch"]
+  hosts: [ "http://elasticsearch" ]
   index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
+setup.template.name: "filebeat"
+setup.template.pattern: "filebeat-*"
