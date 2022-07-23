@@ -22,7 +22,7 @@
     <name>tutor</name>
     <url>https://tutor.tjnu.edu.cn</url>
     <inceptionYear>2021</inceptionYear>
-    <description>天津师范大学师范生学业指导系统</description>
+    <description>天津师范大学师范生学业指导云平台</description>
 
     <licenses>
         <license>
@@ -59,7 +59,7 @@
         <hutool.version>5.7.15</hutool.version>
         <xxl-job.version>2.3.0</xxl-job.version>
         <redisson.version>3.16.3</redisson.version>
-        <easyexcel.version>3.0.5</easyexcel.version>
+        <easyexcel.version>3.1.0</easyexcel.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
