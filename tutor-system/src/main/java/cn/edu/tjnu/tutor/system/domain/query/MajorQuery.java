@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.query;
 
-import cn.edu.tjnu.tutor.common.core.domain.dto.PageDTO;
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,7 +28,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MajorQuery extends PageDTO {
+public class MajorQuery extends PageQuery {
 
     private static final long serialVersionUID = 3729660645629823779L;
 

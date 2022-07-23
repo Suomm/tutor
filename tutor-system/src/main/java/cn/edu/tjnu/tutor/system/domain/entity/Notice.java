@@ -16,13 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 公告信息。
@@ -32,7 +33,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("sys_notice")
-public class Notice implements Serializable {
+public class Notice extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,12 +49,12 @@ public class Notice implements Serializable {
     private Integer collegeId;
 
     /**
-     * 公告类型（0面向老师，1面向学生）。
+     * 公告类型（0 面向老师，1 面向学生）。
      */
     private Integer noticeType;
 
     /**
-     * 公告范围（0普通公告，1管理员公告）。
+     * 公告范围（0 普通公告，1 管理员公告）。
      */
     private Integer noticeScope;
 
@@ -86,5 +87,22 @@ public class Notice implements Serializable {
      * 更新时间。
      */
     private LocalDateTime updateTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Notice) {
+            Notice other = (Notice) o;
+            return Objects.equals(this.noticeId, other.noticeId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.noticeId);
+    }
 
 }

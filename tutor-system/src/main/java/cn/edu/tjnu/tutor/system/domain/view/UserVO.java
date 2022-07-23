@@ -16,7 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.view;
 
-import cn.edu.tjnu.tutor.common.validation.constraints.ClassName;
+import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
@@ -26,23 +26,51 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 班级信息。
+ * 用户信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-public class ClassVO implements Serializable {
+public class UserVO implements Serializable {
 
-    private static final long serialVersionUID = 4735551938253218880L;
+    private static final long serialVersionUID = 7516817215395798067L;
 
     /**
-     * 班级主键。
+     * 用户主键。
      *
      * @mock 1
      */
     @ExcelIgnore
-    private Integer classId;
+    private Integer userId;
+
+    /**
+     * 所属学院主键。
+     *
+     * @mock 1
+     */
+    @ExcelIgnore
+    private Integer collegeId;
+
+    /**
+     * 用户编号（学号或工号）。
+     *
+     * @mock 2040050143
+     */
+    @NotNull
+    @UserCode
+    @ExcelProperty("用户编号")
+    private String userCode;
+
+    /**
+     * 用户名称。
+     *
+     * @mock 王帅
+     */
+    @NotNull
+    @Length(max = 50)
+    @ExcelProperty("用户名称")
+    private String userName;
 
     /**
      * 所属学院名称。
@@ -50,36 +78,7 @@ public class ClassVO implements Serializable {
      * @mock 化学学院
      */
     @NotNull
-    @Length(max = 50)
     @ExcelProperty("所属学院")
     private String collegeName;
-
-    /**
-     * 所属专业名称。
-     *
-     * @mock 化学（师范）
-     */
-    @NotNull
-    @Length(max = 50)
-    @ExcelProperty("所属专业")
-    private String majorName;
-
-    /**
-     * 班级名称。
-     *
-     * @mock 化学2001
-     */
-    @NotNull
-    @ClassName
-    @ExcelProperty("班级名称")
-    private String className;
-
-    /**
-     * 所属年级。
-     *
-     * @mock 20
-     */
-    @ExcelIgnore
-    private String grade;
 
 }

@@ -14,64 +14,40 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.entity;
+package cn.edu.tjnu.tutor.system.domain.extra;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Objects;
+import java.io.Serializable;
 
 /**
- * 参数配置。
+ * 用户和角色关联。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("sys_config")
-public class Config extends BaseEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("ref_user_role")
+public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 参数主键。
+     * 用户主键。
      */
     @TableId(type = IdType.AUTO)
-    private Integer configId;
+    private Integer userId;
 
     /**
-     * 参数名称。
+     * 角色主键。
      */
-    private String configName;
-
-    /**
-     * 参数键名。
-     */
-    private String configKey;
-
-    /**
-     * 参数键值。
-     */
-    private String configValue;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o instanceof Config) {
-            Config other = (Config) o;
-            return Objects.equals(this.configId, other.configId);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.configId);
-    }
+    private Integer roleId;
 
 }

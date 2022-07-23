@@ -44,13 +44,13 @@ public class MajorVO implements Serializable {
     private Integer majorId;
 
     /**
-     * 学院名称。
+     * 所属学院名称。
      *
      * @mock 化学学院
      */
     @NotNull
     @Length(max = 50)
-    @ExcelProperty("学院名称")
+    @ExcelProperty("所属学院")
     private String collegeName;
 
     /**

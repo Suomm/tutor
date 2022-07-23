@@ -16,12 +16,13 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * （教育实践）文档拆分之后的模板信息。
@@ -31,7 +32,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("gen_template")
-public class Template implements Serializable {
+public class Template extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -62,7 +63,7 @@ public class Template implements Serializable {
     private String tmplUrl;
 
     /**
-     * 是否只读（0否 1是）。
+     * 是否只读（0 否 1 是）。
      */
     private Integer readOnly;
 
@@ -75,5 +76,22 @@ public class Template implements Serializable {
      * 更新时间。
      */
     private LocalDateTime updateTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Template) {
+            Template other = (Template) o;
+            return Objects.equals(this.tmplId, other.tmplId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.tmplId);
+    }
 
 }

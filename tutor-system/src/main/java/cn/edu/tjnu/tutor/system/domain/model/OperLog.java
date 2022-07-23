@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -24,8 +25,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 操作日志信息。
@@ -36,7 +37,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Document(indexName = "oper_log")
-public class OperLog implements Serializable {
+public class OperLog extends BaseEntity {
 
     private static final long serialVersionUID = -3652454157461927553L;
 
@@ -112,5 +113,22 @@ public class OperLog implements Serializable {
      */
     @Field(format = DateFormat.date_time_no_millis)
     private LocalDateTime operTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof OperLog) {
+            OperLog other = (OperLog) o;
+            return Objects.equals(this.operId, other.operId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.operId);
+    }
 
 }

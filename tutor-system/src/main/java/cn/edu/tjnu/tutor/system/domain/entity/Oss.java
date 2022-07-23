@@ -16,12 +16,13 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 对象存储信息。
@@ -31,7 +32,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("sys_oss")
-public class Oss implements Serializable {
+public class Oss extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -60,5 +61,22 @@ public class Oss implements Serializable {
      * URL地址。
      */
     private String url;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Oss) {
+            Oss other = (Oss) o;
+            return Objects.equals(this.ossId, other.ossId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.ossId);
+    }
 
 }

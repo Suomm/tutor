@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -24,8 +25,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 活动信息。
@@ -35,7 +36,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Document(indexName = "activity")
-public class Activity implements Serializable {
+public class Activity extends BaseEntity {
 
     private static final long serialVersionUID = 7232391888281110320L;
 
@@ -69,7 +70,7 @@ public class Activity implements Serializable {
     /**
      * 活动标题。
      */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String title;
 
     /**
@@ -84,8 +85,25 @@ public class Activity implements Serializable {
     private LocalDateTime createTime;
 
     /**
-     * 活动范围（0班级/小组内可见，1公开）。
+     * 活动范围（0 班级/小组内可见，1 公开）。
      */
     private Integer scope;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Activity) {
+            Activity other = (Activity) o;
+            return Objects.equals(this.activityId, other.activityId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.activityId);
+    }
 
 }

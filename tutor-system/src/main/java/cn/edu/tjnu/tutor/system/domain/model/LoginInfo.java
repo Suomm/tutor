@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -24,8 +25,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 用户登录信息。
@@ -36,7 +37,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Document(indexName = "login_info")
-public class LoginInfo implements Serializable {
+public class LoginInfo extends BaseEntity {
 
     private static final long serialVersionUID = 1713865713115996871L;
 
@@ -44,7 +45,7 @@ public class LoginInfo implements Serializable {
      * 登陆信息主键。
      */
     @Id
-    private String id;
+    private String infoId;
 
     /**
      * 用户编号。
@@ -89,5 +90,22 @@ public class LoginInfo implements Serializable {
      */
     @Field(format = DateFormat.date_time_no_millis)
     private LocalDateTime loginTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof LoginInfo) {
+            LoginInfo other = (LoginInfo) o;
+            return Objects.equals(this.infoId, other.infoId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.infoId);
+    }
 
 }

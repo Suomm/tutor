@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -24,8 +25,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 问题信息。
@@ -35,7 +36,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Document(indexName = "problem")
-public class Problem implements Serializable {
+public class Problem extends BaseEntity {
 
     private static final long serialVersionUID = 5559693170878148296L;
 
@@ -69,7 +70,7 @@ public class Problem implements Serializable {
     /**
      * 问题标题。
      */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String title;
 
     /**
@@ -84,7 +85,7 @@ public class Problem implements Serializable {
     private LocalDateTime createTime;
 
     /**
-     * 可见范围（0导师小组/班级内可见，1精选问题/公开）。
+     * 可见范围（0 导师小组/班级内可见，1 精选问题/公开）。
      */
     private Integer scope;
 
@@ -92,5 +93,22 @@ public class Problem implements Serializable {
      * 当前状态（0 未解决，1 线上解决，2 线下解决）。
      */
     private Integer status;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Problem) {
+            Problem other = (Problem) o;
+            return Objects.equals(this.problemId, other.problemId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.problemId);
+    }
 
 }

@@ -16,13 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 学院信息。
@@ -33,7 +34,7 @@ import java.io.Serializable;
 @Data
 @TableName("sys_college")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class College implements Serializable {
+public class College extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -69,8 +70,25 @@ public class College implements Serializable {
     private String email;
 
     /**
-     * 可见性（0可见，1不可见）。
+     * 可见性（0 可见，1 不可见）。
      */
     private Integer visible;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof College) {
+            College other = (College) o;
+            return Objects.equals(this.collegeId, other.collegeId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.collegeId);
+    }
 
 }

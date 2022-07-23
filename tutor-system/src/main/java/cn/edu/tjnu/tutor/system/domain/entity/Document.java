@@ -16,11 +16,12 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * （教育实践）文档信息。
@@ -30,7 +31,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("gen_document")
-public class Document implements Serializable {
+public class Document extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,5 +55,22 @@ public class Document implements Serializable {
      * 文件类型（文件后缀名）。
      */
     private String docType;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Document) {
+            Document other = (Document) o;
+            return Objects.equals(this.docId, other.docId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.docId);
+    }
 
 }

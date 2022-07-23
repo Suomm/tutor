@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -24,8 +25,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 文章评论信息。
@@ -35,7 +36,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Document(indexName = "comment")
-public class Comment implements Serializable {
+public class Comment extends BaseEntity {
 
     private static final long serialVersionUID = -1473775313525466489L;
 
@@ -70,7 +71,7 @@ public class Comment implements Serializable {
     /**
      * 评论内容。
      */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String content;
 
     /**
@@ -78,5 +79,22 @@ public class Comment implements Serializable {
      */
     @Field(format = DateFormat.date_time_no_millis)
     private LocalDateTime createTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Comment) {
+            Comment other = (Comment) o;
+            return Objects.equals(this.commentId, other.commentId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.commentId);
+    }
 
 }

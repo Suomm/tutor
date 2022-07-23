@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -24,8 +25,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 文章信息。
@@ -35,7 +36,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Document(indexName = "article")
-public class Article implements Serializable {
+public class Article extends BaseEntity {
 
     private static final long serialVersionUID = 3195804457014661912L;
 
@@ -69,7 +70,7 @@ public class Article implements Serializable {
     /**
      * 文章标题。
      */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String title;
 
     /**
@@ -81,7 +82,7 @@ public class Article implements Serializable {
     /**
      * 文章介绍（引言）。
      */
-    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String introduce;
 
     /**
@@ -100,5 +101,22 @@ public class Article implements Serializable {
      */
     @Field(format = DateFormat.date_time_no_millis)
     private LocalDateTime updateTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Article) {
+            Article other = (Article) o;
+            return Objects.equals(this.articleId, other.articleId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.articleId);
+    }
 
 }

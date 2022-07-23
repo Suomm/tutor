@@ -16,13 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 专业信息。
@@ -33,7 +34,7 @@ import java.io.Serializable;
 @Data
 @TableName("sys_major")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Major implements Serializable {
+public class Major extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,5 +58,22 @@ public class Major implements Serializable {
      * 专业简称。
      */
     private String majorAbbr;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Major) {
+            Major other = (Major) o;
+            return Objects.equals(this.majorId, other.majorId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.majorId);
+    }
 
 }

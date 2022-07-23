@@ -16,12 +16,13 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 导师团信息。
@@ -31,7 +32,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("sys_team")
-public class Team implements Serializable {
+public class Team extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,5 +56,22 @@ public class Team implements Serializable {
      * 导师团介绍信息。
      */
     private String introduce;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Team) {
+            Team other = (Team) o;
+            return Objects.equals(this.teamId, other.teamId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.teamId);
+    }
 
 }

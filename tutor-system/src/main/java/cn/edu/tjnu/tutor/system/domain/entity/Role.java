@@ -16,13 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 角色信息。
@@ -33,7 +34,7 @@ import java.io.Serializable;
 @Data
 @TableName("sys_role")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Role implements Serializable {
+public class Role extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,5 +53,22 @@ public class Role implements Serializable {
      * 角色名称。
      */
     private String roleName;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Role) {
+            Role other = (Role) o;
+            return Objects.equals(this.roleId, other.roleId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.roleId);
+    }
 
 }

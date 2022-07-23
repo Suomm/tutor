@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -23,8 +24,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 活动记录信息。
@@ -34,7 +35,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Document(indexName = "record")
-public class Record implements Serializable {
+public class Record extends BaseEntity {
 
     private static final long serialVersionUID = -2836638793719121984L;
 
@@ -67,5 +68,22 @@ public class Record implements Serializable {
      */
     @Field(format = DateFormat.date_time_no_millis)
     private LocalDateTime completeTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Record) {
+            Record other = (Record) o;
+            return Objects.equals(this.recordId, other.recordId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.recordId);
+    }
 
 }

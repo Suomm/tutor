@@ -17,44 +17,47 @@
 package cn.edu.tjnu.tutor.system.domain.query;
 
 import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
-import cn.edu.tjnu.tutor.common.validation.groups.Select;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.Null;
-
 /**
- * 班级信息查询对象。
+ * 用户信息查询对象。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ClassQuery extends PageQuery {
+public class UserQuery extends PageQuery {
 
-    private static final long serialVersionUID = -6288224397032646380L;
+    private static final long serialVersionUID = -583042903949935455L;
 
     /**
-     * 学院主键。
+     * 用户编号。
+     *
+     * @mock 2040050143
+     */
+    private String userCode;
+
+    /**
+     * 用户名称。
+     *
+     * @mock 王帅
+     */
+    private String userName;
+
+    /**
+     * 所属学院主键。
      *
      * @mock 1
      */
-    @Null(groups = Select.class)
     private Integer collegeId;
 
     /**
-     * 专业主键。
+     * 用户类型（0 教师，1 学生）。
      *
      * @mock 1
      */
-    private Integer majorId;
-
-    /**
-     * 所属年级。
-     *
-     * @mock 20
-     */
-    private String grade;
+    private Integer userType;
 
 }

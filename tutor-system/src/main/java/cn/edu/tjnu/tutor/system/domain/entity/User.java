@@ -16,8 +16,9 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
-import cn.edu.tjnu.tutor.common.validation.constraints.UserCode;
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 用户信息。
@@ -38,7 +39,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("sys_user")
-public class User implements Serializable {
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -56,7 +57,6 @@ public class User implements Serializable {
     /**
      * 用户编号（学号或工号）。
      */
-    @UserCode
     private String userCode;
 
     /**
@@ -75,7 +75,7 @@ public class User implements Serializable {
     private String phone;
 
     /**
-     * 用户性别（0女，1男，2保密）。
+     * 用户性别（0 女，1 男，2 保密）。
      */
     private Integer gender;
 
@@ -88,5 +88,28 @@ public class User implements Serializable {
      * 自我介绍。
      */
     private String introduce;
+
+    /**
+     * 角色绑定。
+     */
+    @TableField(exist = false)
+    private Integer[] roleIds;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof User) {
+            User other = (User) o;
+            return Objects.equals(this.userId, other.userId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.userId);
+    }
 
 }

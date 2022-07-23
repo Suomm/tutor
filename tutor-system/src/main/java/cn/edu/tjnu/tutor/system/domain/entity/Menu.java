@@ -16,12 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
+import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 菜单信息。
@@ -31,7 +33,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("sys_menu")
-public class Menu implements Serializable {
+public class Menu extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -70,5 +72,28 @@ public class Menu implements Serializable {
      * 菜单图标。
      */
     private String icon;
+
+    /**
+     * 角色绑定。
+     */
+    @TableField(exist = false)
+    private Integer[] roleIds;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Menu) {
+            Menu other = (Menu) o;
+            return Objects.equals(this.menuId, other.menuId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.menuId);
+    }
 
 }
