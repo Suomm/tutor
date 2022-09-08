@@ -17,7 +17,7 @@ spring:
     # CAS 登出地址
     server-logout-url: ${cas.server-url-prefix}/logout
     # 授权登陆地址
-    client-host-url: https://tutor.tjnu.edu.cn
+    client-host-url: https://tutor.tjnu.edu.cn:443
     # 登陆成功回调地址
     callbackUrl: https://tutor.tjnu.edu.cn/login
     # CAS Ticket 校验类型

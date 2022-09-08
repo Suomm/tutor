@@ -1,12 +1,18 @@
 # Elasticsearch 搜索引擎配置
-spring:
-  # Elasticsearch 服务器的地址
-  elasticsearch:
-    rest:
-      uris: "elasticsearch"
-  # 排除响应式 Elasticsearch 的配置
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticSearchReactiveHealthContributorAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.elasticsearch.ReactiveElasticsearchRepositoriesAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.elasticsearch.ReactiveElasticsearchRestClientAutoConfiguration
+easy-es:
+  # 是否开启 easy-es 自动配置
+  enable: false
+  # ES 连接地址+端口
+  address: elasticsearch:9200
+  # username: elastic
+  # password: WG7WVmuNMtM4GwNYkyWH
+  global-config:
+    # 控制台打印生成的 DSL 语句
+    print-dsl: false
+    # 索引处理模式
+    process_index_mode: manual
+    # 异步处理索引是否阻塞主线程
+    asyncProcessIndexBlocking: false
+    db-config:
+      # 索引前缀，用于统一项目模块
+      table-prefix: tutor_

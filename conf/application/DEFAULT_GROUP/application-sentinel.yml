@@ -3,12 +3,12 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: sentinel
-      datasource:
-        # Nacos 持久化限流配置
-        flow-rules:
-          nacos:
-            server-addr: nacos
-            data-id: sentinel-flow.json
-            rule-type: flow
-            namespace: 71ad7654-6ef6-4032-8da1-1b1cf3be1458
+        dashboard: sentinel:8080
+#      Nacos 持久化限流配置
+#      datasource:
+#        flow-rules:
+#          nacos:
+#            server-addr: nacos
+#            data-id: sentinel-flow.json
+#            rule-type: flow
+#            namespace: 71ad7654-6ef6-4032-8da1-1b1cf3be1458

@@ -4,12 +4,12 @@ spring:
     dynamic:
       # 性能分析插件（有性能损耗，生产环境请关闭）
       p6spy: true
+      # Druid 的统一配置
+      druid:
+        test-while-idle: true
+        validation-query: SELECT 1
       # 多数据源配置（这里只配置了一个主数据源）
       datasource:
-        # Druid 的统一配置
-        druid:
-          test-while-idle: true
-          validation-query: SELECT 1
         # 主数据源的配置
         master:
           username: root

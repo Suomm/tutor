@@ -6,4 +6,4 @@ spring:
     # 主机地址
     host: redis
     # 密码（生产环境建议开启）
-    password: requirepass
+    # password: requirepass
