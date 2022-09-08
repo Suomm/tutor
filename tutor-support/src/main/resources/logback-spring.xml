@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--  获取应用名称  -->
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
+
+    <!--  日志文件写入位置  -->
+    <property name="LOG_PATH" value="/var/log/tutor"/>
+
+    <!--  默认配置  -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--  配置控制台 (Console) 输出日志  -->
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!--  配置文件 (File) 输出日志  -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>0</totalSizeCap>
+            <maxFileSize>10MB</maxFileSize>
+            <cleanHistoryOnStart>false</cleanHistoryOnStart>
+            <FileNamePattern>${LOG_PATH}/${APP_NAME}-%d{yyyy-MM-dd}-spring-%i.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--  配置异步 (Async) 输出日志  -->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <!--  root 全局日志级别，用来指定最基础的日志输出级别  -->
+    <root level="INFO">
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
