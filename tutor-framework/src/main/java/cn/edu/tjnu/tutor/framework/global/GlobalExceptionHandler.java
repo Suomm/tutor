@@ -20,6 +20,7 @@ import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -37,6 +38,16 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * 处理请求方式不支持异常。
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public AjaxResult<Void> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e,
+                                                                HttpServletRequest request) {
+        log.error("请求地址'{}', 不支持'{}'请求", request.getRequestURI(), e.getMethod());
+        return AjaxResult.error(e.getMessage());
+    }
 
     /**
      * 拦截未知的异常信息。
