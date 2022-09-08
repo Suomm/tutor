@@ -20,6 +20,7 @@ import cn.edu.tjnu.tutor.system.domain.dto.CollegeDTO;
 import cn.edu.tjnu.tutor.system.domain.entity.College;
 import cn.edu.tjnu.tutor.system.domain.meta.CollegeMeta;
 import cn.edu.tjnu.tutor.system.domain.view.CollegeVO;
+import cn.edu.tjnu.tutor.system.settings.MapstructSettings;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -29,7 +30,7 @@ import org.mapstruct.Mapping;
  * @author 王帅
  * @since 2.0
  */
-@Mapper(componentModel = "spring")
+@Mapper(config = MapstructSettings.class)
 public interface CollegeStruct {
 
     /**

@@ -13,4 +13,25 @@
         <result property="introduce" column="introduce"/>
     </resultMap>
 
+    <resultMap id="GroupVoResult" type="cn.edu.tjnu.tutor.system.domain.view.GroupVO">
+        <id property="groupId" column="group_id"/>
+        <result property="groupName" column="group_name"/>
+        <result property="total" column="total"/>
+        <result property="stock" column="stock"/>
+        <result property="introduce" column="introduce"/>
+    </resultMap>
+
+    <select id="selectPageVO" resultMap="GroupVoResult">
+        select group_id, group_name, total, stock, introduce
+        from sys_group
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectUserCount" resultType="java.lang.Long">
+        select count(*)
+        from ref_user_group
+        where user_id = #{otherUserId}
+          and group_id = (select group_id from ref_user_group where user_id = #{userId})
+    </select>
+
 </mapper>

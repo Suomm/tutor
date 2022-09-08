@@ -14,46 +14,35 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.extra;
+package cn.edu.tjnu.tutor.system.domain.dto;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
- * （学生）用户完成（教育实践）文档模板的信息。
+ * 小组组长打分信息数据传输对象。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("gen_user_tmpl")
-public class UserTmpl implements Serializable {
+public class GroupMarkDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 用户主键。
-     */
-    @TableId
-    private Integer userId;
+    private static final long serialVersionUID = -2190319347340576693L;
 
     /**
-     * 文档模板主键。
+     * 打分成绩。
+     *
+     * @mock 100
      */
-    private Integer tmplId;
+    private Integer score;
 
     /**
-     * 文档模板完成之后，文件上传URL。
+     * 小组评价。
+     *
+     * @mock 表现优秀！
      */
-    private String docUrl;
-
-    /**
-     * 上传时间。
-     */
-    private LocalDateTime createTime;
+    private String remark;
 
 }

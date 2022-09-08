@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.TeachingRecordMapper">
+
+    <resultMap id="TeachingScoreResult" type="cn.edu.tjnu.tutor.system.domain.entity.TeachingRecord">
+        <id property="recordId" column="record_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="lessonDate" column="lesson_date"/>
+        <result property="place" column="place"/>
+        <result property="markSchool" column="mark_senior"/>
+        <result property="markCollege" column="mark_college"/>
+    </resultMap>
+
+    <resultMap id="TeachingRecordVOResult" type="cn.edu.tjnu.tutor.system.domain.view.TeachingRecordVO">
+        <id property="recordId" column="record_id"/>
+        <result property="lessonDate" column="lesson_date"/>
+        <result property="place" column="place"/>
+        <result property="markSchool" column="mark_senior"/>
+        <result property="markCollege" column="mark_college"/>
+    </resultMap>
+
+    <select id="selectPageVO" resultMap="TeachingRecordVOResult">
+        select record_id, lesson_date, place, mark_school, mark_college
+        from prac_teaching_record
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectScoreVO" resultType="cn.edu.tjnu.tutor.system.domain.view.ScoreVO">
+        select mark_school  as highSchool,
+               mark_college as university
+        from prac_teaching_record
+        where user_id = #{userId}
+    </select>
+
+</mapper>

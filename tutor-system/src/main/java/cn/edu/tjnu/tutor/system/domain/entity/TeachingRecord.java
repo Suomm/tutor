@@ -16,82 +16,73 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * （教育实践）文档拆分之后的模板信息。
+ * 课堂教学成绩信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("gen_template")
-public class Template extends BaseEntity {
+@TableName("prac_teaching_record")
+public class TeachingRecord implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 模板主键。
+     * 课堂教学记录主键。
      */
-    @TableId
-    private Integer tmplId;
+    @TableId(type = IdType.AUTO)
+    private Integer recordId;
 
     /**
-     * 所属手册主键。
+     * 实习生主键。
      */
-    private Integer docId;
+    private Integer userId;
 
     /**
-     * 模板名称。
+     * 试讲时间。
      */
-    private String tmplName;
+    private LocalDate lessonDate;
 
     /**
-     * 模板排列顺序。
+     * 试讲地点。
      */
-    private Integer tmplOrder;
+    private String place;
 
     /**
-     * 模板文件URL。
+     * 中学指导教师评分。
      */
-    private String tmplUrl;
+    private Integer markSchool;
 
     /**
-     * 是否只读（0 否 1 是）。
+     * 高校指导教师评分。
      */
-    private Integer readOnly;
-
-    /**
-     * 创建时间。
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间。
-     */
-    private LocalDateTime updateTime;
+    private Integer markCollege;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o instanceof Template) {
-            Template other = (Template) o;
-            return Objects.equals(this.tmplId, other.tmplId);
+        if (o instanceof TeachingRecord) {
+            TeachingRecord other = (TeachingRecord) o;
+            return Objects.equals(this.recordId, other.recordId);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.tmplId);
+        return Objects.hash(this.recordId);
     }
 
 }

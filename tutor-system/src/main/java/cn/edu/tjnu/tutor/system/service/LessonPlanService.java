@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.system.service;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.entity.Document;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import cn.edu.tjnu.tutor.system.domain.entity.LessonPlan;
+import cn.edu.tjnu.tutor.system.domain.view.LessonPlanVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * （教育实践）文档信息数据层。
+ * 实习教案信息服务层。
  *
  * @author 王帅
  * @since 2.0
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface DocumentMapper extends BaseMapper<Document> {
+public interface LessonPlanService extends IService<LessonPlan> {
+
+    /**
+     * 分页查询实习教案信息。
+     *
+     * @param userId 实习生主键
+     * @param page   分页查询参数
+     * @return 分页对象
+     */
+    <E extends IPage<LessonPlanVO>> E pageVO(Integer userId, E page);
+
 }

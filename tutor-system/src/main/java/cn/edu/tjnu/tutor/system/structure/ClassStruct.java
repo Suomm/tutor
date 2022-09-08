@@ -20,6 +20,7 @@ import cn.edu.tjnu.tutor.common.util.StringUtils;
 import cn.edu.tjnu.tutor.system.domain.dto.ClassDTO;
 import cn.edu.tjnu.tutor.system.domain.entity.TheClass;
 import cn.edu.tjnu.tutor.system.domain.view.ClassVO;
+import cn.edu.tjnu.tutor.system.settings.MapstructSettings;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -29,7 +30,7 @@ import org.mapstruct.Mapping;
  * @author 王帅
  * @since 2.0
  */
-@Mapper(componentModel = "spring", imports = StringUtils.class)
+@Mapper(config = MapstructSettings.class, imports = StringUtils.class)
 public interface ClassStruct {
 
     /**

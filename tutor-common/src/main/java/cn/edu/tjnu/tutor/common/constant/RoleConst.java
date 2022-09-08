@@ -54,6 +54,11 @@ public final class RoleConst {
     public static final String ROLE_TEACHER = "ROLE_TEACHER";
 
     /**
+     * 小组长：协助教师完成小组内一些工作的学生角色。
+     */
+    public static final String ROLE_HEADMAN = "ROLE_HEADMAN";
+
+    /**
      * 实习生：需要完成教育实践活动的特定学生角色。
      */
     public static final String ROLE_INTERN = "ROLE_INTERN";

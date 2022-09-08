@@ -16,9 +16,12 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
+import cn.edu.tjnu.tutor.common.util.SqlUtils;
 import cn.edu.tjnu.tutor.system.domain.entity.Group;
+import cn.edu.tjnu.tutor.system.domain.view.GroupVO;
 import cn.edu.tjnu.tutor.system.mapper.GroupMapper;
 import cn.edu.tjnu.tutor.system.service.GroupService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +33,20 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements GroupService {
+
+    @Override
+    public <E extends IPage<GroupVO>> E getUserInfo(Integer userId, String role, E page) {
+        return null;
+    }
+
+    @Override
+    public <E extends IPage<GroupVO>> E pageVO(Integer userId, E page) {
+        return baseMapper.selectPageVO(userId, page);
+    }
+
+    @Override
+    public boolean notInSameGroup(Integer userId, Integer otherUserId) {
+        return !SqlUtils.toBool(baseMapper.selectUserCount(userId, otherUserId));
+    }
+
 }

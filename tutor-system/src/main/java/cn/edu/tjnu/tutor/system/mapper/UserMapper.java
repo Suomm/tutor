@@ -44,7 +44,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param userId 用户主键
      * @return 用户信息
      */
-    ProfileVO selectUserInfo(Integer userId);
+    ProfileVO selectUserProfile(Integer userId);
 
     /**
      * 根据用户编号查询用户信息。

@@ -44,11 +44,16 @@ public enum ExceptionType implements Localizable {
     EXCEL_EXPORT_FAILED("导出文档 “{0}.xlsx” 失败！"),
     EXCEL_IMPORT_FAILED("导入成功 {0} 条数据，失败 {1} 条数据，发生错误行号：{2}！"),
     EXCEL_FILE_OPEN_FAILED("打开 Excel 文档 “{0}” 失败！"),
+    FILE_NOT_FOUND("文件 “{0}” 不存在！"),
+    GROUP_NAME_ALREADY_EXISTS("小组名称 “{0}” 已经存在！"),
     MAJOR_NOT_EXISTS("您所选择的专业不存在！"),
     MAJOR_NAME_ALREADY_EXISTS("专业名称 “{0}” 已经存在！"),
     MENU_ALREADY_BIND_ROLE("菜单已绑定角色，不能删除！"),
     MENU_NAME_ALREADY_EXISTS("菜单名称 “{0}” 已经存在，请换用其他名称！"),
+    RECORD_ALREADY_SCORED("课堂教学记录已经被打分！"),
     SUBMENU_ALREADY_EXISTS("存在子菜单，请先删除子菜单！"),
+    USERS_ARE_NOT_IN_THE_SAME_GROUP("两个用户不在同一个分组内！"),
+    USER_ARE_NOT_OWNED_GROUP("这个小组不是您所有的！"),
     USER_NAME_ALREADY_EXISTS("用户名称 “{0}” 已经存在！");
 
     private static final Map<Locale, ResourceBundle> CACHED_RESOURCE_BUNDLES =

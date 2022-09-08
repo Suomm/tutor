@@ -34,7 +34,7 @@
         </association>
     </resultMap>
 
-    <select id="selectUserInfo" resultMap="ProfileVoResult">
+    <select id="selectUserProfile" resultMap="ProfileVoResult">
         select u.user_code,
                u.user_name,
                u.email as user_email,
@@ -56,8 +56,15 @@
         where u.user_id = #{userId}
     </select>
 
-    <select id="selectByUserCode" resultType="cn.edu.tjnu.tutor.common.core.domain.model.LoginUser">
-        select user_id, user_code, college_id
+    <resultMap id="LoginUserResult" type="cn.edu.tjnu.tutor.common.core.domain.model.LoginUser">
+        <id property="userId" column="user_id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="userName" column="user_name"/>
+        <result property="collegeId" column="college_id"/>
+    </resultMap>
+
+    <select id="selectByUserCode" resultMap="LoginUserResult">
+        select user_id, user_code, user_name, college_id
         from sys_user
         where user_code = #{userCode}
     </select>

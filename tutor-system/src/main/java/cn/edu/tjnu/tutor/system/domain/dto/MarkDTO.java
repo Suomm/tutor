@@ -14,19 +14,41 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.mapper;
+package cn.edu.tjnu.tutor.system.domain.dto;
 
-import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
-import cn.edu.tjnu.tutor.system.domain.entity.Template;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
+import lombok.Data;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
- * （教育实践）文档拆分之后的模板信息数据层。
+ * 实习生成绩数据传输对象。
  *
  * @author 王帅
  * @since 2.0
  */
-@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
-public interface TemplateMapper extends BaseMapper<Template> {
+@Data
+public class MarkDTO implements Serializable {
+
+    private static final long serialVersionUID = -8644072006250163371L;
+
+    /**
+     * 中学指导教师评分。
+     *
+     * @mock 80
+     */
+    @NotNull
+    @Range(max = 100)
+    private Integer highSchool;
+
+    /**
+     * 高校指导教师评分。
+     *
+     * @mock 80
+     */
+    @NotNull
+    @Range(max = 100)
+    private Integer university;
+
 }

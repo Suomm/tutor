@@ -16,61 +16,93 @@
 
 package cn.edu.tjnu.tutor.system.domain.entity;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * （教育实践）文档信息。
+ * 实习教案信息。
  *
  * @author 王帅
  * @since 2.0
  */
 @Data
-@TableName("gen_document")
-public class Document extends BaseEntity {
+@TableName("prac_lesson_plan")
+public class LessonPlan implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 文档主键。
+     * 实习教案主键。
      */
-    @TableId
-    private Integer docId;
+    @TableId(type = IdType.AUTO)
+    private Integer planId;
 
     /**
-     * 文档名称。
+     * 实习生主键。
      */
-    private String docName;
+    private Integer userId;
 
     /**
-     * 文档样例URL。
+     * 课题名称。
      */
-    private String docUrl;
+    private String subjectName;
 
     /**
-     * 文件类型（文件后缀名）。
+     * 课程类型。
      */
-    private String docType;
+    private String subjectType;
+
+    /**
+     * 教学过程。
+     */
+    private String teachingProcess;
+
+    /**
+     * 课程设计思路。
+     */
+    private String designIdea;
+
+    /**
+     * 个人反思与总结。
+     */
+    private String personalSummary;
+
+    /**
+     * 小组评价。
+     */
+    private String groupEvaluation;
+
+    /**
+     * 教案撰写日期。
+     */
+    private LocalDate startDate;
+
+    /**
+     * 上传的文件链接地址。
+     */
+    private String docLink;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o instanceof Document) {
-            Document other = (Document) o;
-            return Objects.equals(this.docId, other.docId);
+        if (o instanceof LessonPlan) {
+            LessonPlan other = (LessonPlan) o;
+            return Objects.equals(this.planId, other.planId);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.docId);
+        return Objects.hash(this.planId);
     }
 
 }

@@ -19,6 +19,7 @@ package cn.edu.tjnu.tutor.system.structure;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import cn.edu.tjnu.tutor.system.domain.meta.UserMeta;
 import cn.edu.tjnu.tutor.system.domain.view.UserVO;
+import cn.edu.tjnu.tutor.system.settings.MapstructSettings;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -28,7 +29,7 @@ import org.mapstruct.Mapping;
  * @author 王帅
  * @since 2.0
  */
-@Mapper(componentModel = "spring")
+@Mapper(config = MapstructSettings.class)
 public interface UserStruct {
 
     /**

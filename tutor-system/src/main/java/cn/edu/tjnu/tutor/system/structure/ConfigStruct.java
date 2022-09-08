@@ -18,6 +18,7 @@ package cn.edu.tjnu.tutor.system.structure;
 
 import cn.edu.tjnu.tutor.system.domain.entity.Config;
 import cn.edu.tjnu.tutor.system.domain.meta.ConfigMeta;
+import cn.edu.tjnu.tutor.system.settings.MapstructSettings;
 import org.mapstruct.Mapper;
 
 /**
@@ -26,7 +27,7 @@ import org.mapstruct.Mapper;
  * @author 王帅
  * @since 2.0
  */
-@Mapper(componentModel = "spring")
+@Mapper(config = MapstructSettings.class)
 public interface ConfigStruct {
 
     /**

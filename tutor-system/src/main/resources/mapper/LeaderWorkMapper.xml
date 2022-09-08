@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.LeaderWorkMapper">
+
+    <resultMap id="LeaderWorkResult" type="cn.edu.tjnu.tutor.system.domain.entity.LeaderWork">
+        <id property="workId" column="work_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="className" column="class_name"/>
+        <result property="studentAmount" column="student_amount"/>
+        <result property="baseInfo" column="base_info"/>
+        <result property="dailyWork" column="daily_work"/>
+        <result property="workPlan" column="work_plan"/>
+        <result property="educationPlan" column="education_plan"/>
+        <result property="classActivity" column="class_activity"/>
+        <result property="docLink" column="doc_link"/>
+        <result property="markSchool" column="mark_school"/>
+        <result property="markCollege" column="mark_college"/>
+    </resultMap>
+
+    <select id="selectScoreVO" resultType="cn.edu.tjnu.tutor.system.domain.view.ScoreVO">
+        select mark_school  as highSchool,
+               mark_college as university
+        from prac_leader_work
+        where user_id = #{userId};
+    </select>
+
+</mapper>

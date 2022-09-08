@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.LectureNoteMapper">
+
+    <resultMap id="LectureRecordResult" type="cn.edu.tjnu.tutor.system.domain.entity.LectureNote">
+        <id property="noteId" column="note_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="lectureContent" column="lecture_content"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="className" column="class_name"/>
+        <result property="lectureType" column="lecture_type"/>
+        <result property="teachingProcess" column="teaching_process"/>
+        <result property="experience" column="experience"/>
+        <result property="personalSummary" column="personal_summary"/>
+        <result property="groupEvaluation" column="group_evaluation"/>
+        <result property="startDate" column="start_date"/>
+        <result property="docLink" column="doc_link"/>
+    </resultMap>
+
+    <resultMap id="LectureRecordVoResult" type="cn.edu.tjnu.tutor.system.domain.view.LectureNoteVO">
+        <id property="noteId" column="note_id"/>
+        <result property="lectureContent" column="lecture_content"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="className" column="class_name"/>
+        <result property="lectureType" column="lecture_type"/>
+        <result property="teachingProcess" column="teaching_process"/>
+        <result property="experience" column="experience"/>
+        <result property="personalSummary" column="personal_summary"/>
+        <result property="groupEvaluation" column="group_evaluation"/>
+        <result property="startDate" column="start_date"/>
+        <result property="docLink" column="doc_link"/>
+    </resultMap>
+
+    <select id="selectPageVO" resultMap="LectureRecordVoResult">
+        select note_id,
+               lecture_content,
+               lecture_type,
+               teacher_name,
+               class_name,
+               teaching_process,
+               experience,
+               personal_summary,
+               group_evaluation,
+               start_date,
+               doc_link
+        from prac_lecture_note
+        where user_id = #{userId}
+    </select>
+
+</mapper>

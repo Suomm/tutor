@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.LessonPlanMapper">
+
+    <resultMap id="LessonPlanResult" type="cn.edu.tjnu.tutor.system.domain.entity.LessonPlan">
+        <id property="planId" column="plan_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="subjectName" column="subject_name"/>
+        <result property="subjectType" column="subject_type"/>
+        <result property="teachingProcess" column="teaching_process"/>
+        <result property="designIdea" column="design_idea"/>
+        <result property="personalSummary" column="personal_summary"/>
+        <result property="groupEvaluation" column="group_evaluation"/>
+        <result property="startDate" column="start_date"/>
+        <result property="docLink" column="doc_link"/>
+    </resultMap>
+
+    <resultMap id="LessonPlanVoResult" type="cn.edu.tjnu.tutor.system.domain.view.LessonPlanVO">
+        <id property="planId" column="plan_id"/>
+        <result property="subjectName" column="subject_name"/>
+        <result property="subjectType" column="subject_type"/>
+        <result property="teachingProcess" column="teaching_process"/>
+        <result property="designIdea" column="design_idea"/>
+        <result property="personalSummary" column="personal_summary"/>
+        <result property="groupEvaluation" column="group_evaluation"/>
+        <result property="startDate" column="start_date"/>
+        <result property="docLink" column="doc_link"/>
+    </resultMap>
+
+    <select id="selectPageVO" resultMap="LessonPlanVoResult">
+        select plan_id,
+               subject_name,
+               subject_type,
+               teaching_process,
+               design_idea,
+               personal_summary,
+               group_evaluation,
+               start_date,
+               doc_link
+        from prac_lesson_plan
+        where user_id = #{userId}
+    </select>
+
+</mapper>

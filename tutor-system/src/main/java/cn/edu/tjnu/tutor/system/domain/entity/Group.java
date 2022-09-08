@@ -48,6 +48,11 @@ public class Group extends BaseEntity {
     private Integer userId;
 
     /**
+     * 小组组长主键。
+     */
+    private Integer leaderId;
+
+    /**
      * 小组名称。
      */
     private String groupName;

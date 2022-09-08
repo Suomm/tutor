@@ -18,7 +18,9 @@ package cn.edu.tjnu.tutor.system.mapper;
 
 import cn.edu.tjnu.tutor.common.cache.MybatisRedisCache;
 import cn.edu.tjnu.tutor.system.domain.entity.Group;
+import cn.edu.tjnu.tutor.system.domain.view.GroupVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.CacheNamespace;
 
 /**
@@ -29,4 +31,24 @@ import org.apache.ibatis.annotations.CacheNamespace;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface GroupMapper extends BaseMapper<Group> {
+
+    /**
+     * 分页查询导师小组信息。
+     *
+     * @param <P>    分页对象类型
+     * @param userId 导师用户主键
+     * @param page   分页参数
+     * @return 分页对象
+     */
+    <P extends IPage<GroupVO>> P selectPageVO(Integer userId, P page);
+
+    /**
+     * 选择用户数量
+     *
+     * @param userId      用户id
+     * @param otherUserId 其他用户id
+     * @return {@link Long}
+     */
+    Long selectUserCount(Integer userId, Integer otherUserId);
+
 }

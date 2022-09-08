@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.TeachingStudyMapper">
+
+    <resultMap id="ResearchActivityResult" type="cn.edu.tjnu.tutor.system.domain.entity.TeachingStudy">
+        <id property="studyId" column="study_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="teachingProcess" column="teaching_process"/>
+        <result property="designIdea" column="design_idea"/>
+        <result property="personalSummary" column="personal_summary"/>
+        <result property="groupEvaluation" column="group_evaluation"/>
+        <result property="startDate" column="start_date"/>
+        <result property="docLink" column="doc_link"/>
+    </resultMap>
+
+    <resultMap id="ResearchActivityVoResult" type="cn.edu.tjnu.tutor.system.domain.view.TeachingStudyVO">
+        <id property="studyId" column="study_id"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="teachingProcess" column="teaching_process"/>
+        <result property="designIdea" column="design_idea"/>
+        <result property="personalSummary" column="personal_summary"/>
+        <result property="groupEvaluation" column="group_evaluation"/>
+        <result property="startDate" column="start_date"/>
+        <result property="docLink" column="doc_link"/>
+    </resultMap>
+
+    <select id="selectPageVO" resultMap="ResearchActivityVoResult">
+        select study_id,
+               content,
+               type,
+               teaching_process,
+               design_idea,
+               personal_summary,
+               group_evaluation,
+               start_date,
+               doc_link
+        from prac_teaching_study
+        where user_id = #{userId}
+    </select>
+
+</mapper>

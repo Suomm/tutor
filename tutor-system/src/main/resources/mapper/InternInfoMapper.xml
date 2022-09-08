@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tjnu.tutor.system.mapper.InternInfoMapper">
+
+    <resultMap id="InternInfoResult" type="cn.edu.tjnu.tutor.system.domain.entity.InternInfo">
+        <id property="infoId" column="info_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="type" column="type"/>
+        <result property="subject" column="subject"/>
+        <result property="schoolName" column="school_name"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="grade" column="grade"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="tkpfSchool" column="tkpf_school"/>
+        <result property="tkpfCollege" column="tkpf_college"/>
+        <result property="japfSchool" column="japf_school"/>
+        <result property="japfCollege" column="japf_college"/>
+        <result property="jypfSchool" column="jypf_school"/>
+        <result property="jypfCollege" column="jypf_college"/>
+        <result property="sdpfSchool" column="sdpf_school"/>
+        <result property="sdpfCollege" column="sdpf_college"/>
+        <result property="personalSummary" column="personal_summary"/>
+        <result property="groupEvaluation" column="group_evaluation"/>
+        <result property="sxpySchool" column="sxpy_school"/>
+        <result property="sxpyCollege" column="sxpy_college"/>
+    </resultMap>
+
+    <resultMap id="InternInfoVoResult" type="cn.edu.tjnu.tutor.system.domain.view.InternInfoVO">
+        <result property="userId" column="user_id"/>
+        <result property="type" column="type"/>
+        <result property="subject" column="subject"/>
+        <result property="schoolName" column="school_name"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="grade" column="grade"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+    </resultMap>
+
+    <select id="selectInternInfo" resultMap="InternInfoVoResult">
+        select type,
+               `subject`,
+               school_name,
+               teacher_name,
+               grade,
+               start_date,
+               end_date
+        from prac_intern_info
+        where user_id = #{userId}
+    </select>
+
+    <resultMap id="ReportVoResult" type="cn.edu.tjnu.tutor.system.domain.view.ReportVO">
+        <result property="tkpfSchool" column="tkpf_school"/>
+        <result property="tkpfCollege" column="tkpf_college"/>
+        <result property="japfSchool" column="japf_school"/>
+        <result property="japfCollege" column="japf_college"/>
+        <result property="jypfSchool" column="jypf_school"/>
+        <result property="jypfCollege" column="jypf_college"/>
+        <result property="sdpfSchool" column="sdpf_school"/>
+        <result property="sdpfCollege" column="sdpf_college"/>
+        <result property="bzrpfSchool" column="bzrpf_school"/>
+        <result property="bzrpfCollege" column="bzrpf_college"/>
+        <result property="groupScore" column="group_score"/>
+    </resultMap>
+
+    <select id="selectReportInfo" resultMap="ReportVoResult">
+        select i.tkpf_school,
+               i.tkpf_college,
+               i.japf_school,
+               i.japf_college,
+               i.jypf_school,
+               i.jypf_college,
+               i.sdpf_school,
+               i.sdpf_college,
+               i.group_score,
+               w.mark_school  as bzrpf_school,
+               w.mark_college as bzrpf_college
+        from prac_intern_info i
+                 left join prac_leader_work w on i.user_id = w.user_id
+        where i.user_id = #{userId}
+    </select>
+
+    <resultMap id="TeachingRecordScoreResult" type="cn.edu.tjnu.tutor.system.domain.view.ReportVO">
+        <result property="jxpfSchool" column="jxpf_school"/>
+        <result property="jxpfCollege" column="jxpf_college"/>
+    </resultMap>
+
+    <select id="selectTeachingRecordScore" resultMap="TeachingRecordScoreResult">
+        select AVG(mark_school)  as jxpf_school,
+               AVG(mark_college) as jxpf_college
+        from prac_teaching_record
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectScoreByType" resultType="cn.edu.tjnu.tutor.system.domain.view.ScoreVO">
+        select
+        <choose>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@TK">
+                tkpf_school as hightSchool, tkpf_college as university
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@JA">
+                japf_school as hightSchool, japf_college as university
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@JY">
+                jypf_school as hightSchool, jypf_college as university
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@SD">
+                sdpf_school as hightSchool, sdpf_college as university
+            </when>
+        </choose>
+        from prac_intern_info
+        where user_id = #{userId}
+    </select>
+
+    <update id="updateScoreByType">
+        update prac_intern_info set
+        <choose>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@TK">
+                tkpf_school = #{markDTO.highSchool}, tkpf_college = #{markDTO.university}
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@JA">
+                japf_school = #{markDTO.highSchool}, japf_college = #{markDTO.university}
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@JY">
+                jypf_school = #{markDTO.highSchool}, jypf_college = #{markDTO.university}
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@SD">
+                sdpf_school = #{markDTO.highSchool}, sdpf_college = #{markDTO.university}
+            </when>
+        </choose>
+        where user_id = #{userId}
+    </update>
+
+    <resultMap id="RemarkVoResult" type="cn.edu.tjnu.tutor.system.domain.view.RemarkVO">
+        <result property="highSchool" column="sxpy_school"/>
+        <result property="university" column="sxpy_college"/>
+    </resultMap>
+
+    <select id="selectRemarkVO" resultMap="RemarkVoResult">
+        select personal_summary,
+               group_evaluation,
+               sxpy_school,
+               sxpy_college
+        from prac_intern_info
+        where user_id = #{userId}
+    </select>
+
+    <resultMap id="GroupScoreVoResult" type="cn.edu.tjnu.tutor.system.domain.view.GroupScoreVO">
+        <result property="score" column="group_score"/>
+        <result property="remark" column="group_evaluation"/>
+    </resultMap>
+
+    <select id="selectGroupScoreVO" resultMap="GroupScoreVoResult">
+        select group_score, group_evaluation
+        from prac_intern_info
+        where user_id = #{userId}
+    </select>
+
+    <update id="updateCommentByType">
+        update prac_intern_info set
+        <choose>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@GR">
+                personal_summary = #{content}
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@ZX">
+                sxpy_school = #{content}
+            </when>
+            <when test="type == @cn.edu.tjnu.tutor.system.service.InternInfoService@GX">
+                sxpy_college = #{content}
+            </when>
+        </choose>
+        where user_id = #{userId}
+    </update>
+
+</mapper>

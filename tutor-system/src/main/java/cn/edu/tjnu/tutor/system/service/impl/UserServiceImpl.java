@@ -94,6 +94,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             register(user);
             loginUser = new LoginUser();
             loginUser.setUserId(user.getUserId());
+            loginUser.setUserName(user.getUserName());
             loginUser.setUserCode(user.getUserCode());
             loginUser.setCollegeId(user.getCollegeId());
         }
@@ -121,7 +122,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public ProfileVO getProfile(Integer userId) {
-        return baseMapper.selectUserInfo(userId);
+        return baseMapper.selectUserProfile(userId);
     }
 
     @Override
