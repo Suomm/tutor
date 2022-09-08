@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.plugin;
+package cn.edu.tjnu.tutor.common.plugin;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

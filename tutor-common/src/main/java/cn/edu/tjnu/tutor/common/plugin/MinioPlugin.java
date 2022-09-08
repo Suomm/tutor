@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.support.plugin;
+package cn.edu.tjnu.tutor.common.plugin;
 
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.text.CharSequenceUtil;
+import io.minio.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -27,8 +26,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.StandardCharsets;
+
 /**
- * Minio 模板类。
+ * Minio 插件。
  *
  * @author 王帅
  * @since 1.0
@@ -56,6 +57,13 @@ public class MinioPlugin implements InitializingBean {
         if (!found) {
             minioClient.makeBucket(MakeBucketArgs.builder()
                     .bucket(minioProperties.getBucket()).build());
+            ClassPathResource resource = new ClassPathResource("bucket-policy.json");
+            String config = String.format(resource.readStr(StandardCharsets.UTF_8),
+                    minioProperties.getBucket(), minioProperties.getBucket());
+            minioClient.setBucketPolicy(SetBucketPolicyArgs.builder()
+                    .bucket(minioProperties.getBucket())
+                    .config(config)
+                    .build());
         }
     }
 
@@ -66,18 +74,33 @@ public class MinioPlugin implements InitializingBean {
      * @param file     文件内容
      * @return 可以访问的地址
      */
-    @SuppressWarnings("unused")
     public String upload(String filename, MultipartFile file) {
         try {
             minioClient.putObject(PutObjectArgs.builder()
                     .stream(file.getInputStream(), file.getSize(), -1)
                     .bucket(minioProperties.getBucket())
                     .contentType(file.getContentType())
-                    .object(file.getOriginalFilename())
+                    .object(filename)
                     .build());
             return minioProperties.getBaseUrl().concat(filename);
         } catch (Exception e) {
-            return null;
+            return CharSequenceUtil.EMPTY;
+        }
+    }
+
+    /**
+     * 删除 Minio 中保存的文件。
+     *
+     * @param filename 文件名称
+     */
+    public void remove(String filename) {
+        try {
+            minioClient.removeObject(RemoveObjectArgs.builder()
+                    .bucket(minioProperties.getBucket())
+                    .object(filename)
+                    .build());
+        } catch (Exception e) {
+            // ignored.
         }
     }
 

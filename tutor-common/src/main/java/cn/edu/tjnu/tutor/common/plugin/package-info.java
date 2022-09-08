@@ -15,9 +15,9 @@
  */
 
 /**
- * 模块所需的自定义插件。
+ * 通用的自定义插件。
  *
  * @author 王帅
  * @since 2.0
  */
-package cn.edu.tjnu.tutor.support.plugin;
+package cn.edu.tjnu.tutor.common.plugin;
