@@ -16,13 +16,15 @@
 
 package cn.edu.tjnu.tutor.common.util;
 
+import cn.easyes.core.biz.PageInfo;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Page;
 
 import java.util.Collections;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 分页工具类。
@@ -55,12 +57,33 @@ public final class PageUtils {
      * @param <T>  数据类型
      * @return 分页数据
      */
-    public static <T> PageVO<T> convert(Page<T> page) {
+    public static <T> PageVO<T> convert(PageInfo<T> page) {
         PageVO<T> pageVO = new PageVO<>();
-        pageVO.setPageNum(page.getNumber());
-        pageVO.setPageSize(page.getSize());
-        pageVO.setTotal(page.getTotalElements());
-        pageVO.setContent(page.getContent());
+        pageVO.setPageNum(page.getPageNum());
+        pageVO.setPageSize(page.getPages());
+        pageVO.setTotal(page.getTotal());
+        pageVO.setContent(page.getList());
+        return pageVO;
+    }
+
+    /**
+     * 将 Elasticsearch 分页对象转换为 PageVO 对象。
+     *
+     * @param page 分页对象
+     * @param func 数据类型转换函数
+     * @param <E>  Entity 类型
+     * @param <V>  VO 类型
+     * @return 分页数据
+     */
+    public static <E, V> PageVO<V> convert(PageInfo<E> page, Function<E, V> func) {
+        PageVO<V> pageVO = new PageVO<>();
+        pageVO.setPageNum(page.getPageNum());
+        pageVO.setPageSize(page.getPages());
+        pageVO.setTotal(page.getTotal());
+        pageVO.setContent(page.getList()
+                .stream()
+                .map(func)
+                .collect(Collectors.toList()));
         return pageVO;
     }
 

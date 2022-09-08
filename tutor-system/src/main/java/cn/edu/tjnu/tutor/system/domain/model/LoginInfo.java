@@ -16,15 +16,15 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import cn.easyes.annotation.IndexField;
+import cn.easyes.annotation.IndexId;
+import cn.easyes.annotation.IndexName;
+import cn.easyes.common.enums.FieldType;
+import cn.edu.tjnu.tutor.common.constant.GlobalConst;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -36,59 +36,63 @@ import java.util.Objects;
  */
 @Data
 @Builder
-@Document(indexName = "login_info")
-public class LoginInfo extends BaseEntity {
+@IndexName
+public class LoginInfo implements Serializable {
 
     private static final long serialVersionUID = 1713865713115996871L;
 
     /**
      * 登陆信息主键。
      */
-    @Id
+    @IndexId
     private String infoId;
 
     /**
      * 用户编号。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String userCode;
 
     /**
      * 登录 IP 地址。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String ipaddr;
 
     /**
      * 用户状态。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String status;
 
     /**
      * 浏览器渲染引擎。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String engine;
 
     /**
      * 登录地点。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String address;
 
     /**
      * 浏览器类型。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String browser;
 
     /**
      * 操作系统。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String os;
 
     /**
      * 登录时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime loginTime;
 
     @Override

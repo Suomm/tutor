@@ -14,38 +14,30 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.constant;
+package cn.edu.tjnu.tutor.system.service.impl;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import cn.easyes.core.conditions.interfaces.BaseEsMapper;
+import cn.edu.tjnu.tutor.system.domain.model.Article;
+import cn.edu.tjnu.tutor.system.repository.ArticleRepository;
+import cn.edu.tjnu.tutor.system.service.ArticleService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 /**
- * 统一类型常量。
+ * 文章信息服务层实现。
  *
  * @author 王帅
  * @since 2.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class GlobalConst {
+@Service
+@RequiredArgsConstructor
+public class ArticleServiceImpl implements ArticleService {
 
-    /**
-     * GBK 字符集。
-     */
-    public static final String GBK = "GBK";
+    private final ArticleRepository articleRepository;
 
-    /**
-     * UTF-8 字符集。
-     */
-    public static final String UTF_8 = "UTF-8";
-
-    /**
-     * 空字符串数组。
-     */
-    public static final String[] EMPTY_STRING_ARRAY = {};
-
-    /**
-     * 日期时间格式化字符串。
-     */
-    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    @Override
+    public BaseEsMapper<Article> getBaseMapper() {
+        return articleRepository;
+    }
 
 }

@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.common.core.controller;
 
+import cn.easyes.core.biz.PageInfo;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
 import cn.edu.tjnu.tutor.common.core.domain.ExcelResult;
 import cn.edu.tjnu.tutor.common.core.domain.model.LoginUser;
@@ -24,9 +25,9 @@ import cn.edu.tjnu.tutor.common.enums.ExceptionType;
 import cn.edu.tjnu.tutor.common.util.PageUtils;
 import cn.edu.tjnu.tutor.common.util.SecurityUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springframework.data.domain.Page;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 /**
  * 基本控制器。
@@ -39,7 +40,7 @@ public abstract class BaseController {
     /**
      * 返回失败信息。
      */
-    protected AjaxResult<Void> error(ExceptionType exceptionType, Object... args) {
+    protected <T> AjaxResult<T> error(ExceptionType exceptionType, Object... args) {
         return AjaxResult.error(exceptionType.getMessage(args));
     }
 
@@ -53,8 +54,15 @@ public abstract class BaseController {
     /**
      * 返回分页成功数据。
      */
-    protected <T> AjaxResult<PageVO<T>> pageSuccess(Page<T> page) {
+    protected <T> AjaxResult<PageVO<T>> pageSuccess(PageInfo<T> page) {
         return AjaxResult.success(PageUtils.convert(page));
+    }
+
+    /**
+     * 返回分页成功数据。
+     */
+    protected <E, V> AjaxResult<PageVO<V>> pageSuccess(PageInfo<E> page, Function<E, V> func) {
+        return AjaxResult.success(PageUtils.convert(page, func));
     }
 
     /**

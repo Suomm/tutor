@@ -16,14 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.service;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Template;
-import com.baomidou.mybatisplus.extension.service.IService;
+import cn.edu.tjnu.tutor.common.core.service.ElasticSearchService;
+import cn.edu.tjnu.tutor.system.domain.model.Problem;
 
 /**
- * （教育实践）文档拆分之后的模板信息服务层。
+ * 问题信息服务层。
  *
  * @author 王帅
  * @since 2.0
  */
-public interface TemplateService extends IService<Template> {
+public interface ProblemService extends ElasticSearchService<Problem> {
 }

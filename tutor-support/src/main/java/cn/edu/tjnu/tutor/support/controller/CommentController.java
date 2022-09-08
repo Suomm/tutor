@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.support.controller;
 
+import cn.easyes.core.conditions.LambdaEsQueryWrapper;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
@@ -23,7 +24,7 @@ import cn.edu.tjnu.tutor.common.util.TreeUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Comment;
 import cn.edu.tjnu.tutor.system.domain.view.CommentVO;
-import cn.edu.tjnu.tutor.system.repository.CommentRepository;
+import cn.edu.tjnu.tutor.system.service.CommentService;
 import cn.edu.tjnu.tutor.system.structure.CommentStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -48,7 +49,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
 public class CommentController extends BaseController {
 
     private final CommentStruct commentStruct;
-    private final CommentRepository commentRepository;
+    private final CommentService commentService;
 
     /**
      * 查询文章对应的评论信息。
@@ -58,7 +59,9 @@ public class CommentController extends BaseController {
      */
     @GetMapping("list/{articleId}")
     public AjaxResult<List<CommentVO>> list(@PathVariable Integer articleId) {
-        return success(TreeUtils.build(commentRepository.findAllByArticleId(articleId)
+        LambdaEsQueryWrapper<Comment> wrapper = commentService.lambdaQuery()
+                .eq(Comment::getArticleId, articleId);
+        return success(TreeUtils.build(commentService.selectList(wrapper)
                 .stream()
                 .map(commentStruct::toVO)
                 .collect(Collectors.toList())));
@@ -73,7 +76,7 @@ public class CommentController extends BaseController {
     @PostMapping("save")
     @Log(category = COMMENT, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Comment comment) {
-        return toResult(commentRepository.save(comment).getCommentId() != null);
+        return toResult(commentService.save(comment));
     }
 
     /**
@@ -85,8 +88,7 @@ public class CommentController extends BaseController {
     @DeleteMapping("remove/{commentId}")
     @Log(category = COMMENT, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable String commentId) {
-        commentRepository.deleteById(commentId);
-        return AjaxResult.SUCCESS;
+        return toResult(commentService.deleteById(commentId));
     }
 
 }

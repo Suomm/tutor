@@ -14,38 +14,38 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.constant;
+package cn.edu.tjnu.tutor.system.domain.view;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import cn.edu.tjnu.tutor.system.domain.model.Activity;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * 统一类型常量。
+ * 活动记录信息。
  *
  * @author 王帅
  * @since 2.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class GlobalConst {
+@Data
+public class RecordVO implements Serializable {
+
+    private static final long serialVersionUID = -9204343857274396706L;
 
     /**
-     * GBK 字符集。
+     * 活动标题。
+     *
+     * @mock 这是第一个活动
+     * @see Activity#getTitle()
      */
-    public static final String GBK = "GBK";
+    private String activityTitle;
 
     /**
-     * UTF-8 字符集。
+     * 活动完成的时间。
+     *
+     * @mock 2022-09-08
      */
-    public static final String UTF_8 = "UTF-8";
-
-    /**
-     * 空字符串数组。
-     */
-    public static final String[] EMPTY_STRING_ARRAY = {};
-
-    /**
-     * 日期时间格式化字符串。
-     */
-    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private LocalDateTime completeTime;
 
 }

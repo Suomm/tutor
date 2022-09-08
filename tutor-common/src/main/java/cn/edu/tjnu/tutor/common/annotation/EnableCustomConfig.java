@@ -16,10 +16,10 @@
 
 package cn.edu.tjnu.tutor.common.annotation;
 
+import cn.easyes.starter.register.EsMapperScan;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.lang.annotation.*;
@@ -38,6 +38,6 @@ import java.lang.annotation.*;
 @ComponentScan("cn.edu.tjnu.tutor")
 @EnableAspectJAutoProxy(exposeProxy = true)
 @MapperScan("cn.edu.tjnu.tutor.system.mapper")
-@EnableElasticsearchRepositories("cn.edu.tjnu.tutor.system.repository")
+@EsMapperScan("cn.edu.tjnu.tutor.system.repository")
 public @interface EnableCustomConfig {
 }

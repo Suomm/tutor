@@ -16,10 +16,8 @@
 
 package cn.edu.tjnu.tutor.system.repository;
 
+import cn.easyes.core.conditions.interfaces.BaseEsMapper;
 import cn.edu.tjnu.tutor.system.domain.model.Comment;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-
-import java.util.List;
 
 /**
  * 文章评论信息数据层。
@@ -27,14 +25,5 @@ import java.util.List;
  * @author 王帅
  * @since 2.0
  */
-public interface CommentRepository extends ElasticsearchRepository<Comment, String> {
-
-    /**
-     * 根据文章主键查询对应的评论信息。
-     *
-     * @param articleId 文章主键
-     * @return 文章的所有评论信息
-     */
-    List<Comment> findAllByArticleId(Integer articleId);
-
+public interface CommentRepository extends BaseEsMapper<Comment> {
 }

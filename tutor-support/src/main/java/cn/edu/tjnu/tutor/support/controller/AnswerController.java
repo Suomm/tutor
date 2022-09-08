@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.support.controller;
 
+import cn.easyes.core.conditions.LambdaEsQueryWrapper;
 import cn.edu.tjnu.tutor.common.annotation.Log;
 import cn.edu.tjnu.tutor.common.core.controller.BaseController;
 import cn.edu.tjnu.tutor.common.core.domain.AjaxResult;
@@ -23,7 +24,7 @@ import cn.edu.tjnu.tutor.common.util.TreeUtils;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Answer;
 import cn.edu.tjnu.tutor.system.domain.view.AnswerVO;
-import cn.edu.tjnu.tutor.system.repository.AnswerRepository;
+import cn.edu.tjnu.tutor.system.service.AnswerService;
 import cn.edu.tjnu.tutor.system.structure.AnswerStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -48,7 +49,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
 public class AnswerController extends BaseController {
 
     private final AnswerStruct answerStruct;
-    private final AnswerRepository answerRepository;
+    private final AnswerService answerService;
 
     /**
      * 查询问题对应的答复信息。
@@ -58,7 +59,9 @@ public class AnswerController extends BaseController {
      */
     @GetMapping("list/{problemId}")
     public AjaxResult<List<AnswerVO>> list(@PathVariable Integer problemId) {
-        return success(TreeUtils.build(answerRepository.findAllByProblemId(problemId)
+        LambdaEsQueryWrapper<Answer> wrapper = answerService.lambdaQuery()
+                .eq(Answer::getProblemId, problemId);
+        return success(TreeUtils.build(answerService.selectList(wrapper)
                 .stream()
                 .map(answerStruct::toVO)
                 .collect(Collectors.toList())));
@@ -73,7 +76,7 @@ public class AnswerController extends BaseController {
     @PostMapping("save")
     @Log(category = ANSWER, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Answer answer) {
-        return toResult(answerRepository.save(answer).getAnswerId() != null);
+        return toResult(answerService.save(answer));
     }
 
     /**
@@ -85,8 +88,7 @@ public class AnswerController extends BaseController {
     @DeleteMapping("remove/{commentId}")
     @Log(category = ANSWER, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable String commentId) {
-        answerRepository.deleteById(commentId);
-        return AjaxResult.SUCCESS;
+        return toResult(answerService.deleteById(commentId));
     }
 
 }

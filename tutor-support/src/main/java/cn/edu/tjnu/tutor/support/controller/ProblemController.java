@@ -23,7 +23,7 @@ import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Problem;
-import cn.edu.tjnu.tutor.system.repository.ProblemRepository;
+import cn.edu.tjnu.tutor.system.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +43,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
 @RequestMapping("/problem")
 public class ProblemController extends BaseController {
 
-    private final ProblemRepository problemRepository;
+    private final ProblemService problemService;
 
     /**
      * 查询问题信息。
@@ -51,20 +51,9 @@ public class ProblemController extends BaseController {
      * @param pageQuery 分页参数
      * @return 分页对象
      */
-    @GetMapping("list}")
+    @GetMapping("list")
     public AjaxResult<PageVO<Problem>> list(@Validated PageQuery pageQuery) {
-        return pageSuccess(problemRepository.findAll(pageQuery.pageable()));
-    }
-
-    /**
-     * 查询问题详细信息。
-     *
-     * @param problemId 问题主键|1
-     * @return 问题信息详情
-     */
-    @GetMapping("getInfo/{problemId}")
-    public AjaxResult<Problem> getInfo(@PathVariable String problemId) {
-        return success(problemRepository.findById(problemId).orElse(null));
+        return pageSuccess(problemService.page(null, pageQuery));
     }
 
     /**
@@ -76,7 +65,7 @@ public class ProblemController extends BaseController {
     @PostMapping("save")
     @Log(category = PROBLEM, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Problem problem) {
-        return toResult(problemRepository.save(problem).getProblemId() != null);
+        return toResult(problemService.save(problem));
     }
 
     /**
@@ -88,8 +77,7 @@ public class ProblemController extends BaseController {
     @DeleteMapping("remove/{problemId}")
     @Log(category = PROBLEM, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable String problemId) {
-        problemRepository.deleteById(problemId);
-        return AjaxResult.SUCCESS;
+        return toResult(problemService.deleteById(problemId));
     }
 
 }

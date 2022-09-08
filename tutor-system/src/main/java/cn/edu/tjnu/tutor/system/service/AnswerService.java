@@ -14,38 +14,16 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.common.constant;
+package cn.edu.tjnu.tutor.system.service;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import cn.edu.tjnu.tutor.common.core.service.ElasticSearchService;
+import cn.edu.tjnu.tutor.system.domain.model.Answer;
 
 /**
- * 统一类型常量。
+ * 问题答复信息服务层。
  *
  * @author 王帅
  * @since 2.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class GlobalConst {
-
-    /**
-     * GBK 字符集。
-     */
-    public static final String GBK = "GBK";
-
-    /**
-     * UTF-8 字符集。
-     */
-    public static final String UTF_8 = "UTF-8";
-
-    /**
-     * 空字符串数组。
-     */
-    public static final String[] EMPTY_STRING_ARRAY = {};
-
-    /**
-     * 日期时间格式化字符串。
-     */
-    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
+public interface AnswerService extends ElasticSearchService<Answer> {
 }

@@ -16,15 +16,16 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import cn.easyes.annotation.IndexField;
+import cn.easyes.annotation.IndexId;
+import cn.easyes.annotation.IndexName;
+import cn.easyes.common.constants.Analyzer;
+import cn.easyes.common.enums.FieldType;
+import cn.edu.tjnu.tutor.common.constant.GlobalConst;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -35,15 +36,15 @@ import java.util.Objects;
  * @since 2.0
  */
 @Data
-@Document(indexName = "comment")
-public class Comment extends BaseEntity {
+@IndexName
+public class Comment implements Serializable {
 
     private static final long serialVersionUID = -1473775313525466489L;
 
     /**
      * 评论主键。
      */
-    @Id
+    @IndexId
     private String commentId;
 
     /**
@@ -58,7 +59,7 @@ public class Comment extends BaseEntity {
      *
      * @see User#getUserName()
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String reviewer;
 
     /**
@@ -66,18 +67,19 @@ public class Comment extends BaseEntity {
      *
      * @see #commentId
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private Integer replyId;
 
     /**
      * 评论内容。
      */
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @IndexField(fieldType = FieldType.TEXT, analyzer = Analyzer.IK_SMART, searchAnalyzer = Analyzer.IK_MAX_WORD)
     private String content;
 
     /**
      * 创建时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime createTime;
 
     @Override

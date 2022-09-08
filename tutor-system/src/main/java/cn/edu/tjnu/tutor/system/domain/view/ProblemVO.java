@@ -14,51 +14,64 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.domain.extra;
+package cn.edu.tjnu.tutor.system.domain.view;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * （学生）用户与生成的（教育实践）文档关联。
+ * 问题信息。
  *
  * @author 王帅
- * @since 2.0
+ * @since 1.0
  */
 @Data
-@TableName("gen_user_doc")
-public class UserDoc implements Serializable {
+public class ProblemVO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 用户主键。
-     */
-    @TableId
-    private Integer userId;
+    private static final long serialVersionUID = 7480166029983890431L;
 
     /**
-     * 文档主键。
+     * 提问者姓名。
+     *
+     * @mock 王帅
      */
-    private Integer docId;
+    private String questioner;
 
     /**
-     * 生成的文档URL。
+     * 发布问题者所属学院名称。
+     *
+     * @mock 化学学院
      */
-    private String docUrl;
+    private String collegeName;
+
+    /**
+     * 问题标题。
+     *
+     * @mock 这是第一个问题
+     */
+    private String title;
+
+    /**
+     * 详细内容。
+     *
+     * @mock 问题的详细信息描述
+     */
+    private String content;
 
     /**
      * 创建时间。
+     *
+     * @mock 2020-10-28
      */
     private LocalDateTime createTime;
 
     /**
-     * 更新时间。
+     * 当前状态（0 未解决，1 线上解决，2 线下解决）。
+     *
+     * @mock 0
      */
-    private LocalDateTime updateTime;
+    private Integer status;
 
 }

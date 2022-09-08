@@ -16,15 +16,15 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import cn.easyes.annotation.IndexField;
+import cn.easyes.annotation.IndexId;
+import cn.easyes.annotation.IndexName;
+import cn.easyes.common.enums.FieldType;
+import cn.edu.tjnu.tutor.common.constant.GlobalConst;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -36,82 +36,87 @@ import java.util.Objects;
  */
 @Data
 @Builder
-@Document(indexName = "oper_log")
-public class OperLog extends BaseEntity {
+@IndexName
+public class OperLog implements Serializable {
 
     private static final long serialVersionUID = -3652454157461927553L;
 
     /**
      * 操作日志主键。
      */
-    @Id
+    @IndexId
     private String operId;
 
     /**
      * 用户编号。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String userCode;
 
     /**
      * 操作类别。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String category;
 
     /**
      * 请求 IP 地址。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String operIp;
 
     /**
      * 请求路径。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String operUrl;
 
     /**
      * 操作类型。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String operType;
 
     /**
      * 请求参数。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String operParam;
 
     /**
      * 操作状态。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String operStatus;
 
     /**
      * 操作方法。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String method;
 
     /**
      * 请求方法。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String httpMethod;
 
     /**
      * 错误信息。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String errorMsg;
 
     /**
      * 返回结果。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String jsonResult;
 
     /**
      * 操作时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime operTime;
 
     @Override

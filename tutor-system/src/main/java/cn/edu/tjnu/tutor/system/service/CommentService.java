@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.service.impl;
+package cn.edu.tjnu.tutor.system.service;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Template;
-import cn.edu.tjnu.tutor.system.mapper.TemplateMapper;
-import cn.edu.tjnu.tutor.system.service.TemplateService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+import cn.edu.tjnu.tutor.common.core.service.ElasticSearchService;
+import cn.edu.tjnu.tutor.system.domain.model.Comment;
 
 /**
- * （教育实践）文档拆分之后的模板信息服务层实现。
+ * 文章评论信息服务层。
  *
  * @author 王帅
  * @since 2.0
  */
-@Service
-public class TemplateServiceImpl extends ServiceImpl<TemplateMapper, Template> implements TemplateService {
+public interface CommentService extends ElasticSearchService<Comment> {
 }

@@ -16,18 +16,28 @@
 
 package cn.edu.tjnu.tutor.system.service.impl;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Document;
-import cn.edu.tjnu.tutor.system.mapper.DocumentMapper;
-import cn.edu.tjnu.tutor.system.service.DocumentService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import cn.easyes.core.conditions.interfaces.BaseEsMapper;
+import cn.edu.tjnu.tutor.system.domain.model.Problem;
+import cn.edu.tjnu.tutor.system.repository.ProblemRepository;
+import cn.edu.tjnu.tutor.system.service.ProblemService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * （教育实践）文档信息服务层实现。
+ * 问题信息服务层实现。
  *
  * @author 王帅
  * @since 2.0
  */
 @Service
-public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> implements DocumentService {
+@RequiredArgsConstructor
+public class ProblemServiceImpl implements ProblemService {
+
+    private final ProblemRepository problemRepository;
+
+    @Override
+    public BaseEsMapper<Problem> getBaseMapper() {
+        return problemRepository;
+    }
+
 }

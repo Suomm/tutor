@@ -16,15 +16,16 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import cn.easyes.annotation.IndexField;
+import cn.easyes.annotation.IndexId;
+import cn.easyes.annotation.IndexName;
+import cn.easyes.common.constants.Analyzer;
+import cn.easyes.common.enums.FieldType;
+import cn.edu.tjnu.tutor.common.constant.GlobalConst;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -35,15 +36,15 @@ import java.util.Objects;
  * @since 1.0
  */
 @Data
-@Document(indexName = "article")
-public class Article extends BaseEntity {
+@IndexName
+public class Article implements Serializable {
 
     private static final long serialVersionUID = 3195804457014661912L;
 
     /**
      * 文章主键。
      */
-    @Id
+    @IndexId
     private String articleId;
 
     /**
@@ -58,48 +59,49 @@ public class Article extends BaseEntity {
      *
      * @see User#getUserName()
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String author;
 
     /**
      * 发布文章者所属学院名称。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String collegeName;
 
     /**
      * 文章标题。
      */
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @IndexField(fieldType = FieldType.TEXT, analyzer = Analyzer.IK_SMART, searchAnalyzer = Analyzer.IK_MAX_WORD)
     private String title;
 
     /**
      * 文章封面图片。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String cover;
 
     /**
      * 文章介绍（引言）。
      */
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @IndexField(fieldType = FieldType.TEXT, analyzer = Analyzer.IK_SMART, searchAnalyzer = Analyzer.IK_MAX_WORD)
     private String introduce;
 
     /**
      * 文章内容。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String content;
 
     /**
      * 发布时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime updateTime;
 
     @Override

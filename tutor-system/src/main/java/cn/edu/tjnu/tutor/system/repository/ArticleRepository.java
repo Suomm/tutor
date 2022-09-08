@@ -16,8 +16,8 @@
 
 package cn.edu.tjnu.tutor.system.repository;
 
+import cn.easyes.core.conditions.interfaces.BaseEsMapper;
 import cn.edu.tjnu.tutor.system.domain.model.Article;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
  * 文章信息数据层。
@@ -25,5 +25,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author 王帅
  * @since 2.0
  */
-public interface ArticleRepository extends ElasticsearchRepository<Article, String> {
+public interface ArticleRepository extends BaseEsMapper<Article> {
 }

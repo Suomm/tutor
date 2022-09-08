@@ -60,7 +60,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
         String ip = IpUtils.getClientIp(request);
         UserAgent ua = UserAgentUtil.parse(request.getHeader(USER_AGENT));
         // 将登陆/注销状态存入 ES 中方便数据分析
-        repository.save(LoginInfo.builder()
+        repository.insert(LoginInfo.builder()
                 .ipaddr(ip)
                 .status(status.name())
                 .loginTime(LocalDateTime.now())

@@ -39,9 +39,19 @@ public final class LoginUser implements UserDetails {
     private Integer userId;
 
     /**
+     * 用户名称。
+     */
+    private String userName;
+
+    /**
      * 所属学院主键。
      */
     private Integer collegeId;
+
+    /**
+     * 所属学院名称。
+     */
+    private String collegeName;
 
     /**
      * 用户编号（学号，工号）。

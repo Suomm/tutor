@@ -23,7 +23,7 @@ import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 import cn.edu.tjnu.tutor.common.core.domain.view.PageVO;
 import cn.edu.tjnu.tutor.common.validation.groups.Insert;
 import cn.edu.tjnu.tutor.system.domain.model.Article;
-import cn.edu.tjnu.tutor.system.repository.ArticleRepository;
+import cn.edu.tjnu.tutor.system.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +43,7 @@ import static cn.edu.tjnu.tutor.common.enums.OperType.INSERT;
 @RequestMapping("/article")
 public class ArticleController extends BaseController {
 
-    private final ArticleRepository articleRepository;
+    private final ArticleService articleService;
 
     /**
      * 查询文章信息。
@@ -53,18 +53,7 @@ public class ArticleController extends BaseController {
      */
     @GetMapping("list")
     public AjaxResult<PageVO<Article>> list(@Validated PageQuery pageQuery) {
-        return pageSuccess(articleRepository.findAll(pageQuery.pageable()));
-    }
-
-    /**
-     * 查询文章详细信息。
-     *
-     * @param articleId 文章主键|1
-     * @return 文章信息详情
-     */
-    @GetMapping("getInfo/{articleId}")
-    public AjaxResult<Article> getInfo(@PathVariable String articleId) {
-        return success(articleRepository.findById(articleId).orElse(null));
+        return pageSuccess(articleService.page(null, pageQuery));
     }
 
     /**
@@ -76,7 +65,7 @@ public class ArticleController extends BaseController {
     @PostMapping("save")
     @Log(category = ARTICLE, operType = INSERT)
     public AjaxResult<Void> save(@RequestBody @Validated(Insert.class) Article article) {
-        return toResult(articleRepository.save(article).getArticleId() != null);
+        return toResult(articleService.save(article));
     }
 
     /**
@@ -88,8 +77,7 @@ public class ArticleController extends BaseController {
     @DeleteMapping("remove/{articleId}")
     @Log(category = ARTICLE, operType = DELETE)
     public AjaxResult<Void> remove(@PathVariable String articleId) {
-        articleRepository.deleteById(articleId);
-        return AjaxResult.SUCCESS;
+        return toResult(articleService.deleteById(articleId));
     }
 
 }

@@ -16,10 +16,8 @@
 
 package cn.edu.tjnu.tutor.system.repository;
 
+import cn.easyes.core.conditions.interfaces.BaseEsMapper;
 import cn.edu.tjnu.tutor.system.domain.model.Record;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
  * 活动记录信息数据层。
@@ -27,15 +25,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author 王帅
  * @since 2.0
  */
-public interface RecordRepository extends ElasticsearchRepository<Record, String> {
-
-    /**
-     * 根据用户主键查询参加的的活动。
-     *
-     * @param userId   用户主键
-     * @param pageable 分页对象
-     * @return 所有关联活动
-     */
-    Page<Record> findAllByUserId(Integer userId, Pageable pageable);
-
+public interface RecordRepository extends BaseEsMapper<Record> {
 }

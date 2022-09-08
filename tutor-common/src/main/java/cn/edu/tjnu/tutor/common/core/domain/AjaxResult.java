@@ -86,11 +86,11 @@ public final class AjaxResult<T> implements Serializable {
     /**
      * 返回错误消息。
      *
-     * @param msg 返回内容
+     * @param message 返回内容
      * @return 错误消息
      */
-    public static AjaxResult<Void> error(String msg) {
-        return new AjaxResult<>(DEFAULT_ERROR_CODE, msg, null);
+    public static <T> AjaxResult<T> error(String message) {
+        return new AjaxResult<>(DEFAULT_ERROR_CODE, message, null);
     }
 
 }

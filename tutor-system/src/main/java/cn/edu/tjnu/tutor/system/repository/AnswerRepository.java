@@ -16,10 +16,8 @@
 
 package cn.edu.tjnu.tutor.system.repository;
 
+import cn.easyes.core.conditions.interfaces.BaseEsMapper;
 import cn.edu.tjnu.tutor.system.domain.model.Answer;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-
-import java.util.List;
 
 /**
  * 问题答复信息数据层。
@@ -27,14 +25,5 @@ import java.util.List;
  * @author 王帅
  * @since 2.0
  */
-public interface AnswerRepository extends ElasticsearchRepository<Answer, String> {
-
-    /**
-     * 根据问题主键查询对应的答复信息。
-     *
-     * @param problemId 问题主键
-     * @return 问题的所有答复信息
-     */
-    List<Answer> findAllByProblemId(Integer problemId);
-
+public interface AnswerRepository extends BaseEsMapper<Answer> {
 }

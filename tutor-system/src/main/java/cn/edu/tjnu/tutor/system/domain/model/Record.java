@@ -16,14 +16,14 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import cn.easyes.annotation.IndexField;
+import cn.easyes.annotation.IndexId;
+import cn.easyes.annotation.IndexName;
+import cn.easyes.common.enums.FieldType;
+import cn.edu.tjnu.tutor.common.constant.GlobalConst;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -34,39 +34,41 @@ import java.util.Objects;
  * @since 2.0
  */
 @Data
-@Document(indexName = "record")
-public class Record extends BaseEntity {
+@IndexName
+public class Record implements Serializable {
 
     private static final long serialVersionUID = -2836638793719121984L;
 
     /**
      * 活动记录主键。
      */
-    @Id
+    @IndexId
     private String recordId;
 
     /**
      * 完成用户的主键。
      */
+    @IndexField(fieldType = FieldType.INTEGER)
     private Integer userId;
 
     /**
      * 完成活动的主键。
      */
-    private Integer activityId;
+    @IndexField(fieldType = FieldType.KEYWORD)
+    private String activityId;
 
     /**
      * 活动标题。
      *
      * @see Activity#getTitle()
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String activityTitle;
 
     /**
      * 活动完成的时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime completeTime;
 
     @Override

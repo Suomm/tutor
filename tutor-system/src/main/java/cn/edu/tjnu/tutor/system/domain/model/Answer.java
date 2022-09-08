@@ -16,15 +16,16 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import cn.easyes.annotation.IndexField;
+import cn.easyes.annotation.IndexId;
+import cn.easyes.annotation.IndexName;
+import cn.easyes.common.constants.Analyzer;
+import cn.easyes.common.enums.FieldType;
+import cn.edu.tjnu.tutor.common.constant.GlobalConst;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -35,15 +36,15 @@ import java.util.Objects;
  * @since 2.0
  */
 @Data
-@Document(indexName = "answer")
-public class Answer extends BaseEntity {
+@IndexName
+public class Answer implements Serializable {
 
     private static final long serialVersionUID = -5407130919934194838L;
 
     /**
      * 答复主键。
      */
-    @Id
+    @IndexId
     private String answerId;
 
     /**
@@ -58,7 +59,7 @@ public class Answer extends BaseEntity {
      *
      * @see User#getUserName()
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String reviewer;
 
     /**
@@ -66,12 +67,13 @@ public class Answer extends BaseEntity {
      *
      * @see #answerId
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private Integer replyId;
 
     /**
      * 答复内容。
      */
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @IndexField(fieldType = FieldType.TEXT, analyzer = Analyzer.IK_SMART, searchAnalyzer = Analyzer.IK_MAX_WORD)
     private String content;
 
     /**
@@ -82,7 +84,7 @@ public class Answer extends BaseEntity {
     /**
      * 创建时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime createTime;
 
     @Override

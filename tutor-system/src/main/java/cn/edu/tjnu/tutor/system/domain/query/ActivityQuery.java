@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package cn.edu.tjnu.tutor.system.service;
+package cn.edu.tjnu.tutor.system.domain.query;
 
-import cn.edu.tjnu.tutor.system.domain.entity.Document;
-import com.baomidou.mybatisplus.extension.service.IService;
+import cn.edu.tjnu.tutor.common.core.domain.query.PageQuery;
 
 /**
- * （教育实践）文档信息服务层。
+ * 活动信息查询对象。
  *
  * @author 王帅
  * @since 2.0
  */
-public interface DocumentService extends IService<Document> {
+public class ActivityQuery extends PageQuery {
+
+    private static final long serialVersionUID = 4132889071767952695L;
+
 }

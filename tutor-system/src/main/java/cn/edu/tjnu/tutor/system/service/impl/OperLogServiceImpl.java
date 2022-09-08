@@ -78,7 +78,7 @@ public class OperLogServiceImpl implements OperLogService {
             operLog.setJsonResult(JSONUtil.toJsonStr(jsonResult));
         }
         // 将日志存入 ES 中方便数据分析
-        repository.save(operLog);
+        repository.insert(operLog);
     }
 
 }

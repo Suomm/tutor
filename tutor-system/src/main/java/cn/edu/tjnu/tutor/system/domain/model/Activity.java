@@ -16,16 +16,18 @@
 
 package cn.edu.tjnu.tutor.system.domain.model;
 
-import cn.edu.tjnu.tutor.common.core.domain.BaseEntity;
+import cn.easyes.annotation.IndexField;
+import cn.easyes.annotation.IndexId;
+import cn.easyes.annotation.IndexName;
+import cn.easyes.common.constants.Analyzer;
+import cn.easyes.common.enums.FieldType;
+import cn.edu.tjnu.tutor.common.constant.GlobalConst;
 import cn.edu.tjnu.tutor.system.domain.entity.User;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -35,15 +37,15 @@ import java.util.Objects;
  * @since 1.0
  */
 @Data
-@Document(indexName = "activity")
-public class Activity extends BaseEntity {
+@IndexName
+public class Activity implements Serializable {
 
     private static final long serialVersionUID = 7232391888281110320L;
 
     /**
      * 活动主键。
      */
-    @Id
+    @IndexId
     private String activityId;
 
     /**
@@ -58,36 +60,60 @@ public class Activity extends BaseEntity {
      *
      * @see User#getUserName()
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String publisher;
 
     /**
      * 活动发布者所属学院名称。
      */
-    @Field(type = FieldType.Keyword)
+    @IndexField(fieldType = FieldType.KEYWORD)
     private String collegeName;
 
     /**
      * 活动标题。
      */
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @IndexField(fieldType = FieldType.TEXT, analyzer = Analyzer.IK_SMART, searchAnalyzer = Analyzer.IK_MAX_WORD)
     private String title;
 
     /**
      * 活动详细信息。
      */
+    @IndexField(fieldType = FieldType.TEXT)
     private String content;
 
     /**
-     * 发布时间。
+     * 活动发布时间。
      */
-    @Field(format = DateFormat.date_time_no_millis)
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
     private LocalDateTime createTime;
 
     /**
-     * 活动范围（0 班级/小组内可见，1 公开）。
+     * 活动开始时间。
      */
-    private Integer scope;
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
+    private LocalDateTime startTime;
+
+    /**
+     * 活动结束时间。
+     */
+    @IndexField(fieldType = FieldType.DATE, dateFormat = GlobalConst.DATE_TIME_FORMAT)
+    private LocalDateTime endTime;
+
+    /**
+     * 活动所在小组主键（0 表示公开的活动）。
+     */
+    private Integer groupId;
+
+    /**
+     * 活动所在小组名称。
+     */
+    @IndexField(fieldType = FieldType.TEXT, analyzer = Analyzer.IK_SMART, searchAnalyzer = Analyzer.IK_MAX_WORD)
+    private String groupName;
+
+    /**
+     * 相关文件链接。
+     */
+    private List<String> fileLinks;
 
     @Override
     public boolean equals(Object o) {

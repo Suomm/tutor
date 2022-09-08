@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
-create database tutor;
-create database xxl_job;
-create database nacos_config;
+package cn.edu.tjnu.tutor.system.service;
+
+import cn.edu.tjnu.tutor.common.core.service.ElasticSearchService;
+import cn.edu.tjnu.tutor.system.domain.model.Record;
+
+/**
+ * 活动记录信息服务层。
+ *
+ * @author 王帅
+ * @since 2.0
+ */
+public interface RecordService extends ElasticSearchService<Record> {
+}
