@@ -26,7 +26,7 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>参数配置元数据信息，用于后台操作数据。
+ * <p>参数配置元数据信息。
  *
  * <p>插入参数配置信息时：
  * <blockquote><pre>

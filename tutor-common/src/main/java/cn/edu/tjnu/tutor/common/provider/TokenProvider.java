@@ -107,7 +107,7 @@ public class TokenProvider {
         // 刷新存储令牌
         refreshToken(loginUser);
         // 生成 JWT 令牌
-        return JWTUtil.createToken(Collections.singletonMap(PREFIX_LOGIN_USER, loginUser.getUserCode()), key);
+        return JWTUtil.createToken(Collections.singletonMap(PREFIX_LOGIN_USER, loginUser.getUuid()), key);
     }
 
     /**
@@ -146,7 +146,9 @@ public class TokenProvider {
      * @return 用户唯一标识
      */
     private String parseToken(String token) {
-        return (String) JWTUtil.parseToken(token).getPayload(PREFIX_LOGIN_USER);
+        return (String) JWTUtil.parseToken(token)
+                .setKey(key)
+                .getPayload(PREFIX_LOGIN_USER);
     }
 
     /**

@@ -28,7 +28,7 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>学院信息传输对象，用于超级管理员（ROLE_ROOT）操作学院信息。
+ * <p>学院信息数据传输对象。
  *
  * <p>插入学院信息时：
  * <blockquote><pre>

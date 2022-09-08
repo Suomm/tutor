@@ -1,7 +1,8 @@
 {
+  "serverUrl": "http://localhost:8633",
+  "packageFilters": "cn.edu.tjnu.tutor.support.controller",
   "isStrict": true,
   "allInOne": false,
-  "outPath": "../bin/apidoc/support",
-  "coverOld": true,
-  "projectName": "Tutor Support"
+  "outPath": "../docs/apidoc/support",
+  "coverOld": true
 }

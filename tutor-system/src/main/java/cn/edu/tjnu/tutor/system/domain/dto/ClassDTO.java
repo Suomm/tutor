@@ -26,7 +26,7 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>班级信息数据传输对象，用于超级管理员（ROLE_ROOT）与学院管理员（ROLE_ADMIN）操作班级信息。
+ * <p>班级信息数据传输对象。
  *
  * <p>插入班级信息时：
  * <blockquote><pre>

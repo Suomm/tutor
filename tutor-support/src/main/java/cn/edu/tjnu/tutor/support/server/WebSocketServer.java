@@ -16,6 +16,7 @@
 
 package cn.edu.tjnu.tutor.support.server;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 @Slf4j
 @Component
+@NoArgsConstructor
 @ServerEndpoint("/webSocket/{sid}")
 public class WebSocketServer {
 

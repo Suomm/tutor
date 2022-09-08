@@ -27,7 +27,7 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>菜单元数据信息，用于后台操作数据。
+ * <p>菜单元数据信息。
  *
  * <p>插入菜单数据时：
  * <blockquote><pre>

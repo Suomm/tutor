@@ -111,7 +111,7 @@ public class TokenController {
                 .getAttributes();
         // 获取学院主键
         College college = collegeService.lambdaQuery()
-                .select(College::getCollegeId)
+                .select(College::getCollegeId, College::getCollegeName)
                 .eq(College::getCollegeCode, attributes.get(COLLEGE_CODE))
                 .oneOpt()
                 .orElseThrow(() -> new ServiceException(ExceptionType.COLLEGE_NOT_REGISTER));
@@ -121,6 +121,7 @@ public class TokenController {
                 .userCode(attributes.get(USER_CODE).toString())
                 .userName(attributes.get(USER_NAME).toString())
                 .build());
+        loginUser.setCollegeName(college.getCollegeName());
         // 记录登录信息
         loginInfoService.recordLoginInfo(request, loginUser, UserStatus.LOGIN);
         // 重定向到前端地址

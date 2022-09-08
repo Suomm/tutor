@@ -27,7 +27,7 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
- * <p>学院元数据信息，用于后台操作数据。
+ * <p>学院元数据信息。
  *
  * <p>插入学院信息时：
  * <blockquote><pre>
