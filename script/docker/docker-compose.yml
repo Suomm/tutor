@@ -13,14 +13,12 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      # 初始化 SQL 脚本映射
-      - /docker/mysql/db:/usr/local/sql
       # 数据挂载
       - /docker/mysql/data/:/var/lib/mysql/
       # 配置挂载
       - /docker/mysql/conf/:/etc/mysql/conf.d/
-      # 初始化执行的 SQL 脚本
-      - /docker/mysql/init:/docker-entrypoint-initdb.d/
+    networks:
+      - tutor_network
   nginx:
     image: nginx:1.20.2
     container_name: nginx
@@ -35,9 +33,11 @@ services:
       # 配置文件映射
       - /docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
       # 页面目录
-      - /docker/nginx/html:/home/tutor/projects
+      - /docker/nginx/html:/home/tutor
       # 日志目录
       - /docker/nginx/log:/var/log/nginx
+    networks:
+      - tutor_network
   redis:
     image: redis:6.2.6
     container_name: redis
@@ -49,6 +49,8 @@ services:
       - /docker/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
+    networks:
+      - tutor_network
   minio:
     image: minio/minio:RELEASE.2021-06-14T01-29-23Z
     container_name: minio
@@ -62,11 +64,13 @@ services:
       # 管理后台密码，最小8个字符
       - MINIO_SECRET_KEY=12345678
     volumes:
-      # 映射当前目录下的data目录至容器内/data目录
+      # 映射当前目录下的 data 目录至容器内 /data 目录
       - /docker/minio/data:/data
       # 映射配置目录
       - /docker/minio/conf:/root/.minio/
     command: "server /data"
+    networks:
+      - tutor_network
   nacos:
     image: nacos/nacos-server:1.4.2
     container_name: nacos
@@ -92,6 +96,8 @@ services:
       - "9555:9555"
     depends_on:
       - mysql
+    networks:
+      - tutor_network
   sentinel:
     build:
       context: ./sentinel
@@ -100,6 +106,8 @@ services:
     privileged: true
     ports:
       - "8080:8080"
+    networks:
+      - tutor_network
   rabbitmq:
     image: rabbitmq:3.8-management
     container_name: rabbitmq
@@ -114,6 +122,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - tutor_network
   elasticsearch:
     build:
       context: ./elasticsearch
@@ -129,6 +139,8 @@ services:
       - /docker/elasticsearch/logs:/usr/share/elasticsearch/logs
     ports:
       - "9200:9200"
+    networks:
+      - tutor_network
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.6.2
     container_name: filebeat
@@ -137,21 +149,28 @@ services:
     environment:
       - "--strict.perms=false"
     volumes:
-      - /var/log/:/var/log/
+      - /docker/filebeat/logs:/usr/share/filebeat/logs
+      - /docker/tutor/admin/logs/:/var/log/tutor/admin
+      - /docker/tutor/gateway/logs/:/var/log/tutor/gateway
+      - /docker/tutor/support/logs/:/var/log/tutor/support
       - /docker/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
     depends_on:
       - elasticsearch
+    networks:
+      - tutor_network
   kibana:
     image: docker.elastic.co/kibana/kibana:7.6.2
     container_name: kibana
     restart: always
     privileged: true
-    environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    volumes:
+      - /docker/kibana/config:/usr/share/kibana/config
     ports:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    networks:
+      - tutor_network
   kkfileview:
     image: keking/kkfileview:v3.6.0
     container_name: kkfileview
@@ -159,6 +178,8 @@ services:
     privileged: true
     ports:
       - "8012:8012"
+    networks:
+      - tutor_network
   xxl-job-admin:
     image: xuxueli/xxl-job-admin:2.3.0
     container_name: xxl-job-admin
@@ -174,11 +195,16 @@ services:
       - "8081:8080"
     depends_on:
       - mysql
+    networks:
+      - tutor_network
   tutor-admin:
-    image: suomm/tutor-admin:latest
+    build:
+      context: ./tutor/admin
     container_name: tutor-admin
     restart: always
     privileged: true
+    volumes:
+      - /docker/tutor/admin/logs:/var/log/tutor
     ports:
       - "9377:9377"
     depends_on:
@@ -186,20 +212,30 @@ services:
       - nacos
       - rabbitmq
       - elasticsearch
+    networks:
+      - tutor_network
   tutor-gateway:
-    image: suomm/tutor-gateway:latest
+    build:
+      context: ./tutor/gateway
     container_name: tutor-gateway
     restart: always
     privileged: true
+    volumes:
+      - /docker/tutor/gateway/logs:/var/log/tutor
     ports:
       - "5735:5735"
     depends_on:
       - sentinel
+    networks:
+      - tutor_network
   tutor-support:
-    image: suomm/tutor-support:latest
+    build:
+      context: ./tutor/support
     container_name: tutor-support
     restart: always
     privileged: true
+    volumes:
+      - /docker/tutor/support/logs:/var/log/tutor
     ports:
       - "8633"
     depends_on:
@@ -207,8 +243,9 @@ services:
       - nginx
       - kkfileview
       - tutor-admin
+    networks:
+      - tutor_network
 
 networks:
-  default:
-    external:
-      name: tutor-network
+  tutor_network:
+    external: true

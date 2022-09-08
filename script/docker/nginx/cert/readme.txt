@@ -1,0 +1,1 @@
+来存放 domain.crt 和 server.key 两个文件，用于 Nginx 配置 SSL 连接。

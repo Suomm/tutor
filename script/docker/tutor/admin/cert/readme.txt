@@ -1,0 +1,1 @@
+存放 domain.crt 文件，用于 SSO 单点登录时后端 jre 安装证书。
